@@ -60,7 +60,9 @@ const Options = () => {
             onChange={(event) => setLike(event.target.checked)}
           />
           I like colors.
+          
         </label>
+        i like turtles
       </div>
       <div>{status}</div>
       <button onClick={saveOptions}>Save</button>

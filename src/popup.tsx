@@ -15,6 +15,10 @@ const Popup = () => {
     });
   }, []);
 
+  const thunk = document.getElementById("think_btn");
+
+console.log('hi robert', thunk)
+
   const changeBackground = () => {
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
       const tab = tabs[0];
@@ -50,6 +54,8 @@ const Popup = () => {
 };
 
 const root = createRoot(document.getElementById("root")!);
+
+
 
 root.render(
   <React.StrictMode>
