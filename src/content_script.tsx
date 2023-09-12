@@ -10,7 +10,28 @@ window.onload = function () {
   document.addEventListener('keydown', (e) => {
     const handler = e.key.toLowerCase();
     console.log('Key pressed:', handler);
-  
+ 
+    
+// send to Graveyard (it has to be above the 'd' if statement)    
+    if (e.shiftKey && handler === 'd') {
+      console.log('shift pressed')
+      const cardHoverMenuDiv = document.getElementById('card_menu_content')
+      if (cardHoverMenuDiv) {
+        const cardMenuBtnDivs = cardHoverMenuDiv.querySelectorAll('div.card_menu_btn');
+        for (const cardMenuBtnDiv of cardMenuBtnDivs) {
+          const spanElement = cardMenuBtnDiv.querySelector('span.card_menu_txt');
+            if (spanElement && spanElement?.textContent?.trim() === 'To Grave') {
+              (spanElement as HTMLElement).click();
+              break;
+            }
+            else if (spanElement && spanElement?.textContent?.trim() === 'To Graveyard') {
+              (spanElement as HTMLElement).click();
+              break;
+            }
+        }}}    
+    
+
+
 // think button
     if (!(e.target instanceof HTMLInputElement)) {
       if (handler === 't') {
@@ -88,6 +109,8 @@ if (handler === 'n') {
           (spanElement as HTMLElement).click();
           break;
     }}}}
+
+// Send to GY
 
   
 }})}
