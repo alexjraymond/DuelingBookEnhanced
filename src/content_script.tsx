@@ -12,7 +12,7 @@ window.onload = function () {
     console.log('Key pressed:', handler);
  
     
-// send to Graveyard (it has to be above the 'd' if statement) 👍   
+// send to Graveyard (it has to be above the 'd' if statement) 👍 shift + d
     if (e.shiftKey && handler === 'd') {
       console.log('shift pressed')
       const cardHoverMenuDiv = document.getElementById('card_menu_content')
@@ -29,8 +29,37 @@ window.onload = function () {
               break;
             }
         }}}    
+
+// add back to hand 👍 a
+    if (handler === 'a') {
+      const cardHoverMenuDiv = document.getElementById('card_menu_content')
+      if (cardHoverMenuDiv) {
+        const cardMenuBtnDivs = cardHoverMenuDiv.querySelectorAll('div.card_menu_btn');
+        for (const cardMenuBtnDiv of cardMenuBtnDivs) {
+          const spanElement = cardMenuBtnDiv.querySelector('span.card_menu_txt');
+            if (spanElement && spanElement?.textContent?.trim() === 'To Hand') {
+              (spanElement as HTMLElement).click();
+              break;
+            }}}
+    }
     
-// view Extra Deck 👍
+// Set card 👍 shift + s
+if (e.shiftKey && handler === 's') {
+  console.log('shift pressed')
+  const cardHoverMenuDiv = document.getElementById('card_menu_content')
+  if (cardHoverMenuDiv) {
+    const cardMenuBtnDivs = cardHoverMenuDiv.querySelectorAll('div.card_menu_btn');
+    for (const cardMenuBtnDiv of cardMenuBtnDivs) {
+      const spanElement = cardMenuBtnDiv.querySelector('span.card_menu_txt');
+        if (spanElement && spanElement?.textContent?.trim() === 'Set') {
+          (spanElement as HTMLElement).click();
+          break;
+        }
+    }}}    
+
+
+
+// view Deck & Extra Deck 👍
     if (handler === 'v') {
       const cardHoverMenuDiv = document.getElementById('card_menu_content')
       if (cardHoverMenuDiv) {
@@ -122,5 +151,5 @@ if (handler === 'n') {
 
 
 
-    
+
 }})}
