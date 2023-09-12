@@ -39,22 +39,55 @@ window.onload = function () {
 // Special Summon a card that has "SS ATK" or "s. Summon ATK" in the menu
       if (handler === 's') {
         const cardHoverMenuDiv = document.getElementById('card_menu_content')
-        console.log('s clicked')
-        console.log (cardHoverMenuDiv)
         if (cardHoverMenuDiv) {
-        console.log(cardHoverMenuDiv)
-        const cardMenuBtnDivs = cardHoverMenuDiv.querySelectorAll('div.card_menu_btn');
-  for (const cardMenuBtnDiv of cardMenuBtnDivs) {
-    const spanElement = cardMenuBtnDiv.querySelector('span.card_menu_txt');
-    if (spanElement && spanElement?.textContent?.trim() === 'SS ATK') {
-      (spanElement as HTMLElement).click();
-      break;
-    }
-    else if (spanElement && spanElement?.textContent?.trim() === 'S. Summon ATK') {
-      (spanElement as HTMLElement).click();
-      break;
+          const cardMenuBtnDivs = cardHoverMenuDiv.querySelectorAll('div.card_menu_btn');
+          for (const cardMenuBtnDiv of cardMenuBtnDivs) {
+            const spanElement = cardMenuBtnDiv.querySelector('span.card_menu_txt');
+              if (spanElement && spanElement?.textContent?.trim() === 'SS ATK') {
+                (spanElement as HTMLElement).click();
+                break;
+          }
+              else if (spanElement && spanElement?.textContent?.trim() === 'S. Summon ATK') {
+                (spanElement as HTMLElement).click();
+                break;
       }}
-
     }
   };
+
+// Declare effect on mouseover
+      if (handler === 'd') {
+        const cardHoverMenuDiv = document.getElementById('card_menu_content')
+        if (cardHoverMenuDiv) {
+          const cardMenuBtnDivs = cardHoverMenuDiv.querySelectorAll('div.card_menu_btn');
+          for (const cardMenuBtnDiv of cardMenuBtnDivs) {
+            const spanElement = cardMenuBtnDiv.querySelector('span.card_menu_txt');
+              if (spanElement && spanElement?.textContent?.trim() === 'Declare') {
+                (spanElement as HTMLElement).click();
+                break;
+          }}}}
+
+          if (handler === 'd') {
+            const cardHoverMenuDiv = document.getElementById('card_menu_content')
+            if (cardHoverMenuDiv) {
+              const cardMenuBtnDivs = cardHoverMenuDiv.querySelectorAll('div.card_menu_btn');
+              for (const cardMenuBtnDiv of cardMenuBtnDivs) {
+                const spanElement = cardMenuBtnDiv.querySelector('span.card_menu_txt');
+                  if (spanElement && spanElement?.textContent?.trim() === 'Declare') {
+                    (spanElement as HTMLElement).click();
+                    break;
+              }}}}
+
+// Normal Summon on mouseover
+if (handler === 'n') {
+  const cardHoverMenuDiv = document.getElementById('card_menu_content')
+  if (cardHoverMenuDiv) {
+    const cardMenuBtnDivs = cardHoverMenuDiv.querySelectorAll('div.card_menu_btn');
+    for (const cardMenuBtnDiv of cardMenuBtnDivs) {
+      const spanElement = cardMenuBtnDiv.querySelector('span.card_menu_txt');
+        if (spanElement && spanElement?.textContent?.trim() === 'Normal Summon') {
+          (spanElement as HTMLElement).click();
+          break;
+    }}}}
+
+  
 }})}
