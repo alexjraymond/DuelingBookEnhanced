@@ -30,8 +30,8 @@ window.onload = function () {
             }
         }}}    
 
-// add back to hand 👍 a
-    if (handler === 'a') {
+// add back to hand 👍 h
+    if (handler === 'h') {
       const cardHoverMenuDiv = document.getElementById('card_menu_content')
       if (cardHoverMenuDiv) {
         const cardMenuBtnDivs = cardHoverMenuDiv.querySelectorAll('div.card_menu_btn');
@@ -41,6 +41,25 @@ window.onload = function () {
               (spanElement as HTMLElement).click();
               break;
             }}}
+    }
+
+    // Activate card 👍 a
+    if (handler === 'a') {
+      const cardHoverMenuDiv = document.getElementById('card_menu_content')
+      if (cardHoverMenuDiv) {
+        const cardMenuBtnDivs = cardHoverMenuDiv.querySelectorAll('div.card_menu_btn');
+        for (const cardMenuBtnDiv of cardMenuBtnDivs) {
+          const spanElement = cardMenuBtnDiv.querySelector('span.card_menu_txt');
+            if (spanElement && spanElement?.textContent?.trim() === 'Activate') {
+              (spanElement as HTMLElement).click();
+              break;
+            }
+            else if (spanElement && spanElement?.textContent?.trim() === 'To S/T') {
+              (spanElement as HTMLElement).click();
+              break;
+            }
+          
+          }}
     }
     
 // Set card 👍 shift + s
