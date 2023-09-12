@@ -12,7 +12,7 @@ window.onload = function () {
     console.log('Key pressed:', handler);
  
     
-// send to Graveyard (it has to be above the 'd' if statement)    
+// send to Graveyard (it has to be above the 'd' if statement) 👍   
     if (e.shiftKey && handler === 'd') {
       console.log('shift pressed')
       const cardHoverMenuDiv = document.getElementById('card_menu_content')
@@ -30,16 +30,26 @@ window.onload = function () {
             }
         }}}    
     
+// view Extra Deck 👍
+    if (handler === 'v') {
+      const cardHoverMenuDiv = document.getElementById('card_menu_content')
+      if (cardHoverMenuDiv) {
+        const cardMenuBtnDivs = cardHoverMenuDiv.querySelectorAll('div.card_menu_btn');
+        for (const cardMenuBtnDiv of cardMenuBtnDivs) {
+          const spanElement = cardMenuBtnDiv.querySelector('span.card_menu_txt');
+            if (spanElement && spanElement?.textContent?.trim() === 'View') {
+              (spanElement as HTMLElement).click();
+              break;
+            }}}}
 
-
-// think button
+// think button 👍
     if (!(e.target instanceof HTMLInputElement)) {
       if (handler === 't') {
         console.log('Clicking "think_btn"');
         thunk?.click();
       }
 
-// thumbs up button
+// thumbs up button 👍
       if (handler === 'f') {
         console.log('Clicking good_btn')
         thumbsUp?.click();
@@ -57,7 +67,7 @@ window.onload = function () {
         askPhaseChange?.focus();
       }
 
-// Special Summon a card that has "SS ATK" or "s. Summon ATK" in the menu
+// Special Summon a card that has "SS ATK" or "s. Summon ATK" in the menu 👍
       if (handler === 's') {
         const cardHoverMenuDiv = document.getElementById('card_menu_content')
         if (cardHoverMenuDiv) {
@@ -75,7 +85,7 @@ window.onload = function () {
     }
   };
 
-// Declare effect on mouseover
+// Declare effect on mouseover 👍
       if (handler === 'd') {
         const cardHoverMenuDiv = document.getElementById('card_menu_content')
         if (cardHoverMenuDiv) {
@@ -98,7 +108,7 @@ window.onload = function () {
                     break;
               }}}}
 
-// Normal Summon on mouseover
+// Normal Summon on mouseover 👍
 if (handler === 'n') {
   const cardHoverMenuDiv = document.getElementById('card_menu_content')
   if (cardHoverMenuDiv) {
@@ -110,7 +120,7 @@ if (handler === 'n') {
           break;
     }}}}
 
-// Send to GY
 
-  
+
+    
 }})}
