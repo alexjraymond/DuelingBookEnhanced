@@ -2,10 +2,74 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Getting Started Extension's Popup</title>
+    <title>DuelingBookEnhanced</title>
+    <link rel="stylesheet" type="text/css" href="../src/main.css">
     <script src="js/vendor.js"></script>
+    <style>
+
+input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #3498db; /* Border color */
+  border-radius: 4px; /* Rounded corners */
+  background-color: transparent;
+  outline: none; /* Remove focus outline */
+  cursor: pointer;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+      /* Button Styles */
+      button {
+        display: inline-block;
+        width: 90px;
+        padding: 6px 12px;
+        background-color: #E54B4B;
+        color: #fff;
+        font-size: 12px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+      }
+      button:hover {
+      background-color: #E54B4B;
+      transform: translateY(-3px);
+      box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    button:active {
+      transform: translateY(0);
+      background-color: #fc7676;
+      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+    }
+    
+    #button-container {
+      width: 190px;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+
+    label {
+  
+    }
+
+
+    </style>
   </head>
-  <body>
+  <body
+  style=
+    'margin: 0; 
+    padding: 0; 
+    background-color: #1E1E24 !important;
+    color: #F7EBE8; 
+    width: 207px; 
+    border-radius: 30px;
+    font-family: Montserrat
+    '>
     <div id="root"></div>
     <script src="js/popup.js"></script>
   </body>

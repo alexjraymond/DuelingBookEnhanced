@@ -2,54 +2,95 @@ import React, { useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
 
 const Popup = () => {
-  const [count, setCount] = useState(0);
-  const [currentURL, setCurrentURL] = useState<string>();
+  const [disableAllOptions, setDisableAllOptions] = useState(false);
+  const [skipIntro, setSkipIntro] = useState(false);
+  const [immediatelyGoToMainMenu, setImmediatelyGoToMainMenu] = useState(false);
+  const [isNightMode, setIsNightMode] = useState(false);
 
-  useEffect(() => {
-    chrome.action.setBadgeText({ text: count.toString() });
-  }, [count]);
+  const handleFeedbackLinkClick = () => {
+    // google form feedback logic... window.open?
+  };
 
-  useEffect(() => {
-    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-      setCurrentURL(tabs[0].url);
-    });
-  }, []);
+  const handleSettingsButtonClick = () => {
+    // settings redirect... window.location.href, or react router?
+  };
 
-  const thunk = document.getElementById("think_btn");
-
-console.log('hi robert', thunk)
-
-  const changeBackground = () => {
-    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-      const tab = tabs[0];
-      if (tab.id) {
-        chrome.tabs.sendMessage(
-          tab.id,
-          {
-            color: "#555555",
-          },
-          (msg) => {
-            console.log("result message:", msg);
-          }
-        );
-      }
-    });
+  const toggleNightMode = () => {
+    setIsNightMode(!isNightMode);
+    // night mode logic - probably just styles to make the text white and background black
   };
 
   return (
-    <>
-      <ul style={{ minWidth: "700px" }}>
-        <li>Current URL: {currentURL}</li>
-        <li>Current Time: {new Date().toLocaleTimeString()}</li>
-      </ul>
-      <button
-        onClick={() => setCount(count + 1)}
-        style={{ marginRight: "5px" }}
+    <div 
+      style={{
+        display: 'flex', 
+        flexDirection: 'column',
+      }}
       >
-        count up
-      </button>
-      <button onClick={changeBackground}>change background</button>
-    </>
+      <h1
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: '#FFA987',
+          color: '#1E1E24',
+          marginTop: 0,
+          marginBottom: 0
+        }}
+      
+      >Settings</h1>
+      <div 
+      id="input_container"
+      style={{
+        padding: 5,
+        display: 'grid',
+        justifyItems: 'start',
+        gap: 10,
+        
+      }}
+      >
+      <label>
+        <input
+          type="checkbox"
+          checked={disableAllOptions}
+          onChange={() => setDisableAllOptions(!disableAllOptions)}
+        />
+        Disable/Enable All Options
+      </label>
+
+      <label>
+        <input
+          type="checkbox"
+          checked={skipIntro}
+          onChange={() => setSkipIntro(!skipIntro)}
+        />
+        Skip Intro
+      </label>
+
+      <label>
+        <input
+          type="checkbox"
+          checked={immediatelyGoToMainMenu}
+          onChange={() => setImmediatelyGoToMainMenu(!immediatelyGoToMainMenu)}
+
+        />
+        Go to Settings
+      </label>
+
+      <label>
+        <input
+          type="checkbox"
+          checked={isNightMode}
+          onChange={toggleNightMode}
+        />
+        Night Mode
+      </label>
+      <div id= "button-container">
+        <button onClick={handleFeedbackLinkClick}>Provide Feedback</button>
+        <button onClick={handleSettingsButtonClick}>Go to All Settings</button>
+      </div>
+      </div>
+    </div>
   );
 };
 

@@ -1,0 +1,7 @@
+body {
+	font-family: Arial, Helvetica, sans-serif; /* Choose an appropriate font stack */
+	line-height: 1.6; /* Adjust line height for better readability */
+	margin: 0; /* Remove default margin */
+	padding: 0; /* Remove default padding */
+	background-color: #add8e6; /* Set a background color */
+}

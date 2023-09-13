@@ -7,13 +7,13 @@ window.onload = function () {
   const skipIntroButton = document.getElementById('skip_intro_btn') as HTMLElement
   const enterButton = document.getElementById('duel_btn') as HTMLElement
 
-  // skip the intro every time
-  if (skipIntroButton.style.display !== 'none') {
-    console.log('intro skipped')
-    skipIntroButton.click()
-    // enter the menu immediately if logged in
-    enterButton.click()
-  }
+  // // skip the intro every time
+  // if (skipIntroButton.style.display !== 'none') {
+  //   console.log('intro skipped')
+  //   skipIntroButton.click()
+  //   // enter the menu immediately if logged in
+  //   enterButton.click()
+  // }
 
   // chat variables
   const chatInput = document.querySelectorAll('input.cin_txt')[1] as HTMLInputElement
@@ -23,8 +23,9 @@ window.onload = function () {
   const deck = document.getElementById('deck_hidden') as HTMLElement;
   const extraDeck = document.getElementById('extra_hidden') as HTMLElement;
   let deckMenu = document.getElementById('card_menu_content') as HTMLElement;
-  let deckViewButton = deckMenu?.getElementsByClassName('card_menu_btn')[0] as HTMLElement;
-  let deckViewSpan = deckViewButton?.getElementsByTagName('span')[0] as HTMLElement;
+  let deckViewButton = deckMenu?.getElementsByClassName('card_menu_btn')[1] as HTMLElement;
+  let deckViewSpan = deckViewButton?.getElementsByTagName('span')[1] as HTMLElement;
+
 
   // the ultimate keydown listener
   document.addEventListener('keydown', (e) => {
@@ -174,7 +175,7 @@ window.onload = function () {
       if (handler === 't') {
         console.log('Clicking "think_btn"');
         thunk?.click();
-        chatInput.value = 'IM THINKING!'
+        chatInput.value = 'hm'
         const enterEvent = new KeyboardEvent('keydown', {
           key: 'Enter',
           keyCode: 13,
