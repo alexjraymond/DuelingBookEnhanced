@@ -103,7 +103,7 @@ if (e.shiftKey && handler === 's') {
         thumbsUp?.click();
       }
 
-// open graveyard (not yet working)
+// open graveyard 👍
       if (handler === 'g') {
         console.log('Clicking GY')
         GY?.click();
