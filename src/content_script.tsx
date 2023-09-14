@@ -23,8 +23,8 @@ window.onload = function () {
   const deck = document.getElementById('deck_hidden') as HTMLElement;
   const extraDeck = document.getElementById('extra_hidden') as HTMLElement;
   let deckMenu = document.getElementById('card_menu_content') as HTMLElement;
-  let deckViewButton = deckMenu?.getElementsByClassName('card_menu_btn')[1] as HTMLElement;
-  let deckViewSpan = deckViewButton?.getElementsByTagName('span')[1] as HTMLElement;
+  let deckViewButton = deckMenu?.getElementsByClassName('card_menu_btn')[0] as HTMLElement;
+  let deckViewSpan = deckViewButton?.getElementsByTagName('span')[0] as HTMLElement;
 
 
   // the ultimate keydown listener
@@ -92,7 +92,11 @@ window.onload = function () {
       deckMenu = document.getElementById('card_menu_content') as HTMLElement;
       deckViewButton = deckMenu?.getElementsByClassName('card_menu_btn')[0] as HTMLElement;
       deckViewSpan = deckViewButton?.getElementsByTagName('span')[0] as HTMLElement;
-      if (deckViewSpan) {
+      if (deckViewSpan && deckViewSpan.textContent === 'View') {
+        deckViewSpan.click()
+      } else if (deckViewSpan && deckViewSpan.textContent === 'Show') {
+        deckViewButton = deckMenu?.getElementsByClassName('card_menu_btn')[1] as HTMLElement;
+        deckViewSpan = deckViewButton?.getElementsByTagName('span')[0] as HTMLElement;
         deckViewSpan.click()
       } else {
         const { name } = hotkeyHashMap[handler]
