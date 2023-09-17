@@ -5,3 +5,7 @@ body {
 	padding: 10px;
 	background-color: #add8e6; /* Set a background color */
 }
+
+h1 {
+	color: red
+}
