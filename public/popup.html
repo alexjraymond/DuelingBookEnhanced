@@ -3,101 +3,21 @@
   <head>
     <meta charset="UTF-8">
     <title>DuelingBookEnhanced</title>
-    <!-- <link rel="stylesheet" type="text/css" href="../src/main.css"> -->
     <script src="js/vendor.js"></script>
     <style>
-
-input[type="checkbox"] {
-
-  width: 20px;
-  height: 20px;
-  border: 2px solid #3498db; /* Border color */
-  border-radius: 4px; /* Rounded corners */
-  background-color: transparent;
-  outline: none; /* Remove focus outline */
-  cursor: pointer;
-  transition: background-color 0.3s ease, border-color 0.3s ease;
-  color: #fff
-}
-
-input[type="checkbox"]:checked + label::before {
-  background-color: #2ecc71; /* Change the background color when checked */
-  border-color: #2ecc71; /* Change the border color when checked */
-}
-
-
-      /* Button Styles */
-      button {
-        display: inline-block;
-        width: 90px;
-        padding: 6px 12px;
-        background-color: #3498db;
-        color: #fff;
-        font-size: 12px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        transition: background-color 0.3s ease, transform 0.2s ease;
-        height: 40px;
-      }
-      button:hover {
-      background-color: #49b6ff;
-      transform: translateY(-3px);
-      box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+    body {
+      margin: 0;
+      padding: 10px;
+      background-color: #1E1E24 !important;
+      color: #F7EBE8;
+      width: 340px;
+      border-radius: 30px;
+      font-family: sans-serif
     }
-
-    button:active {
-      transform: translateY(0);
-      background-color: #297ab0;
-      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
-    }
-    
-    #button-container {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-around;
-      width: 100%;
-    }
-
-    label {
-  
-    }
-
-    /* // Colors
-@brand-primary: #29b5a8;
-@brand-secondary: #ff8300;
-@gray: #6b7381;
-@gray-light: lighten(@gray, 15%);
-@gray-lighter: lighten(@gray, 30%);;
-
-// Button Colors
-@btn-default-color: @gray;
-@btn-default-bg: @gray-lighter;
-
-// Toggle Sizes
-@toggle-default-size: 1.5rem;
-@toggle-default-label-width: 4rem;
-@toggle-default-font-size: .75rem;
-
-.btn-toggle {
-    top: 50%;
-    transform: translateY(-50%);
-  } */
-
     </style>
   </head>
-  <body
-  style=
-    'margin: 0; 
-    padding: 0; 
-    background-color: #1E1E24 !important;
-    color: #F7EBE8; 
-    width: 207px; 
-    border-radius: 30px;
-    font-family: Montserrat
-    '>
+  <body>
     <div id="root"></div>
     <script src="js/popup.js"></script>
   </body>
 </html>
-

@@ -6,7 +6,7 @@ const srcDir = path.join(__dirname, "..", "src");
 module.exports = {
     entry: {
       popup: path.join(srcDir, 'popup.tsx'),
-      options: path.join(srcDir, 'options.tsx'),
+      options: path.join(srcDir, 'fullOptions.tsx'),
       background: path.join(srcDir, 'background.ts'),
       content_script: path.join(srcDir, 'content_script.tsx'),
     },
@@ -33,10 +33,21 @@ module.exports = {
                 test: /\.css$/,
                 use: ["style-loader", "css-loader"],
             },
+            {
+                test: /\.(png|jpe?g|gif|svg)$/i,
+                use: [
+                    {
+                        loader: 'file-loader',
+                        options: {
+                            outputPath: 'images',
+                        },
+                    },
+                ],
+            },
         ],
     },
     resolve: {
-        extensions: [".ts", ".tsx", ".js"],
+        extensions: [".ts", ".tsx", ".js", ".jsx"],
     },
     plugins: [
         new CopyPlugin({
@@ -44,4 +55,11 @@ module.exports = {
             options: {},
         }),
     ],
+    devServer: {
+        static: {
+            directory: path.join(__dirname, '../dist'),
+        },
+        hot: true,
+        port: 3000, // Choose a port number
+    },
 };
