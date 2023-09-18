@@ -6,7 +6,7 @@ const srcDir = path.join(__dirname, "..", "src");
 module.exports = {
     entry: {
       popup: path.join(srcDir, 'popup.tsx'),
-      options: path.join(srcDir, 'fullOptions.tsx'),
+      fullOptions: path.join(srcDir, 'fullOptions.tsx'),
       background: path.join(srcDir, 'background.ts'),
       content_script: path.join(srcDir, 'content_script.tsx'),
     },
@@ -60,6 +60,6 @@ module.exports = {
             directory: path.join(__dirname, '../dist'),
         },
         hot: true,
-        port: 3000, // Choose a port number
+        port: 3000,
     },
 };

@@ -1,0 +1,185 @@
+<html><head>
+    <meta charset="UTF-8">
+    <title>DuelingBookEnhanced</title>
+    <script src="js/vendor.js"></script>
+  <style>
+
+body {
+  background-color: #F3F3F3;
+  padding-top: 25px;
+  font-family: sans-serif;
+}
+
+.content-container {
+  display:flex;
+  justify-content: center;
+  gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+#sidebar {
+  width: 30%
+}
+
+header h2 {
+  font-weight: normal;
+}
+
+header span {
+  font-weight: bold;
+}
+
+.full-logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo-frame {
+  width: 60px;
+}
+
+img {
+  width: 100%;
+  object-fit: contain;
+}
+
+.settings-header {
+  color:gray;
+  font-weight: bold;
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+
+.settings-tabs {
+  display: flex;
+  flex-direction: column;
+}
+
+.settings-tabs button {
+  padding-top:10px;
+  padding-bottom:10px;
+  font-size: large;
+  border: none;
+  text-align: start;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.settings-tabs button:hover {
+  background-color: rgb(224, 224, 224);
+}
+
+.main-content {
+  display: flex;
+  flex-wrap: wrap;
+  width: 70%;
+  padding-right: 50px;
+}
+
+.premium-banner-container {
+  width:100%;
+  background-color: white;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  margin-bottom: 30px;
+  height: 100px;
+}
+
+.premium-label {
+  font-weight: bold;
+  font-size: larger;
+}
+
+.premium-upgrade {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+}
+
+.premium-upgrade button {
+  background-color: orange;
+  color: white;
+  font-weight: bold;
+  font-size: large;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+}
+
+main {
+  width: 100%;
+}
+
+</style></head>
+  <body>
+    <div id="root">
+      <div class="content-container">
+        <div id="sidebar">
+          <div class="fixed">
+            <header>
+              <div class="full-logo">
+                <div class="logo-frame">
+                  <img
+                    src="https://github.com/alexjraymond/DuelingBookEnhanced/blob/main/public/dbe_logo_64.png?raw=true"
+                    alt="DBE Logo">
+                </div>
+                <h2>DuelingBook<span>Enhanced</span></h2>
+              </div>
+              <p class="settings-header">SETTINGS</p>
+            </header>
+            <nav>
+              <div class="settings-tabs" role="tablist">
+                <button role="presentation">
+                  General
+                </button>
+                <button role="presentation">
+                  Allowlisted websites
+                </button>
+                <button role="presentation">
+                  Advanced
+                </button>
+                <button role="presentation">
+                  Help
+                </button>
+              </div>
+            </nav>
+          </div>
+        </div>
+        <div class="main-content">
+          <aside class="premium-banner-container">
+            <div class="premium-upgrade banner foreground">
+              <span class="premium-label" dir="ltr">Premium</span>
+              <p id="premium-upgrade-description" data-i18n="options_premium_upgrade_description">Customize and enhance your
+                dueling experience! <a data-i18n-index="0"
+                  href="https://accounts.adblockplus.org/en_US/premium?an=adblockpluschrome&amp;av=3.19&amp;ap=chrome&amp;apv=116.0.0.0&amp;p=chromium&amp;pv=116.0.0.0&amp;s=desktop-options"
+                  target="_blank">Learn more</a></p>
+              <button class="premium upgrade button">Upgrade</button>
+            </div>
+          </aside>
+          <main>
+            <div>Favorite color:
+              <select>
+                <option value="red">red</option>
+                <option value="green">green</option>
+                <option value="blue">blue</option>
+                <option value="yellow">yellow</option>
+              </select>
+            </div>
+            <div>
+              <label><input type="checkbox">I like colors.</label>i like turtles
+            </div>
+            <div></div>
+            <button>Save</button>
+          </main>
+        </div>
+      </div>
+    </div>
+    <script src="js/fullOptions.js"></script>
+  </body>
+
+  </html>
