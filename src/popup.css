@@ -52,7 +52,8 @@ input[type="checkbox"]:checked+label::before {
 button#settings-button {
 	background-color: transparent;
 	border: none;
-	width: 37px;
+	width: 55px;
+	min-width: unset;
 	cursor: pointer;
 }
 

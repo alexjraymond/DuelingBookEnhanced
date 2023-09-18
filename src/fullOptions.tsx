@@ -88,12 +88,12 @@ const Options = () => {
               <span className="premium-label" dir="ltr">Premium</span>
             </div>
             <p>
-              Customize and enhance your dueling experience!
+              Customize and enhance your dueling experience!&nbsp;
               <a
                 href="#"
                 target="_blank"
               >
-                Learn more
+                Learn more&nbsp;
               </a>
             </p>
             <button className="premium upgrade button">Upgrade</button>

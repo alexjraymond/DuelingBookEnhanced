@@ -8,18 +8,18 @@ import cog from './assets/images/cog.png'
 const Popup = () => {
   const [disableAllOptions, setDisableAllOptions] = useState(false);
   const [skipIntro, setSkipIntro] = useState(false);
-  const [immediatelyGoToMainMenu, setImmediatelyGoToMainMenu] = useState(false);
+  const [autoConnect, setAutoConnect] = useState(false);
   const [isNightMode, setIsNightMode] = useState(false);
 
   const handleSettingsButtonClick = () => {
-    console.log('trying to redirect to all options page')
+    chrome.runtime.openOptionsPage()
   };
 
   // night mode logic - probably just styles to make the text white and background black
-  // here's the spans and divs and stuff
   // card text left side: div w/ id "preview_txt"
   // chatbox: class="cout_txt textarea scrollpane selectable" (there's no id for it, it's cringe)
   // good color for night mode background: #242428
+
   const toggleNightMode = () => {
     console.log('youre clicking nightmode');
     const textBoxes = document.querySelectorAll(".os_viewport");
