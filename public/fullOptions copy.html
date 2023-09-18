@@ -89,6 +89,16 @@ img {
   height: 100px;
 }
 
+.premium-header {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.premium-icon-frame {
+  width: 60px;
+}
+
 .premium-label {
   font-weight: bold;
   font-size: larger;
@@ -109,10 +119,33 @@ img {
   border: none;
   padding: 10px 20px;
   border-radius: 5px;
+  cursor: pointer;
+}
+
+.premium-upgrade button:hover {
+  background-color: rgb(235, 180, 42);
 }
 
 main {
   width: 100%;
+  background-color: white;
+  padding: 5px 30px;
+  border-radius: 5px;
+  border-color: lightgray;
+  border-width: 2px;
+  border-style: solid;
+}
+
+.main-header {
+  font-size: 3rem;
+  font-weight: normal;
+}
+
+.main-options {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin: 20px 0;
 }
 
 </style></head>
@@ -138,7 +171,7 @@ main {
                   General
                 </button>
                 <button role="presentation">
-                  Allowlisted websites
+                  Customize Hotkeys
                 </button>
                 <button role="presentation">
                   Advanced
@@ -153,7 +186,12 @@ main {
         <div class="main-content">
           <aside class="premium-banner-container">
             <div class="premium-upgrade banner foreground">
-              <span class="premium-label" dir="ltr">Premium</span>
+              <div class="premium-header">
+                <div class="premium-icon-frame">
+                  <img src="https://github.com/alexjraymond/DuelingBookEnhanced/blob/main/public/yugi-icon.png?raw=true" alt="">
+                </div>
+                <span class="premium-label" dir="ltr">Premium</span>
+              </div>
               <p id="premium-upgrade-description" data-i18n="options_premium_upgrade_description">Customize and enhance your
                 dueling experience! <a data-i18n-index="0"
                   href="https://accounts.adblockplus.org/en_US/premium?an=adblockpluschrome&amp;av=3.19&amp;ap=chrome&amp;apv=116.0.0.0&amp;p=chromium&amp;pv=116.0.0.0&amp;s=desktop-options"
@@ -162,19 +200,17 @@ main {
             </div>
           </aside>
           <main>
-            <div>Favorite color:
-              <select>
-                <option value="red">red</option>
-                <option value="green">green</option>
-                <option value="blue">blue</option>
-                <option value="yellow">yellow</option>
-              </select>
+            <h1 class="main-header">General</h1>
+            <p>Determine how DuelingBookEnhanced can improve your experience</p>
+            <hr />
+            <div class="main-options">
+              <label><input type="checkbox">Enable DuelingBookEnhanced</label>
+              <label><input type="checkbox">Skip Intro</label>
+              <label><input type="checkbox">Auto-Connect (must be logged in!)</label>
+              <label><input type="checkbox">Night Mode</label>
             </div>
-            <div>
-              <label><input type="checkbox">I like colors.</label>i like turtles
-            </div>
-            <div></div>
-            <button>Save</button>
+            <hr />
+
           </main>
         </div>
       </div>

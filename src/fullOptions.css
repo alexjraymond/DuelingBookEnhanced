@@ -1,24 +1,143 @@
 body {
   background-color: #F3F3F3;
+  padding-top: 25px;
+  font-family: sans-serif;
 }
 
 .content-container {
-  display:flex;
+  display: flex;
   justify-content: center;
+  gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-.header h2 {
+#sidebar {
+  width: 30%
+}
+
+header h2 {
   font-weight: normal;
 }
 
-.header span {
+header span {
   font-weight: bold;
 }
 
 .full-logo {
-  display: flex
+  display: flex;
+  align-items: center;
 }
 
 .logo-frame {
-  width: 45px;
+  width: 60px;
+}
+
+img {
+  width: 100%;
+  object-fit: contain;
+}
+
+.settings-header {
+  color: gray;
+  font-weight: bold;
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+
+.settings-tabs {
+  display: flex;
+  flex-direction: column;
+}
+
+.settings-tabs button {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-size: large;
+  border: none;
+  text-align: start;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.settings-tabs button:hover {
+  background-color: rgb(224, 224, 224);
+}
+
+.main-content {
+  display: flex;
+  flex-wrap: wrap;
+  width: 70%;
+  padding-right: 50px;
+}
+
+.premium-banner-container {
+  width: 100%;
+  background-color: white;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  margin-bottom: 30px;
+  height: 100px;
+}
+
+.premium-header {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.premium-icon-frame {
+  width: 60px;
+}
+
+.premium-label {
+  font-weight: bold;
+  font-size: larger;
+}
+
+.premium-upgrade {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+}
+
+.premium-upgrade button {
+  background-color: orange;
+  color: white;
+  font-weight: bold;
+  font-size: large;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.premium-upgrade button:hover {
+  background-color: rgb(235, 180, 42);
+}
+
+main {
+  width: 100%;
+  background-color: white;
+  padding: 5px 30px;
+  border-radius: 5px;
+  border-color: lightgray;
+  border-width: 2px;
+  border-style: solid;
+}
+
+.main-header {
+  font-size: 3rem;
+  font-weight: normal;
+}
+
+.main-options {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin: 20px 0;
 }
