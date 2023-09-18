@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
+import Button  from './components/Button'
 import logo from './assets/images/dbe_logo.png'
+import coffee from './assets/images/coffee.png'
 import yugiIcon from './assets/images/yugi-icon.png'
 import './fullOptions.css';
 
@@ -58,17 +60,17 @@ const Options = () => {
             <p className="settings-header">SETTINGS</p>
           </header>
           <nav>
-            <div className="settings-tabs" role="tablist">
-              <button role="presentation">
+            <div className="settings-tabs">
+              <button>
                 General
               </button>
-              <button role="presentation">
+              <button>
                 Customize Hotkeys
               </button>
-              <button role="presentation">
+              <button>
                 Advanced
               </button>
-              <button role="presentation">
+              <button>
                 Help
               </button>
             </div>
@@ -76,21 +78,28 @@ const Options = () => {
         </div>
       </div>
       <div className="main-content">
+
         <aside className="premium-banner-container">
-          <div className="premium-upgrade banner foreground">
+          <div className="banner">
             <div className="premium-header">
-              <div className="premium-icon-frame">
+              <div className="icon-frame">
                 <img src={yugiIcon} alt="yugi icon" />
               </div>
               <span className="premium-label" dir="ltr">Premium</span>
             </div>
-            <p id="premium-upgrade-description" data-i18n="options_premium_upgrade_description">Customize and enhance your
-              dueling experience! <a data-i18n-index="0"
-                href="https://accounts.adblockplus.org/en_US/premium?an=adblockpluschrome&amp;av=3.19&amp;ap=chrome&amp;apv=116.0.0.0&amp;p=chromium&amp;pv=116.0.0.0&amp;s=desktop-options"
-                target="_blank">Learn more</a></p>
+            <p>
+              Customize and enhance your dueling experience!
+              <a
+                href="#"
+                target="_blank"
+              >
+                Learn more
+              </a>
+            </p>
             <button className="premium upgrade button">Upgrade</button>
           </div>
         </aside>
+
         <main>
           <h1 className="main-header">General</h1>
           <p>Determine how DuelingBookEnhanced can improve your experience</p>
@@ -102,7 +111,36 @@ const Options = () => {
             <label><input type="checkbox" />Night Mode</label>
           </div>
           <hr />
+          <div className="main-footer">
+            <div className="main-footer-link">
+              <div className="main-footer-message">
+                <span>Noticed a bug or want to request a feature? Let us know! </span>
+              </div>
+              <Button buttonText='Bugs & Feedback' buttonUrl='https://forms.gle/yLW8pasvEr2rshSQ9' />
+            </div>
+            <div className="main-footer-link">
+              <div className="main-footer-message">
+                <span>Ready to play? It's time to duel!</span>
+              </div>
+              <Button buttonText={'Open DB'} buttonUrl='http://www.DuelingBook.com/html5' />
+            </div>
+          </div>
         </main>
+
+        <footer>
+          <div className="banner">
+            <div className="footer-header">
+              <div className="icon-frame">
+                <img src={coffee} alt="coffee" />
+              </div>
+              <div className="footer-label">
+                <span className="bold">Enjoying our Product? </span>
+                <span>Share some support </span>
+              </div>
+              <button className="footer-coffee">Buy Us Coffee</button>
+            </div>
+          </div>
+        </footer>
       </div>
     </div>
   );
