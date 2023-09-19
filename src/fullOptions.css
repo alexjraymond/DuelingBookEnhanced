@@ -1,184 +1,186 @@
 body {
-  background-color: #F3F3F3;
-  padding-top: 25px;
-  font-family: sans-serif;
+	background-color: #f3f3f3;
+	padding-top: 25px;
+	font-family: sans-serif;
 }
 
 .content-container {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  max-width: 1200px;
-  margin: 0 auto;
+	display: flex;
+	justify-content: center;
+	gap: 20px;
+	max-width: 1200px;
+	margin: 0 auto;
 }
 
 .bold {
-  font-weight: bold;
+	font-weight: bold;
 }
 
 #sidebar {
-  width: 30%
+	width: 30%;
 }
 
 header h2 {
-  font-weight: normal;
+	font-weight: normal;
 }
 
 header span {
-  font-weight: bold;
+	font-weight: bold;
 }
 
 .full-logo {
-  display: flex;
-  align-items: center;
+	display: flex;
+	align-items: center;
 }
 
 .logo-frame {
-  width: 60px;
+	width: 60px;
 }
 
 img {
-  width: 100%;
-  object-fit: contain;
+	width: 100%;
+	object-fit: contain;
 }
 
 .settings-header {
-  color: gray;
-  font-weight: bold;
-  margin: 25px 0;
+	color: gray;
+	font-weight: bold;
+	margin: 25px 0;
 }
 
 .settings-tabs {
-  display: flex;
-  flex-direction: column;
+	display: flex;
+	flex-direction: column;
 }
 
 .settings-tabs button {
-  padding-top: 10px;
-  padding-bottom: 10px;
-  font-size: large;
-  border: none;
-  text-align: start;
-  background-color: transparent;
-  cursor: pointer;
-  color: black;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	font-size: large;
+	border: none;
+	text-align: start;
+	background-color: transparent;
+	cursor: pointer;
+	color: black;
 }
 
 .settings-tabs button:hover {
-  background-color: rgb(224, 224, 224);
+	background-color: rgb(224, 224, 224);
 }
 
 .main-content {
-  display: flex;
-  flex-wrap: wrap;
-  width: 70%;
-  padding-right: 50px;
+	display: flex;
+	flex-wrap: wrap;
+	width: 70%;
+	padding-right: 50px;
 }
 
-.premium-banner-container, footer {
-  width: 100%;
-  background-color: white;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  border-radius: 5px;
-  margin-bottom: 30px;
-  height: 100px;
+.premium-banner-container,
+footer {
+	width: 100%;
+	background-color: white;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+	border-radius: 5px;
+	margin-bottom: 30px;
+	height: 100px;
 }
 
 footer .banner {
-  width: 100%;
+	width: 100%;
 }
 
-.premium-header, .footer-header {
-  display: flex;
-  align-items: center;
-  gap: 7px;
+.premium-header,
+.footer-header {
+	display: flex;
+	align-items: center;
+	gap: 7px;
 }
 
 .footer-header {
-  justify-content: space-between;
-  gap: 75px;
+	justify-content: space-between;
+	gap: 75px;
 }
 
 .icon-frame {
-  width: 60px;
+	width: 60px;
 }
 
 .premium-label {
-  font-weight: bold;
-  font-size: larger;
+	font-weight: bold;
+	font-size: larger;
 }
 
 .banner {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 30px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 30px;
 }
 
 .banner button {
-  background-color: orange;
-  color: white;
-  font-weight: bold;
-  font-size: large;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
+	background-color: orange;
+	color: white;
+	font-weight: bold;
+	font-size: large;
+	border: none;
+	padding: 10px 20px;
+	border-radius: 5px;
+	cursor: pointer;
 }
 
 .banner button:hover {
-  background-color: rgb(235, 180, 42);
+	background-color: rgb(235, 180, 42);
 }
 
 main {
-  width: 100%;
-  background-color: white;
-  padding: 5px 30px;
-  border-radius: 5px;
-  border-color: lightgray;
-  border-width: 2px;
-  border-style: solid;
-  margin-bottom: 30px;
+	width: 100%;
+	background-color: white;
+	padding: 5px 30px;
+	border-radius: 5px;
+	border-color: lightgray;
+	border-width: 2px;
+	border-style: solid;
+	margin-bottom: 30px;
 }
 
 .main-header {
-  font-size: 3rem;
-  font-weight: normal;
+	font-size: 3rem;
+	font-weight: normal;
 }
 
 .main-options {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  margin: 20px 0;
+	display: flex;
+	flex-direction: column;
+	gap: 15px;
+	margin: 20px 0;
 }
 
 .main-footer {
-  margin: 25px 0;
-  width: 100%;
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
+	margin: 25px 0;
+	width: 100%;
+	display: flex;
+	justify-content: space-evenly;
+	align-items: center;
 }
 
 .main-footer-link {
-  width: 50%;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: start;
-  gap: 6px;
+	width: 50%;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: start;
+	gap: 6px;
 }
 
 .main-footer-message {
-  width: 100%;
-  display: flex;
-  justify-content: center;
+	width: 100%;
+	display: flex;
+	justify-content: center;
 }
 
 .footer-label {
-  font-size: medium;
+	font-size: medium;
 }

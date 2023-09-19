@@ -19,10 +19,12 @@ const Popup = () => {
   // card text left side: div w/ id "preview_txt"
   // chatbox: class="cout_txt textarea scrollpane selectable" (there's no id for it, it's cringe)
   // good color for night mode background: #242428
+  // transfer logic through chrome.storage shenanigans
 
   const toggleNightMode = () => {
     console.log('youre clicking nightmode');
     const textBoxes = document.querySelectorAll(".os_viewport");
+    console.log('heres how many textboxes we got', textBoxes)
     console.log(textBoxes);
     textBoxes.forEach((textBox) => {
       if (textBox instanceof HTMLElement) {
