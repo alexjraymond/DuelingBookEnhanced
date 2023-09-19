@@ -3,8 +3,9 @@ import Button from "./components/Button";
 import logo from "./assets/images/dbe_logo.png";
 import coffee from "./assets/images/coffee.png";
 import yugiIcon from "./assets/images/yugi-icon.png";
-import { BsDiscord } from 'react-icons/Bs'
-import {BiCoffeeTogo} from 'react-icons/Bi'
+import { BsDiscord } from 'react-icons/bs'
+import {BiCoffeeTogo} from 'react-icons/bi'
+import ReactDOM from "react-dom";
 
 export const Options = () => {
   const [color, setColor] = useState<string>("");
@@ -104,7 +105,7 @@ export const Options = () => {
           <button className="bg-gray-700 w-full py-2 mb-2">Help</button>
         </nav>
       </div>
-      <div className="flex-grow p-4">
+      <div className="flex-grow p-4 pt-0 rounded-lg">
         <aside className="bg-gray-700 text-white p-4 mb-4 rounded-lg flex justify-center items-center align-middle text-lg space-x-4">
           <div className="flex items-center ">
             <img src={yugiIcon} alt="yugi icon" className="w-10 h-10 justify-center mb-2" />
@@ -154,3 +155,9 @@ export const Options = () => {
   );
 };
 
+ReactDOM.render(
+  <React.StrictMode>
+    <Options />
+  </React.StrictMode>,
+  document.getElementById('root')
+);
