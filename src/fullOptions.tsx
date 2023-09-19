@@ -1,15 +1,40 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { createRoot } from "react-dom/client";
 import Button from "./components/Button";
 import logo from "./assets/images/dbe_logo.png";
 import coffee from "./assets/images/coffee.png";
 import yugiIcon from "./assets/images/yugi-icon.png";
 import { BsDiscord } from 'react-icons/Bs'
+import {BiCoffeeTogo} from 'react-icons/Bi'
 
 const Options = () => {
   const [color, setColor] = useState<string>("");
   const [status, setStatus] = useState<string>("");
   const [like, setLike] = useState<boolean>(false);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const [isSmall, setIsSmall] = useState(false);
+
+  useEffect(() => {
+    function handleResize() {
+      if (containerRef.current) {
+        const width = containerRef.current.offsetWidth;
+        if (width < 260) {
+          setIsSmall(true);
+        } else {
+          setIsSmall(false);
+        }
+      }
+    }
+
+    window.addEventListener("resize", handleResize);
+
+    handleResize();
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
 
   useEffect(() => {
     chrome.storage.sync.get(
@@ -41,13 +66,18 @@ const Options = () => {
   };
 
   return (
-    <div className="container mx-auto flex items-start h-screen p-4">
-      <div className="flex flex-col bg-gray-300 rounded-lg shadow-lg md:w-3/4 lg:w-1/5">
-        <div className="flex items-center mb-4 bg-gray-700">
+    <div className="container mx-auto flex items-stretch h-auto p-4">
+      <div className="flex flex-col bg-gray-300 rounded-lg shadow-lg mb-8">
+        <div ref={containerRef} className="flex items-center mb-4 bg-gray-700 justify-center">
           <img src={logo} alt="DBE Logo" className="w-16 h-16" />
-          <h2 className="text-2xl font-bold text-white">DuelingBook<span className="text-gray-500">Enhanced</span></h2>
+          <h2 className="text-2xl font-bold text-white">
+          {isSmall ? "DB" : "DuelingBook"}
+            <span className="text-gray-500">
+              {isSmall ? "E" : 'Enhanced'}
+            </span>
+          </h2>
         </div>
-        <p className="text-xl font-semibold mt-4">SETTINGS</p>
+        <p className="text-xl font-semibold text-center">SETTINGS</p>
         <nav className="mt-4">
           <button className="bg-gray-700 w-full py-2 mb-2">General</button>
           <button className="bg-gray-700 w-full py-2 mb-2">Customize Hotkeys</button>
@@ -89,14 +119,14 @@ const Options = () => {
           </div>
         </main>
 
-        <footer className="mt-8">
-          <div className="bg-gray-700 text-white p-4 flex items-center">
-            <img src={coffee} alt="coffee" className="w-8 h-8 mr-2" />
-            <div className="flex-grow">
+        <footer className="pt-2">
+          <div className="bg-gray-700 text-white p-4 mb-4 rounded-lg flex justify-center items-center align-middle text-lg space-x-4 flex-grow">
+            <img src={coffee} alt="coffee" className="w-8 h-8" />
+            <div className="">
               <span className="font-bold">Enjoying our Product?</span>
               <span> Share some support</span>
             </div>
-            <button className="bg-gray-600 p-2">Buy Us Coffee</button>
+            <button className="bg-blue-500 p-2 font-bold flex justify-center items-center"><BiCoffeeTogo className="w-8 h-8 flex" /></button>
           </div>
         </footer>
       </div>
