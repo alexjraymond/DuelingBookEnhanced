@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useRef } from "react";
-import { createRoot } from "react-dom/client";
 import Button from "./components/Button";
 import logo from "./assets/images/dbe_logo.png";
 import coffee from "./assets/images/coffee.png";
@@ -7,13 +6,15 @@ import yugiIcon from "./assets/images/yugi-icon.png";
 import { BsDiscord } from 'react-icons/Bs'
 import {BiCoffeeTogo} from 'react-icons/Bi'
 
-const Options = () => {
+export const Options = () => {
   const [color, setColor] = useState<string>("");
   const [status, setStatus] = useState<string>("");
   const [like, setLike] = useState<boolean>(false);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [isSmall, setIsSmall] = useState(false);
+  const [currentSection, setCurrentSection] = useState("General");
 
+// conditional stuff for changing DuelingBookEnhanced to DBE based on ref div's width
   useEffect(() => {
     function handleResize() {
       if (containerRef.current) {
@@ -35,6 +36,9 @@ const Options = () => {
     };
   }, []);
 
+  const handleSectionClick = (section: string) => {
+    setCurrentSection(section);
+  }
 
   useEffect(() => {
     chrome.storage.sync.get(
@@ -63,6 +67,21 @@ const Options = () => {
         return () => clearTimeout(id);
       }
     );
+  };
+
+  const renderMainContent = () => {
+    switch (currentSection) {
+      case "General":
+        return <div>General Settings Here</div>;
+      case "Customize Hotkeys":
+        return <div>Customize Hotkeys Here</div>;
+      case "Advanced":
+        return <div>Advanced Settings Here</div>;
+      case "Help":
+        return <div>Help Content Here</div>;
+      default:
+        return null;
+    }
   };
 
   return (
@@ -97,6 +116,7 @@ const Options = () => {
         </aside>
 
         <main>
+
           <h1 className="text-3xl font-bold">General</h1>
           <p className="text-gray-600 mt-2 mb-4">Determine how DuelingBookEnhanced can improve your experience</p>
           <hr className="border-gray-300 mb-4" />
@@ -134,10 +154,3 @@ const Options = () => {
   );
 };
 
-const root = createRoot(document.getElementById("root")!);
-
-root.render(
-  <React.StrictMode>
-    <Options />
-  </React.StrictMode>
-);
