@@ -113,7 +113,13 @@ export const Options = () => {
           <p className="">
             Join our Discord!
           </p>
-          <button className="bg-blue-500 p-2 font-bold flex justify-center items-center"><BsDiscord className="w-8 h-8 flex" /></button>
+          <button
+            id="discord_button"
+            className="bg-blue-500 p-2 font-bold flex justify-center items-center"
+            onClick={() => window.open('https://discord.gg/BHHyHDSh', '_blank')}
+          >
+            <BsDiscord className="w-8 h-8 flex" />
+          </button>
         </aside>
 
         <main>
@@ -142,7 +148,7 @@ export const Options = () => {
 
         <footer className="pt-2">
           <div className="bg-gray-700 text-white p-4 mb-4 rounded-lg flex justify-center items-center align-middle text-lg space-x-4 flex-grow">
-            <img src={coffee} alt="coffee" className="w-8 h-8" />
+            <img src={coffee} alt="coffee" className="w-10 h-10" />
             <div className="">
               <span className="font-bold">Enjoying our Product?</span>
               <span> Share some support</span>
