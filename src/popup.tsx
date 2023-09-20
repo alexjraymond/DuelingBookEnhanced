@@ -4,6 +4,7 @@ import Button from './components/Button';
 import './popup.css';
 import logo from './assets/images/dbe_logo.png'
 import cog from './assets/images/cog.png'
+import { HiOutlineCog8Tooth } from 'react-icons/hi2'
 
 const Popup = () => {
   const [disableAllOptions, setDisableAllOptions] = useState(false);
@@ -43,7 +44,7 @@ const Popup = () => {
           <h2>DuelingBook<span>Enhanced</span></h2>
         </div>
         <button id="settings-button" onClick={handleSettingsButtonClick}>
-          <img src={cog} alt="settings" />
+          <HiOutlineCog8Tooth className="cog-icon"/>
         </button>
       </div>
       <div id="input_container" className="input-container">
@@ -67,6 +68,17 @@ const Popup = () => {
             onChange={() => setSkipIntro(!skipIntro)}
           />
           <label className="checkbox-label" htmlFor="skipIntro">Skip Intro</label>
+        </div>
+
+        <div className="checkbox-container">
+          <input
+            id="autoConnect"
+            className="checkbox-input"
+            type="checkbox"
+            checked={autoConnect}
+            onChange={() => setAutoConnect(!autoConnect)}
+          />
+          <label className="checkbox-label" htmlFor="autoConnect">Auto-Connect (must be logged in!)</label>
         </div>
 
         <div className="checkbox-container">

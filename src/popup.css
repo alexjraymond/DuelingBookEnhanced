@@ -52,9 +52,12 @@ input[type="checkbox"]:checked+label::before {
 button#settings-button {
 	background-color: transparent;
 	border: none;
-	width: 55px;
-	min-width: unset;
 	cursor: pointer;
+}
+
+.cog-icon {
+	width: 35px;
+	height: 35px;
 }
 
 .button-container {
