@@ -1,26 +1,20 @@
 import React, { useState } from "react";
 import { createRoot } from "react-dom/client";
 import Button from './components/Button';
-import './popup.css';
 import logo from './assets/images/dbe_logo.png'
-import cog from './assets/images/cog.png'
 import { HiOutlineCog8Tooth } from 'react-icons/hi2'
 
 const Popup = () => {
-  const [disableAllOptions, setDisableAllOptions] = useState(false);
-  const [skipIntro, setSkipIntro] = useState(false);
-  const [autoConnect, setAutoConnect] = useState(false);
-  const [isNightMode, setIsNightMode] = useState(false);
+  const [options, setOptions] = useState({
+    disableAllOptions: false,
+    skipIntro: false,
+    autoConnect: false,
+    isNightMode: false,
+  });
 
   const handleSettingsButtonClick = () => {
     chrome.runtime.openOptionsPage()
   };
-
-  // night mode logic - probably just styles to make the text white and background black
-  // card text left side: div w/ id "preview_txt"
-  // chatbox: class="cout_txt textarea scrollpane selectable" (there's no id for it, it's cringe)
-  // good color for night mode background: #242428
-  // transfer logic through chrome.storage shenanigans
 
   const toggleNightMode = () => {
     console.log('youre clicking nightmode');
@@ -33,66 +27,68 @@ const Popup = () => {
         textBox.classList.toggle("night-mode"); // Toggle night mode class
       }
     });
-    setIsNightMode(!isNightMode);
+    setOptions({ ...options, isNightMode: !options.isNightMode });
   };
 
+  const inputItems = [
+    {
+      id: "allOptions",
+      label: "Disable/Enable All Options",
+      checked: options.disableAllOptions,
+      onChange: () => setOptions({ ...options, disableAllOptions: !options.disableAllOptions }),
+    },
+    {
+      id: "skipIntro",
+      label: "Skip Intro",
+      checked: options.skipIntro,
+      onChange: () => setOptions({ ...options, skipIntro: !options.skipIntro }),
+    },
+    {
+      id: "autoConnect",
+      label: "Auto-Connect (must be logged in!)",
+      checked: options.autoConnect,
+      onChange: () => setOptions({ ...options, autoConnect: !options.autoConnect }),
+    },
+    {
+      id: "nightMode",
+      label: "Night Mode",
+      checked: options.isNightMode,
+      onChange: toggleNightMode,
+    },
+  ];
+
+
   return (
-    <div className="popup-container">
-      <div className="popup-header">
-        <div className="full-logo">
-          <div className="logo-frame"><img src={logo} alt="DBE Logo" /></div>
-          <h2>DuelingBook<span>Enhanced</span></h2>
+    <div className="flex flex-col gap-4">
+      <div className="flex justify-between items-center gap-6">
+        <div className="flex items-center">
+          <div className="w-12"><img src={logo} alt="DBE Logo" /></div>
+          <h2 className="font-normal text-xl">
+            DuelingBook<span className="font-bold">Enhanced</span>
+          </h2>
         </div>
-        <button id="settings-button" onClick={handleSettingsButtonClick}>
-          <HiOutlineCog8Tooth className="cog-icon"/>
+        <button
+          id="settings-button"
+          className="group bg-transparent border-none cursor-pointer hover:bg-transparent hover:shadow-none p-0 flex justify-center items-center min-w-0"
+          onClick={handleSettingsButtonClick}
+        >
+          <HiOutlineCog8Tooth className="w-9 h-9 group-hover:text-blue-400" />
         </button>
       </div>
-      <div id="input_container" className="input-container">
-        <div className="checkbox-container">
-          <input
-            id="allOptions"
-            className="checkbox-input"
-            type="checkbox"
-            checked={disableAllOptions}
-            onChange={() => setDisableAllOptions(!disableAllOptions)}
-          />
-          <label className="checkbox-label" htmlFor="allOptions">Disable/Enable All Options</label>
-        </div>
-
-        <div className="checkbox-container">
-          <input
-            id="skipIntro"
-            className="checkbox-input"
-            type="checkbox"
-            checked={skipIntro}
-            onChange={() => setSkipIntro(!skipIntro)}
-          />
-          <label className="checkbox-label" htmlFor="skipIntro">Skip Intro</label>
-        </div>
-
-        <div className="checkbox-container">
-          <input
-            id="autoConnect"
-            className="checkbox-input"
-            type="checkbox"
-            checked={autoConnect}
-            onChange={() => setAutoConnect(!autoConnect)}
-          />
-          <label className="checkbox-label" htmlFor="autoConnect">Auto-Connect (must be logged in!)</label>
-        </div>
-
-        <div className="checkbox-container">
-          <input
-            id="nightMode"
-            className="checkbox-input"
-            type="checkbox"
-            checked={isNightMode}
-            onChange={toggleNightMode}
-          />
-          <label className="checkbox-label" htmlFor="nightMode">Night Mode</label>
-        </div>
-
-        <div id="button-container" className="button-container">
+      <div id="input_container" className="p-5 flex flex-col gap-4">
+        {inputItems.map((item) => (
+          <div className="flex items-center" key={item.id}>
+            <input
+              id={item.id}
+              type="checkbox"
+              className="w-4 h-4 border-2 border-blue-500 rounded-4 bg-transparent outline-none cursor-pointer transition duration-300 ease-in text-white"
+              checked={item.checked}
+              onChange={item.onChange}
+            />
+            <label className="ml-5" htmlFor={item.id}>{item.label}</label>
+          </div>
+        ))}
+        <div id="button-container" className="flex justify-around w-full">
           <Button buttonText='Bugs & Feedback' buttonUrl='https://forms.gle/yLW8pasvEr2rshSQ9' />
           <Button buttonText={'Open DB'} buttonUrl='http://www.DuelingBook.com/html5' />
         </div>

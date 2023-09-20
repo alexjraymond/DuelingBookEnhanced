@@ -88,34 +88,34 @@ export const Options = () => {
   return (
     <div className="container mx-auto flex items-stretch h-auto p-4">
       <div className="flex flex-col bg-gray-300 rounded-lg shadow-lg mb-8">
-        <div ref={containerRef} className="flex items-center mb-4 bg-gray-700 justify-center">
-          <img src={logo} alt="DBE Logo" className="w-16 h-16" />
-          <h2 className="text-2xl font-bold text-white">
+        <div ref={containerRef} className="flex items-center mb-4 bg-gray-700 justify-center p-2">
+          <img src={logo} alt="DBE Logo" className="w-12 h-12" />
+          <h2 className="text-xl font-bold text-white">
           {isSmall ? "DB" : "DuelingBook"}
-            <span className="text-gray-500">
+            <span className="text-gray-400">
               {isSmall ? "E" : 'Enhanced'}
             </span>
           </h2>
         </div>
         <p className="text-xl font-semibold text-center">SETTINGS</p>
-        <nav className="mt-4">
-          <button className="bg-gray-700 w-full py-2 mb-2">General</button>
-          <button className="bg-gray-700 w-full py-2 mb-2">Customize Hotkeys</button>
-          <button className="bg-gray-700 w-full py-2 mb-2">Advanced</button>
-          <button className="bg-gray-700 w-full py-2 mb-2">Help</button>
+        <nav className="mt-4 text-white">
+          <button className="bg-gray-700 hover:bg-gray-500 w-full py-2 mb-2">General</button>
+          <button className="bg-gray-700 hover:bg-gray-500 w-full py-2 mb-2">Customize Hotkeys</button>
+          <button className="bg-gray-700 hover:bg-gray-500 w-full py-2 mb-2">Advanced</button>
+          <button className="bg-gray-700 hover:bg-gray-500 w-full py-2 mb-2">Help</button>
         </nav>
       </div>
       <div className="flex-grow p-4 pt-0 rounded-lg">
         <aside className="bg-gray-700 text-white p-4 mb-4 rounded-lg flex justify-center items-center align-middle text-lg space-x-4">
           <div className="flex items-center ">
-            <img src={yugiIcon} alt="yugi icon" className="w-10 h-10 justify-center mb-2" />
+            <img src={yugiIcon} alt="yugi icon" className="w-12 h-12 justify-center mb-2" />
           </div>
           <p className="">
             Join our Discord!
           </p>
           <button
             id="discord_button"
-            className="bg-blue-500 p-2 font-bold flex justify-center items-center"
+            className="bg-blue-500 font-bold flex justify-center items-center px-7 py-1 rounded-xl hover:bg-blue-400"
             onClick={() => window.open('https://discord.gg/BHHyHDSh', '_blank')}
           >
             <BsDiscord className="w-8 h-8 flex" />
@@ -147,13 +147,13 @@ export const Options = () => {
         </main>
 
         <footer className="pt-2">
-          <div className="bg-gray-700 text-white p-4 mb-4 rounded-lg flex justify-center items-center align-middle text-lg space-x-4 flex-grow">
+          <div className="bg-gray-700 text-white p-4 mb-4 rounded-xl flex justify-center items-center align-middle text-lg space-x-4 flex-grow">
             <img src={coffee} alt="coffee" className="w-10 h-10" />
             <div className="">
               <span className="font-bold">Enjoying our Product?</span>
               <span> Share some support</span>
             </div>
-            <button className="bg-blue-500 p-2 font-bold flex justify-center items-center"><BiCoffeeTogo className="w-8 h-8 flex" /></button>
+            <button className="bg-blue-500 px-7 py-1 rounded-lg font-bold flex justify-center items-center hover:bg-blue-400"><BiCoffeeTogo className="w-8 h-8 flex" /></button>
           </div>
         </footer>
       </div>
