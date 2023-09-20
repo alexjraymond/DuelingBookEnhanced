@@ -128,10 +128,10 @@ export const Options = () => {
           <p className="text-gray-600 mt-2 mb-4">Determine how DuelingBookEnhanced can improve your experience</p>
           <hr className="border-gray-300 mb-4" />
           <div className="flex flex-col gap-4">
-            <label className="flex items-center w-max"><input type="checkbox"  />Enable DuelingBookEnhanced</label>
-            <label className="flex items-center w-max"><input type="checkbox" />Skip Intro</label>
-            <label className="flex items-center w-max"><input type="checkbox"  />Auto-Connect (must be logged in!)</label>
-            <label className="flex items-center w-max"><input type="checkbox" />Night Mode</label>
+            <label className="flex items-center w-max"><input type="checkbox" className="mr-2" />Enable DuelingBookEnhanced</label>
+            <label className="flex items-center w-max"><input type="checkbox" className="mr-2" />Skip Intro</label>
+            <label className="flex items-center w-max"><input type="checkbox" className="mr-2" />Auto-Connect (must be logged in!)</label>
+            <label className="flex items-center w-max"><input type="checkbox" className="mr-2" />Night Mode</label>
           </div>
           <hr className="border-gray-300 my-4" />
           <div className="flex justify-evenly items-center">
