@@ -108,7 +108,7 @@ export const Options = () => {
       <div className="flex-grow p-4 pt-0 rounded-lg">
         <aside className="bg-gray-700 text-white p-4 mb-4 rounded-lg flex justify-center items-center align-middle text-lg space-x-4">
           <div className="flex items-center ">
-            <img src={yugiIcon} alt="yugi icon" className="w-12 h-12 justify-center mb-2" />
+            <img src={yugiIcon} alt="yugi icon" className="w-16 h-16 justify-center mb-2" />
           </div>
           <p className="">
             Join our Discord!
@@ -127,11 +127,11 @@ export const Options = () => {
           <h1 className="text-3xl font-bold">General</h1>
           <p className="text-gray-600 mt-2 mb-4">Determine how DuelingBookEnhanced can improve your experience</p>
           <hr className="border-gray-300 mb-4" />
-          <div className="space-y-4">
-            <label className="flex items-center"><input type="checkbox" className="mr-2" />Enable DuelingBookEnhanced</label>
-            <label className="flex items-center"><input type="checkbox" className="mr-2" />Skip Intro</label>
-            <label className="flex items-center"><input type="checkbox" className="mr-2" />Auto-Connect (must be logged in!)</label>
-            <label className="flex items-center"><input type="checkbox" className="mr-2" />Night Mode</label>
+          <div className="flex flex-col gap-4">
+            <label className="flex items-center w-max"><input type="checkbox"  />Enable DuelingBookEnhanced</label>
+            <label className="flex items-center w-max"><input type="checkbox" />Skip Intro</label>
+            <label className="flex items-center w-max"><input type="checkbox"  />Auto-Connect (must be logged in!)</label>
+            <label className="flex items-center w-max"><input type="checkbox" />Night Mode</label>
           </div>
           <hr className="border-gray-300 my-4" />
           <div className="flex justify-evenly items-center">
