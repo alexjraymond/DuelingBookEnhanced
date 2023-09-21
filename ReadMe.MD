@@ -8,9 +8,28 @@ Dueling Book Enhanced is a collection of features designed to enhance your exper
 
 ## Features
 
-1. **Hotkeys**: Customize hotkeys for actions.
+1. **Hotkeys**: Use hotkeys for immediate actions.
+
+   - **Close View Menu**: Close the view menu.
+   - **View Graveyard**: Toggle graveyard view.
+   - **View Main Deck**: View the main deck.
+   - **View Extra Deck**: View the extra deck.
+   - **Think**: Perform a thinking action.
+   - **Thumbs Up**: Perform a thumbs-up action.
+   - **Toggle Chat Box**: Toggle the chat box.
+   - **To Graveyard**: Play a card to the graveyard.
+   - **To Grave**: Play a card to the grave.
+   - **To Hand**: Play a card to the hand.
+   - **Activate**: Activate a card.
+   - **S. Summon ATK**: Special summon with ATK.
+   - **SS ATK**: Perform a special summon with ATK.
+   - **Normal Summon**: Perform a normal summon.
+   - **Set**: Set a card.
+   - **Declare**: Declare an action.
+   - **Banish**: Banish a card.
+
 2. **Dark Mode**: Apply a dark mode stylesheet.
-3. **Skip Intro**: Automatically skip the intro movie
+3. **Skip Intro**: Automatically skip the intro movie.
 4. **AutoConnect**: Automatically connect on page load.
 
 ## Usage
