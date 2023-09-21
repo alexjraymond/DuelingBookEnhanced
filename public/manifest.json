@@ -33,7 +33,10 @@
   },
 
   "permissions": [
-    "storage"
+    "activeTab",
+    "storage",
+    "webRequest",
+    "webNavigation"
   ],
 
   "host_permissions": [
