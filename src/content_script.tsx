@@ -168,6 +168,12 @@ window.onload = async function () {
   function playCard(action: string | [string] | [string, string]) {
     const cardHoverMenuDiv = document.getElementById('card_menu_content') as HTMLElement;
     const cardHoverMenuActions = cardHoverMenuDiv?.getElementsByClassName('card_menu_btn') as HTMLCollectionOf<HTMLElement>;
+    
+    const actions = Array.isArray(action) ? action : [action];
+    console.log(action)
+    for (const act of actions) {
+      console.log(act)
+      console.log(actions)
     for (const element of cardHoverMenuActions) {
       const span = element?.getElementsByTagName('span')[0];
       if (span && span.textContent === action) {
@@ -176,7 +182,7 @@ window.onload = async function () {
       }
     }
   }
-
+  }
   function handleKeydown(e: KeyboardEvent) {
     const handler = e.key.toLowerCase();
     if (!(e.target instanceof HTMLInputElement) || handler === 'enter') {
