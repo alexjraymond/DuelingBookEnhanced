@@ -42,7 +42,7 @@
     },
     "s": {
       "div": null,
-      "action": "S. Summon ATK"
+      "action": ["S. Summon ATK", "SS ATK"]
     },
     "n": {
       "div": null,

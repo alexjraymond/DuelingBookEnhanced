@@ -116,13 +116,21 @@ window.onload = async function () {
     const hotkey = hotkeyHashMap[key];
     if (hotkey) {
       const { action } = hotkey;
-      const actionFunction = actionFunctionMap[action];
-      if (actionFunction) {
-        actionFunction();
+      if (Array.isArray(action)) {
+        action.forEach((actionName) => {
+          const actionFunction = actionFunctionMap[actionName];
+          if (actionFunction) {
+            actionFunction();
+          }
+        });
+      } else {
+        const actionFunction = actionFunctionMap[action];
+        if (actionFunction) {
+          actionFunction();
+        }
       }
     }
   }
-
   function toggleGraveYardView() {
     if (view && view.style.display === 'block') {
       console.log("Closing the GY");
@@ -195,7 +203,7 @@ window.onload = async function () {
     }
   }
 
-  const debouncedKeydown = debounce(handleKeydown, 40);
+  const debouncedKeydown = debounce(handleKeydown, 150);
 
   document.addEventListener('keydown', debouncedKeydown);
 }

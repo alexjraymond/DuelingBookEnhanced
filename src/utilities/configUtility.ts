@@ -44,7 +44,7 @@ function getDefaultHotkeys(): HotkeyMap {
       "action": "Activate"
     },
     "s": {
-      "action": "S. Summon ATK"
+      "action": ["SS ATK", "S. Summon ATK"]
     },
     "n": {
       "action": "Normal Summon"
