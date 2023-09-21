@@ -38,7 +38,7 @@ Dueling Book Enhanced is a collection of features designed to enhance your exper
 
 ###  Installation
 
-1. Download and unzip the `dist.zip` file
+1. Download and unzip the `dist.zip` file. (Currently given directly to beta testers. Google Extensions Page currently pending approval)
 
 2. Enable developer mode and go to the Google Chrome Manage Extensions page and click `Load Unpacked`
 
