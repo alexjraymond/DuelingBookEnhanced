@@ -43,11 +43,7 @@ To use the popup:
 
 ## Compatibility
 
-The content script is designed for DuelingBook but may need adjustments for other websites. Test and adapt it as required.
-
-## Contributing
-
-Contributions to Dueling Book Enhanced are welcome. Fork the code and submit pull requests to contribute.
+The content script is designed for DuelingBook using Google Chrome. Future versions will allow compatibility with both Safari and Firefox.
 
 ## License
 
@@ -55,7 +51,7 @@ Dueling Book Enhanced is under the [MIT License](LICENSE.md).
 
 ## Disclaimer
 
-Use Dueling Book Enhanced responsibly and adhere to DuelingBook's terms of use. The author is not responsible for misuse or unauthorized use of these scripts.
+Use Dueling Book Enhanced responsibly and adhere to DuelingBook's terms of use. The author is not responsible for the misuse or unauthorized use of these scripts.
 
 ## Badges
 
