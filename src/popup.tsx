@@ -3,10 +3,10 @@ import { createRoot } from "react-dom/client";
 import Button from './components/Button';
 import logo from './assets/images/dbe_logo.png'
 import { HiOutlineCog8Tooth } from 'react-icons/hi2'
-import { getOptionsFromStorage, saveOptionsToStorage, Options } from './utilities/optionsUtility'
+import { getOptionsFromStorage, saveOptionsToStorage, OptionsTypes } from './utilities/optionsUtility'
 
 const Popup = () => {
-  const [options, setOptions] = useState<Options>({
+  const [options, setOptions] = useState<OptionsTypes>({
     disableAllOptions: false,
     skipIntro: false,
     autoConnect: false,

@@ -1,11 +1,11 @@
-export interface Options {
+export interface OptionsTypes {
   disableAllOptions: boolean;
   skipIntro: boolean;
   autoConnect: boolean;
   isNightMode: boolean;
 }
 
-export const getOptionsFromStorage = (callback: (options: Options) => void) => {
+export const getOptionsFromStorage = (callback: (options: OptionsTypes) => void) => {
   chrome.storage.sync.get(["options"], (result) => {
     const options = result.options || {
       disableAllOptions: false,
@@ -17,6 +17,6 @@ export const getOptionsFromStorage = (callback: (options: Options) => void) => {
   });
 };
 
-export const saveOptionsToStorage = (options: Options) => {
+export const saveOptionsToStorage = (options: OptionsTypes) => {
   chrome.storage.sync.set({ options });
 };

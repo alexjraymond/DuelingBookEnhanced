@@ -5,17 +5,32 @@ import coffee from "./assets/images/coffee.png";
 import yugiIcon from "./assets/images/yugi-icon.png";
 import { BsDiscord } from 'react-icons/bs'
 import {BiCoffeeTogo} from 'react-icons/bi'
+import { getOptionsFromStorage, saveOptionsToStorage, OptionsTypes } from './utilities/optionsUtility'
 import ReactDOM from "react-dom";
 
 export const Options = () => {
-  const [color, setColor] = useState<string>("");
-  const [status, setStatus] = useState<string>("");
-  const [like, setLike] = useState<boolean>(false);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [isSmall, setIsSmall] = useState(false);
   const [currentSection, setCurrentSection] = useState("General");
+  const [options, setOptions] = useState<OptionsTypes>({
+    disableAllOptions: false,
+    skipIntro: false,
+    autoConnect: false,
+    isNightMode: false,
+  });
 
-// conditional stuff for changing DuelingBookEnhanced to DBE based on ref div's width
+  // Load options from storage when the popup is opened
+  useEffect(() => {
+    getOptionsFromStorage((savedOptions) => {
+      setOptions(savedOptions);
+    });
+  }, []);
+
+  // Use useEffect to save options whenever they change
+  useEffect(() => {
+    saveOptionsToStorage(options)
+  }, [options]);
+
   useEffect(() => {
     function handleResize() {
       if (containerRef.current) {
@@ -41,35 +56,6 @@ export const Options = () => {
     setCurrentSection(section);
   }
 
-  useEffect(() => {
-    chrome.storage.sync.get(
-      {
-        favoriteColor: "red",
-        likesColor: true,
-      },
-      (items) => {
-        setColor(items.favoriteColor);
-        setLike(items.likesColor);
-      }
-    );
-  }, []);
-
-  const saveOptions = () => {
-    chrome.storage.sync.set(
-      {
-        favoriteColor: color,
-        likesColor: like,
-      },
-      () => {
-        setStatus("Options saved.");
-        const id = setTimeout(() => {
-          setStatus("");
-        }, 1000);
-        return () => clearTimeout(id);
-      }
-    );
-  };
-
   const renderMainContent = () => {
     switch (currentSection) {
       case "General":
@@ -84,6 +70,33 @@ export const Options = () => {
         return null;
     }
   };
+
+  const inputItems = [
+    {
+      id: "allOptions",
+      label: "Disable/Enable All Options",
+      checked: options.disableAllOptions,
+      onChange: () => setOptions({ ...options, disableAllOptions: !options.disableAllOptions }),
+    },
+    {
+      id: "skipIntro",
+      label: "Skip Intro",
+      checked: options.skipIntro,
+      onChange: () => setOptions({ ...options, skipIntro: !options.skipIntro }),
+    },
+    {
+      id: "autoConnect",
+      label: "Auto-Connect (must be logged in!)",
+      checked: options.autoConnect,
+      onChange: () => setOptions({ ...options, autoConnect: !options.autoConnect }),
+    },
+    {
+      id: "nightMode",
+      label: "Night Mode",
+      checked: options.isNightMode,
+      onChange: () => setOptions({ ...options, isNightMode: !options.isNightMode }),
+    },
+  ];
 
   return (
     <div className="container mx-auto flex items-stretch h-auto p-4">
@@ -121,17 +134,23 @@ export const Options = () => {
             <BsDiscord className="w-8 h-8 flex" />
           </button>
         </aside>
-
         <main>
-
           <h1 className="text-3xl font-bold">General</h1>
           <p className="text-gray-600 mt-2 mb-4">Determine how DuelingBookEnhanced can improve your experience</p>
           <hr className="border-gray-300 mb-4" />
           <div className="flex flex-col gap-4">
-            <label className="flex items-center w-max"><input type="checkbox" className="mr-2" />Enable DuelingBookEnhanced</label>
-            <label className="flex items-center w-max"><input type="checkbox" className="mr-2" />Skip Intro</label>
-            <label className="flex items-center w-max"><input type="checkbox" className="mr-2" />Auto-Connect (must be logged in!)</label>
-            <label className="flex items-center w-max"><input type="checkbox" className="mr-2" />Night Mode</label>
+            {inputItems.map((item) => (
+              <div className="flex items-center" key={item.id}>
+                <input
+                  id={item.id}
+                  type="checkbox"
+                  className="mr-2"
+                  checked={item.checked}
+                  onChange={item.onChange}
+                />
+                <label className="flex items-center w-max" htmlFor={item.id}>{item.label}</label>
+              </div>
+            ))}
           </div>
           <hr className="border-gray-300 my-4" />
           <div className="flex justify-evenly items-center">
@@ -145,7 +164,6 @@ export const Options = () => {
             </div>
           </div>
         </main>
-
         <footer className="pt-2">
           <div className="bg-gray-700 text-white p-4 mb-4 rounded-xl flex justify-center items-center align-middle text-lg space-x-4 flex-grow">
             <img src={coffee} alt="coffee" className="w-10 h-10" />

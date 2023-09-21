@@ -1,3 +1,5 @@
+import { OptionsTypes } from "./utilities/optionsUtility";
+
 window.onload = function () {
   const thunk = document.getElementById('think_btn');
   const thumbsUp = document.getElementById('good_btn');
@@ -16,17 +18,65 @@ window.onload = function () {
     document.head.appendChild(link);
   }
 
-  // Apply your stylesheets
   injectStylesheet('dark-mode.css');
 
+  // Check the user's settings on load
+  chrome.storage.sync.get('options', (result) => {
+    const options = result.options as OptionsTypes;
+    if (options && options.skipIntro) skipIntro(skipIntroButton)
+    if (options && options.autoConnect) autoConnect(skipIntroButton, enterButton)
+  });
 
-  // // skip the intro every time
-  // if (skipIntroButton.style.display !== 'none') {
-  //   console.log('intro skipped')
-  //   skipIntroButton.click()
-  //   // enter the menu immediately if logged in
-  //   enterButton.click()
-  // }
+  // Define a function to handle changes in options
+  function handleOptionsChange(
+    changes: { [key: string]: any }, // Use a more generic type
+    namespace: string
+  ) {
+    if (namespace === "sync") {
+      // Check if the change is of the expected type (OptionsChange)
+      if (changes.options && "newValue" in changes.options) {
+        const newOptions = changes.options.newValue as OptionsTypes;
+        // Handle the updated options here
+        console.log("Options have changed:", newOptions);
+
+        if (newOptions.skipIntro) skipIntro(skipIntroButton)
+        if (newOptions.autoConnect) autoConnect(skipIntroButton, enterButton)
+      }
+    }
+  }
+
+  // Add the event listener for options changes
+  chrome.storage.onChanged.addListener(handleOptionsChange);
+
+  function skipIntro(skipIntroButton: HTMLElement) {
+    if (skipIntroButton.style.display !== 'none') {
+      console.log('Intro is visible, skipping...');
+      skipIntroButton.click();
+    }
+  }
+
+  function autoConnect(skipIntroButton: HTMLElement, enterButton: HTMLElement) {
+    // Create a MutationObserver to watch for changes in the skipIntroButton's style attribute
+    // This makes sure that you don't skip the intro and autoConnect with just autoConnect enabled
+    const observer = new MutationObserver((mutationsList) => {
+      for (const mutation of mutationsList) {
+        if (mutation.attributeName === 'style') {
+          const newStyle = (mutation.target as HTMLElement).style.display;
+          const oldStyle = mutation.oldValue;
+          if (newStyle === 'none' && oldStyle !== 'none') {
+            // The style changed to 'none', trigger the action (e.g., clicking the enterButton)
+            enterButton.click();
+            // Disconnect the observer since we only need to trigger this once
+            observer.disconnect();
+            break;
+          }
+        }
+      }
+    });
+
+    // Start observing the skipIntroButton
+    observer.observe(skipIntroButton, { attributes: true, attributeOldValue: true });
+  }
 
   // chat variables
   const chatInput = document.querySelectorAll('input.cin_txt')[1] as HTMLInputElement
