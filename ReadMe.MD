@@ -30,9 +30,9 @@ Dueling Book Enhanced is a collection of features designed to enhance your exper
    - **Banish** (w): Banishes a card.
 
 
-2. **Dark Mode**: Apply a dark mode stylesheet.
+2. **Dark Mode**: Apply a dark mode.
 3. **Skip Intro**: Automatically skip the intro movie.
-4. **AutoConnect**: Automatically connect on page load.
+4. **AutoConnect**: Automatically connect to the main menu or last screen if you're already logged in.
 
 ## Usage
 
