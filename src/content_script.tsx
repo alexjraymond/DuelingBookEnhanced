@@ -7,6 +7,19 @@ window.onload = function () {
   const skipIntroButton = document.getElementById('skip_intro_btn') as HTMLElement
   const enterButton = document.getElementById('duel_btn') as HTMLElement
 
+  // Function to inject a CSS file into the page
+  function injectStylesheet(filename:string) {
+    const link = document.createElement('link');
+    link.href = chrome.runtime.getURL(`css/${filename}`);
+    link.type = 'text/css';
+    link.rel = 'stylesheet';
+    document.head.appendChild(link);
+  }
+
+  // Apply your stylesheets
+  injectStylesheet('dark-mode.css');
+
+
   // // skip the intro every time
   // if (skipIntroButton.style.display !== 'none') {
   //   console.log('intro skipped')
@@ -18,6 +31,24 @@ window.onload = function () {
   // chat variables
   const chatInput = document.querySelectorAll('input.cin_txt')[1] as HTMLInputElement
   let chatInputFocused = false;
+
+  const toggleDarkMode = () => {
+    const chatInputs = document.querySelectorAll('input.cin_txt')
+    const osViewports = document.querySelectorAll('.os_viewport')
+    const textInputProxies = document.querySelectorAll('.textinput.proxy')
+    const watchers = document.getElementById('watchers') as HTMLElement
+    chatInputs.forEach((node) => {
+      node.classList.toggle('dark-mode')
+    })
+    osViewports.forEach((node) => {
+      node.classList.toggle('dark-mode')
+    })
+    textInputProxies.forEach((node) => {
+      node.classList.toggle('dark-mode')
+    })
+    watchers.classList.toggle('dark-mode')
+    console.log('toggling dark mode')
+  }
 
   // specific div selectors
   const deck = document.getElementById('deck_hidden') as HTMLElement;
@@ -50,6 +81,10 @@ window.onload = function () {
         div: deckViewSpan,
         name: 'extra deck'
       },
+      'd': {
+        div: null,
+        name: 'dark mode'
+      }
     };
 
     // toggle view function 👍
@@ -57,7 +92,11 @@ window.onload = function () {
       // Check if the handler is in the hotkeyHashMap
       if (hotkeyHashMap[handler]) {
         const { div, name } = hotkeyHashMap[handler];
-        if (view && view.style.display === 'block') {
+        console.log(div, name)
+        if (name === 'dark mode') {
+          console.log('Toggling dark mode');
+          toggleDarkMode();
+        } else if (view && view.style.display === 'block') {
           console.log(`Closing the ${name}`);
           closeViewButton.click();
         } else if (div) {
@@ -71,6 +110,11 @@ window.onload = function () {
     if (handler === 'escape') {
       toggleView(handler)
     }
+
+    // toggle dark mode
+      if (handler === 'd') {
+        toggleView(handler)
+      }
 
     // toggle graveyard view 👍
     if (handler === 'g') {
