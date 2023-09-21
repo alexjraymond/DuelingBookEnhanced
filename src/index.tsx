@@ -1,10 +1,12 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { Options } from './fullOptions';
 
-ReactDOM.render(
+const container =   document.getElementById('root')
+const root = createRoot(container!)
+
+root.render(
   <React.StrictMode>
     <Options />
   </React.StrictMode>,
-  document.getElementById('root')
 );
