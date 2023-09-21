@@ -87,48 +87,6 @@ window.onload = async function () {
     }
   }
 
-  function handleToGraveyard() {
-    const cardHoverMenuDiv = document.getElementById('card_menu_content');
-    if (cardHoverMenuDiv) {
-      const cardMenuBtnDivs = cardHoverMenuDiv.querySelectorAll('div.card_menu_btn');
-      for (const cardMenuBtnDiv of cardMenuBtnDivs) {
-        const spanElement = cardMenuBtnDiv.querySelector('span.card_menu_txt');
-        if (spanElement && (spanElement.textContent?.trim() === 'To Grave' || spanElement.textContent?.trim() === 'To Graveyard')) {
-          (spanElement as HTMLElement).click();
-          break;
-        }
-      }
-    }
-  }
-
-  function handleToHand() {
-    const cardHoverMenuDiv = document.getElementById('card_menu_content');
-    if (cardHoverMenuDiv) {
-      const cardMenuBtnDivs = cardHoverMenuDiv.querySelectorAll('div.card_menu_btn');
-      for (const cardMenuBtnDiv of cardMenuBtnDivs) {
-        const spanElement = cardMenuBtnDiv.querySelector('span.card_menu_txt');
-        if (spanElement && spanElement.textContent?.trim() === 'To Hand') {
-          (spanElement as HTMLElement).click();
-          break;
-        }
-      }
-    }
-  }
-
-  function handleActivate() {
-    const cardHoverMenuDiv = document.getElementById('card_menu_content');
-    if (cardHoverMenuDiv) {
-      const cardMenuBtnDivs = cardHoverMenuDiv.querySelectorAll('div.card_menu_btn');
-      for (const cardMenuBtnDiv of cardMenuBtnDivs) {
-        const spanElement = cardMenuBtnDiv.querySelector('span.card_menu_txt');
-        if (spanElement && (spanElement.textContent?.trim() === 'Activate' || spanElement.textContent?.trim() === 'To S/T')) {
-          (spanElement as HTMLElement).click();
-          break;
-        }
-      }
-    }
-  }
-
   function handleThinkButton() {
     console.log('Clicking "think_btn"');
     thunk?.click();
@@ -163,49 +121,20 @@ window.onload = async function () {
     }
   }
 
-  function handleSpecialSummon() {
+  function playCard(action: string) {
     const cardHoverMenuDiv = document.getElementById('card_menu_content');
     if (cardHoverMenuDiv) {
       const cardMenuBtnDivs = cardHoverMenuDiv.querySelectorAll('div.card_menu_btn');
       for (const cardMenuBtnDiv of cardMenuBtnDivs) {
         const spanElement = cardMenuBtnDiv.querySelector('span.card_menu_txt');
-        if (spanElement && (spanElement.textContent?.trim() === 'SS ATK' || spanElement.textContent?.trim() === 'S. Summon ATK')) {
+        console.log(spanElement)
+        if (spanElement && spanElement.textContent?.trim() === action) {
           (spanElement as HTMLElement).click();
           break;
         }
       }
     }
   }
-
-  function handleNormalSummon() {
-    const cardHoverMenuDiv = document.getElementById('card_menu_content');
-    if (cardHoverMenuDiv) {
-      const cardMenuBtnDivs = cardHoverMenuDiv.querySelectorAll('div.card_menu_btn');
-      for (const cardMenuBtnDiv of cardMenuBtnDivs) {
-        const spanElement = cardMenuBtnDiv.querySelector('span.card_menu_txt');
-        if (spanElement && spanElement.textContent?.trim() === 'Normal Summon') {
-          (spanElement as HTMLElement).click();
-          break;
-        }
-      }
-    }
-  }
-
-  function handleSetCard() {
-    console.log('Shift pressed');
-    const cardHoverMenuDiv = document.getElementById('card_menu_content');
-    if (cardHoverMenuDiv) {
-      const cardMenuBtnDivs = cardHoverMenuDiv.querySelectorAll('div.card_menu_btn');
-      for (const cardMenuBtnDiv of cardMenuBtnDivs) {
-        const spanElement = cardMenuBtnDiv.querySelector('span.card_menu_txt');
-        if (spanElement && spanElement?.textContent?.trim() === 'Set') {
-          (spanElement as HTMLElement).click();
-          break;
-        }
-      }
-    }
-  }
-
 
   // the ultimate keydown listener
   document.addEventListener('keydown', (e) => {
@@ -244,38 +173,39 @@ window.onload = async function () {
     console.log('Key pressed:', handler);
     handleHotKey(handler, hotkeyHashMap);
 
-    switch (handler) {
-      case 'v':
-      case 'e':
-        handleDeckView();
-        break;
-      case 'd':
-        handleToGraveyard();
-        break;
-      case 'h':
-        handleToHand();
-        break;
-      case 'a':
-        handleActivate();
-        break;
-      case 't':
-        handleThinkButton();
-        break;
-      case 'f':
-        handleThumbsUpButton();
-        break;
-      case 'enter':
-        handleChatBox();
-        break;
-      case 's':
-        handleSpecialSummon();
-        break;
-      case 'n':
-        handleNormalSummon();
-        break;
-      case 'j':
-        handleSetCard();
-        break;
+      switch (handler) {
+        case 'v':
+        case 'e':
+          handleDeckView();
+          break;
+        case 't':
+          handleThinkButton();
+          break;
+        case 'f':
+          handleThumbsUpButton();
+          break;
+        case 'enter':
+          handleChatBox();
+          break;
+        /* hotkeys below this line only work if you hover the card you want */
+        case 'd':
+          playCard('To Graveyard');
+          break;
+        case 'h':
+          playCard('To Hand');
+          break;
+        case 'a':
+          playCard('Activate');
+          break;
+        case 's':
+          playCard('S. Summon ATK');
+          break;
+        case 'n':
+          playCard('Normal Summon');
+          break;
+        case 'j':
+          playCard('Set');
+          break;
       }
     }
   })
