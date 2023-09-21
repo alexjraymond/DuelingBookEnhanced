@@ -23,7 +23,7 @@ window.onload = function () {
   // Check the user's settings on load
   chrome.storage.sync.get('options', (result) => {
     const options = result.options as OptionsTypes;
-    if (options && options.skipIntro && options.autoConnect) autoConnect(skipIntroButton, enterButton)
+    if (options && options.skipIntro && options.autoConnect) autoConnect(skipIntroButton, enterButton) // If both are enabled, then autoConnect also skips the intro
     if (options && options.skipIntro) skipIntro(skipIntroButton)
     if (options && options.autoConnect) autoConnect(skipIntroButton, enterButton)
     if (options && options.isNightMode) applyDarkMode();
@@ -40,7 +40,7 @@ window.onload = function () {
         const newOptions = changes.options.newValue as OptionsTypes;
         console.log("Options have changed:", newOptions);
 
-        if (newOptions.skipIntro && newOptions.autoConnect) autoConnect
+        if (newOptions.skipIntro && newOptions.autoConnect) autoConnect // If both are enabled, then autoConnect also skips the intro
         if (newOptions.skipIntro) skipIntro(skipIntroButton)
         if (newOptions.autoConnect) autoConnect(skipIntroButton, enterButton)
         if (newOptions.isNightMode) applyDarkMode();
@@ -60,15 +60,13 @@ window.onload = function () {
   }
 
   function autoConnect(skipIntroButton: HTMLElement, enterButton: HTMLElement) {
-    // Create a MutationObserver to watch for changes in the skipIntroButton's style attribute
-    // This makes sure that you don't skip the intro and autoConnect with just autoConnect enabled
+    // Create a MutationObserver to wait for skipIntroButton to become hidden
     const observer = new MutationObserver((mutationsList) => {
       for (const mutation of mutationsList) {
         if (mutation.attributeName === 'style') {
           const newStyle = (mutation.target as HTMLElement).style.display;
           const oldStyle = mutation.oldValue;
           if (newStyle === 'none' && oldStyle !== 'none') {
-            // The style changed to 'none', trigger the action (e.g., clicking the enterButton)
             enterButton.click();
             // Disconnect the observer since we only need to trigger this once
             observer.disconnect();
@@ -153,10 +151,6 @@ window.onload = function () {
         div: deckViewSpan,
         name: 'extra deck'
       },
-      'd': {
-        div: null,
-        name: 'dark mode'
-      }
     };
 
     // toggle view function 👍
@@ -165,10 +159,7 @@ window.onload = function () {
       if (hotkeyHashMap[handler]) {
         const { div, name } = hotkeyHashMap[handler];
         console.log(div, name)
-        if (name === 'dark mode') {
-          console.log('Toggling dark mode');
-          toggleDarkMode();
-        } else if (view && view.style.display === 'block') {
+        if (view && view.style.display === 'block') {
           console.log(`Closing the ${name}`);
           closeViewButton.click();
         } else if (div) {
@@ -182,11 +173,6 @@ window.onload = function () {
     if (handler === 'escape') {
       toggleView(handler)
     }
-
-    // toggle dark mode
-      if (handler === 'd') {
-        toggleView(handler)
-      }
 
     // toggle graveyard view 👍
     if (handler === 'g') {
