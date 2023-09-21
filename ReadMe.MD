@@ -34,33 +34,32 @@ Dueling Book Enhanced is a collection of features designed to enhance your exper
 3. **Skip Intro**: Automatically skip the intro movie.
 4. **AutoConnect**: Automatically connect to the main menu or last screen if you're already logged in.
 
-## Usage
+## Usage and Installation
 
-### Content Script
+###  Installation
 
-To use the content script:
+1. Download and unzip the `dist.zip` file
 
-1. **Installation**: Install a browser extension that supports content scripts (e.g., Tampermonkey or Greasemonkey).
+2. Enable developer mode and go to the Google Chrome Manage Extensions page and click `Load Unpacked`
 
-2. **Script Injection**: Add the TypeScript script as a content script in your extension's settings.
+3. Select the `dist` folder 
 
-3. **Configuration**: Customize hotkeys and options by modifying the `actionFunctionMap` and `hotkeyHashMap` objects in the script.
+4. Visit [DuelingBook](https://www.duelingbook.com/html5) and have fun! 
 
-4. **Execution**: Visit DuelingBook, and the script will enhance functionality based on your settings.
+5. Check the default settings for the hotkeys and features on this page above or in the help section of the extensions options page when installed. 
 
 ### Popup
 
 To use the popup:
 
-1. **Extension Icon**: Click the extension icon in your browser to open the popup.
+1. **Extension Icon**: Click the extension icon in your browser to open the popup. (Consider pinning it to your frequently used extensions! <3)
 
-2. **Settings**: Customize your experience by enabling/disabling options in the General Settings section.
+2. **General Settings**: Customize your experience by enabling/disabling general options here.
 
-3. **Customize Hotkeys**: Configure hotkeys for actions in the Customize Hotkeys section.
+3. **Finding Full Settings**: Click the extensions options menu either by right-clicking on the extension and clicking `options` or left-clicking the extension and clicking the gear icon.
 
-4. **Advanced Settings**: Access advanced options if needed.
+4. **Customizing Full Settings**:  Edit any options in any of the sections. Note: Not all options may be currently accessible and are labeled `Coming Soon`. 
 
-5. **Help**: Find info on issues and upcoming features in the Help section.
 
 ## Compatibility
 
