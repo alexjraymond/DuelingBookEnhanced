@@ -2,7 +2,9 @@
 
 ## Overview
 
-Duelists - tired of clicking through all your actions on DuelingBook?
+Duelists - Are you tired of clicking through all your actions on DuelingBook?
+
+Dueling Book Enhanced is a collection of features designed to enhance your experience on DuelingBook. It includes a TypeScript content script and a React popup, providing various improvements and customization options.
 
 ## Badges
 
