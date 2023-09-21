@@ -20,16 +20,16 @@ Dueling Book Enhanced is a collection of features designed to enhance your exper
    - **Thumbs Up**: Press the thumbs-up button.
    - **Toggle Chat Box**: Start or finish typing in the chat box with a single keypress.
 
-    - **Note**: The hotkeys below require you to hover over a card.
+    **Note: The hotkeys below require you to hover over a card. **
    
-   - **To Graveyard**: Sends a card you're hovering over to the graveyard.
-   - **To Hand**: Sends a card you're hovering over to your hand.
-   - **Activate**: Activates a card you're hovering over.
-   - **S. Summon ATK**: Special Summons a card you're hovering over in attack position.
-   - **Normal Summon**: Special Summons a card you're hovering over in attack position.
-   - **Set**: Sets a card you're hovering over.
-   - **Declare**: Declares a card you're hovering over.
-   - **Banish**: Banishes a card you're hovering over.
+   - **To Graveyard**: Sends a card to the graveyard.
+   - **To Hand**: Sends a card to your hand.
+   - **Activate**: Activates a card.
+   - **S. Summon ATK**: Special Summons a card in attack position.
+   - **Normal Summon**: Special Summons a card in attack position.
+   - **Set**: Sets a card.
+   - **Declare**: Declares a card.
+   - **Banish**: Banishes a card.
 
 2. **Dark Mode**: Apply a dark mode stylesheet.
 3. **Skip Intro**: Automatically skip the intro movie.
