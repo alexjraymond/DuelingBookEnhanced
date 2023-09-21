@@ -2,7 +2,7 @@
 
 ## Overview
 
-Duelists - Are you tired of clicking through all your actions on [DuelingBook](https://www.duelingbook.com/html5)?
+Duelists - Are you tired of clicking through all your actions on [DuelingBook](https://www.duelingbook.com/html5){:target="_blank"}?
 
 Dueling Book Enhanced is a collection of features designed to enhance your experience on DuelingBook. It includes a TypeScript content script and a React popup, providing various improvements and customization options.
 
@@ -51,7 +51,7 @@ Dueling Book Enhanced is under the [MIT License](LICENSE.md).
 
 ## Disclaimer
 
-Use Dueling Book Enhanced responsibly and adhere to [DuelingBook](https://www.duelingbook.com/html5)'s terms of use. The author is not responsible for the misuse or unauthorized use of these scripts.
+Use Dueling Book Enhanced responsibly and adhere to [DuelingBook](https://www.duelingbook.com/html5){:target="_blank"}'s terms of use. The author is not responsible for the misuse or unauthorized use of these scripts.
 
 ## Badges
 
