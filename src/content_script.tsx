@@ -2,6 +2,7 @@ import { OptionsTypes } from "./utilities/optionsUtility";
 import { injectStylesheet, applyDarkMode, removeDarkMode } from "./utilities/darkModeUtility";
 import { autoConnect, skipIntro } from "./utilities/optionsUtility";
 import { loadHotkeysConfig } from "./utilities/configUtility";
+import { debounce } from "lodash";
 
 window.onload = async function () {
   // Load hotkeys configuration first
@@ -127,7 +128,6 @@ window.onload = async function () {
       const cardMenuBtnDivs = cardHoverMenuDiv.querySelectorAll('div.card_menu_btn');
       for (const cardMenuBtnDiv of cardMenuBtnDivs) {
         const spanElement = cardMenuBtnDiv.querySelector('span.card_menu_txt');
-        console.log(spanElement)
         if (spanElement && spanElement.textContent?.trim() === action) {
           (spanElement as HTMLElement).click();
           break;
@@ -137,9 +137,9 @@ window.onload = async function () {
   }
 
   // the ultimate keydown listener
-  document.addEventListener('keydown', (e) => {
+  function handleKeydown(e: KeyboardEvent) {
 
-  const handler = e.key.toLowerCase();
+    const handler = e.key.toLowerCase();
 
     function handleDeckView() {
       const mouseOverEvent = new MouseEvent('mouseover', {
@@ -208,5 +208,10 @@ window.onload = async function () {
           break;
       }
     }
-  })
+  }
+  // Debounce the keydown event handler with a 40ms delay
+  const debouncedKeydown = debounce(handleKeydown, 40);
+
+  // Add the debounced keydown event listener
+  document.addEventListener('keydown', debouncedKeydown);
 }
