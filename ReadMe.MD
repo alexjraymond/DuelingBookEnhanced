@@ -8,14 +8,54 @@ Dueling Book Enhanced is a collection of features designed to enhance your exper
 
 ## Features
 
-1. **Close View Menu**: Easily close the view menu.
-2. **Deck View**: View your Main Deck and Extra Deck.
-3. **Hotkeys**: Customize hotkeys for actions.
-4. **Dark Mode**: Apply a dark mode stylesheet.
-5. **AutoConnect**: Automatically connect on page load.
-6. **Chat Box Interaction**: Toggle focus on the chat input.
-7. **Graveyard View**: Toggle display of the graveyard.
+1. **Hotkeys**: Customize hotkeys for actions.
+2. **Dark Mode**: Apply a dark mode stylesheet.
+3. **Skip Intro**: Automatically skip the intro movie
+4. **AutoConnect**: Automatically connect on page load.
 
+## Usage
+
+### Content Script
+
+To use the content script:
+
+1. **Installation**: Install a browser extension that supports content scripts (e.g., Tampermonkey or Greasemonkey).
+
+2. **Script Injection**: Add the TypeScript script as a content script in your extension's settings.
+
+3. **Configuration**: Customize hotkeys and options by modifying the `actionFunctionMap` and `hotkeyHashMap` objects in the script.
+
+4. **Execution**: Visit DuelingBook, and the script will enhance functionality based on your settings.
+
+### Popup
+
+To use the popup:
+
+1. **Extension Icon**: Click the extension icon in your browser to open the popup.
+
+2. **Settings**: Customize your experience by enabling/disabling options in the General Settings section.
+
+3. **Customize Hotkeys**: Configure hotkeys for actions in the Customize Hotkeys section.
+
+4. **Advanced Settings**: Access advanced options if needed.
+
+5. **Help**: Find info on issues and upcoming features in the Help section.
+
+## Compatibility
+
+The content script is designed for DuelingBook but may need adjustments for other websites. Test and adapt it as required.
+
+## Contributing
+
+Contributions to Dueling Book Enhanced are welcome. Fork the code and submit pull requests to contribute.
+
+## License
+
+Dueling Book Enhanced is under the [MIT License](LICENSE.md).
+
+## Disclaimer
+
+Use Dueling Book Enhanced responsibly and adhere to DuelingBook's terms of use. The author is not responsible for misuse or unauthorized use of these scripts.
 
 ## Badges
 
