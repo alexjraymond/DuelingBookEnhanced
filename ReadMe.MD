@@ -2,7 +2,7 @@
 
 ## Overview
 
-Duelists - Are you tired of clicking through all your actions on <a href="https://www.duelingbook.com/html5" target="_blank">DuelingBook</a>?
+Duelists - Are you tired of clicking through all your actions on [DuelingBook](https://www.duelingbook.com/html5){:target="_blank"} ?
 
 Dueling Book Enhanced is a collection of features designed to enhance your experience on DuelingBook. It includes a TypeScript content script and a React popup, providing various improvements and customization options.
 
