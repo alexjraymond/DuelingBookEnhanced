@@ -1,70 +1,20 @@
-# DuelingBookEnhanced
 
-![build](https://github.com/chibat/chrome-extension-typescript-starter/workflows/build/badge.svg)
+![Logo](https://i.imgur.com/iZjy0B8.png)
 
-Chrome Extension, TypeScript and Visual Studio Code
+Duelists - tired of clicking through all your actions on DuelingBook?
 
-## Prerequisites
 
-* [node + npm](https://nodejs.org/) (Current Version)
+## Badges
 
-## Option
+Add badges from somewhere like: [shields.io](https://shields.io/)
 
-* [Visual Studio Code](https://code.visualstudio.com/)
+[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
+[![GPLv3 License](https://img.shields.io/badge/License-GPL%20v3-yellow.svg)](https://opensource.org/licenses/)
+[![AGPL License](https://img.shields.io/badge/license-AGPL-blue.svg)](http://www.gnu.org/licenses/agpl-3.0)
 
-## Includes the following
 
-* TypeScript
-* Webpack
-* React
-* Jest
-* Example Code
-    * Chrome Storage
-    * Options Version 2
-    * content script
-    * count up badge number
-    * background
+## Demo
 
-## Project Structure
+Insert gif or link to demo
 
-* src/typescript: TypeScript source files
-* src/assets: static files
-* dist: Chrome Extension directory
-* dist/js: Generated JavaScript files
-
-## Setup
-
-```
-npm install
-```
-
-## Import as Visual Studio Code project
-
-...
-
-## Build
-
-```
-npm run build
-```
-
-## Build in watch mode
-
-### terminal
-
-```
-npm run watch
-```
-
-### Visual Studio Code
-
-Run watch mode.
-
-type `Ctrl + Shift + B`
-
-## Load extension to chrome
-
-Load `dist` directory
-
-## Test
-`npx jest` or `npm run test`
+https://imgur.com/PnzoW3N
