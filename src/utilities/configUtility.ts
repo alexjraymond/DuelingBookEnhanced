@@ -1,5 +1,5 @@
 type HotkeyMap = {
-  [key: string]: { div: string | null; name: string };
+  [key: string]: { action: string };
 };
 
 export async function loadHotkeysConfig(): Promise<HotkeyMap> {
@@ -14,12 +14,43 @@ export async function loadHotkeysConfig(): Promise<HotkeyMap> {
 function getDefaultHotkeys(): HotkeyMap {
   return {
     "escape": {
-      "div": null,
-      "name": "view menu"
+      "action": "Close View Menu"
     },
     "g": {
-      "div": "gY",
-      "name": "GY"
+      "action": "View Graveyard"
     },
+    "v": {
+      "action": "View Main Deck"
+    },
+    "e": {
+      "action": "View Extra Deck"
+    },
+    "t": {
+      "action": "Think"
+    },
+    "f": {
+      "action": "Thumbs Up"
+    },
+    "enter": {
+      "action": "Toggle Chat Box"
+    },
+    "d": {
+      "action": "To Graveyard"
+    },
+    "h": {
+      "action": "To Hand"
+    },
+    "a": {
+      "action": "Activate"
+    },
+    "s": {
+      "action": "S. Summon ATK"
+    },
+    "n": {
+      "action": "Normal Summon"
+    },
+    "j": {
+      "action": "Set"
+    }
   };
 }
