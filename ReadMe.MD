@@ -20,7 +20,7 @@ Dueling Book Enhanced is a collection of features designed to enhance your exper
    - **Thumbs Up**: Press the thumbs-up button.
    - **Toggle Chat Box**: Start or finish typing in the chat box with a single keypress.
 
-    **Note: The hotkeys below require you to hover over a card. **
+    **Note - The hotkeys below require you to hover over a card. **
    
    - **To Graveyard**: Sends a card to the graveyard.
    - **To Hand**: Sends a card to your hand.
