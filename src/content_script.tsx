@@ -177,7 +177,7 @@ window.onload = async function () {
   function playCard(action: string | [string] | [string, string]) {
     const cardHoverMenuDiv = document.getElementById('card_menu_content') as HTMLElement;
     const cardHoverMenuActions = cardHoverMenuDiv?.getElementsByClassName('card_menu_btn') as HTMLCollectionOf<HTMLElement>;
-    
+
     const actions = Array.isArray(action) ? action : [action];
     console.log(action)
     for (const act of actions) {

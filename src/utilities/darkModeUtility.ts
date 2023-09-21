@@ -12,11 +12,13 @@ export function applyDarkMode() {
   const textInputProxies = document.querySelectorAll('.textinput.proxy');
   const watchers = document.getElementById('watchers') as HTMLElement;
   const textInputElements = document.querySelectorAll('input[type="text"]');
+  const previewText = document.getElementById('preview_txt') as HTMLElement;
 
   osViewports.forEach((node) => node.classList.add('dark-mode'));
   textInputProxies.forEach((node) => node.classList.add('dark-mode'));
   watchers.classList.add('dark-mode');
   textInputElements.forEach((node) => node.classList.add('dark-mode'))
+  previewText.classList.add('dark-mode')
 }
 
 export function removeDarkMode() {
@@ -24,9 +26,11 @@ export function removeDarkMode() {
   const textInputProxies = document.querySelectorAll('.textinput.proxy');
   const watchers = document.getElementById('watchers') as HTMLElement;
   const textInputElements = document.querySelectorAll('input[type="text"]');
+  const previewText = document.getElementById('preview_txt') as HTMLElement;
 
   osViewports.forEach((node) => node.classList.remove('dark-mode'));
   textInputProxies.forEach((node) => node.classList.remove('dark-mode'));
   watchers.classList.remove('dark-mode');
   textInputElements.forEach((node) => node.classList.remove('dark-mode'))
+  previewText.classList.remove('dark-mode')
 }

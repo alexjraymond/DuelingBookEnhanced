@@ -17,11 +17,8 @@ const Popup = () => {
   console.log("outside the useeffect")
   // Load options from storage when the popup is opened
   useEffect(() => {
-    console.log("inside the useeffect")
     getOptionsFromStorage((savedOptions) => {
       setOptions(savedOptions);
-      console.log("inside getoptionsfromstorage")
-
     });
   }, []);
 
