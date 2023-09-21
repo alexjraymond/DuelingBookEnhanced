@@ -4,6 +4,7 @@
         "target": "es6",
         "moduleResolution": "node",
         "module": "ES6",
+        "resolveJsonModule": true,
         "esModuleInterop": true,
         "sourceMap": false,
         "rootDir": "src",
