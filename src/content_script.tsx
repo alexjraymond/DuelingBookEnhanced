@@ -113,6 +113,23 @@ window.onload = async function () {
   const skipIntroButton = document.getElementById('skip_intro_btn') as HTMLElement;
   const enterButton = document.getElementById('duel_btn') as HTMLElement;
 
+  function saySomething(message: string) {
+    chatInput.value = message;
+    const enterEvent = new KeyboardEvent('keydown', {
+      key: 'Enter',
+      keyCode: 13,
+      which: 13,
+      bubbles: true,
+    });
+    setTimeout(() => {
+      chatInput.focus();
+      chatInput.dispatchEvent(enterEvent);
+    }, 30);
+    setTimeout(() => {
+      chatInput.blur();
+    }, 30);
+  }
+
   function handleHotKey(key: string, hotkeyHashMap: Record<string, any>) {
     const hotkey = hotkeyHashMap[key];
     if (hotkey) {
@@ -132,6 +149,7 @@ window.onload = async function () {
       }
     }
   }
+
   function toggleGraveYardView() {
     if (view && view.style.display === 'block') {
       console.log("Closing the GY");
@@ -144,20 +162,7 @@ window.onload = async function () {
 
   function handleThinkButton() {
     thunk?.click();
-    chatInput.value = 'hm';
-    const enterEvent = new KeyboardEvent('keydown', {
-      key: 'Enter',
-      keyCode: 13,
-      which: 13,
-      bubbles: true,
-    });
-    setTimeout(() => {
-      chatInput.focus();
-      chatInput.dispatchEvent(enterEvent);
-    }, 30);
-    setTimeout(() => {
-      chatInput.blur();
-    }, 30);
+    saySomething('hm');
   }
 
   function handleThumbsUpButton() {
@@ -183,16 +188,17 @@ window.onload = async function () {
     for (const act of actions) {
       console.log(act)
       console.log(actions)
-    for (const element of cardHoverMenuActions) {
+      for (const element of cardHoverMenuActions) {
 
-      const span = element?.getElementsByTagName('span')[0];
-      if (span && span.textContent === action) {
-        span.click();
-        return;
+        const span = element?.getElementsByTagName('span')[0];
+        if (span && span.textContent === action) {
+          span.click();
+          return;
+        }
       }
     }
   }
-  }
+
   function handleKeydown(e: KeyboardEvent) {
     const handler = e.key.toLowerCase();
     if (!(e.target instanceof HTMLInputElement) || handler === 'enter') {
