@@ -10,23 +10,26 @@ Dueling Book Enhanced is a collection of features designed to enhance your exper
 
 1. **Hotkeys**: Use hotkeys for immediate actions.
 
-   - **Close View Menu**: Close the view menu.
-   - **View Graveyard**: Toggle graveyard view.
-   - **View Main Deck**: View the main deck.
-   - **View Extra Deck**: View the extra deck.
-   - **Think**: Perform a thinking action.
-   - **Thumbs Up**: Perform a thumbs-up action.
-   - **Toggle Chat Box**: Toggle the chat box.
-   - **To Graveyard**: Play a card to the graveyard.
-   - **To Grave**: Play a card to the grave.
-   - **To Hand**: Play a card to the hand.
-   - **Activate**: Activate a card.
-   - **S. Summon ATK**: Special summon with ATK.
-   - **SS ATK**: Perform a special summon with ATK.
-   - **Normal Summon**: Perform a normal summon.
-   - **Set**: Set a card.
-   - **Declare**: Declare an action.
-   - **Banish**: Banish a card.
+  
+
+   - **Close View Menu**: Closes the view menu.
+   - **View Graveyard**: Toggles the display of your graveyard.
+   - **View Main Deck**: Toggles the display of your main deck.
+   - **View Extra Deck**: Toggles the display of your extra deck.
+   - **Think**: Press the thinking button and send a chat message indicating that you're thinking.
+   - **Thumbs Up**: Press the thumbs-up button.
+   - **Toggle Chat Box**: Start or finish typing in the chat box with a single keypress.
+
+    - **Note**: The hotkeys below require you to hover over a card.
+   
+   - **To Graveyard**: Sends a card you're hovering over to the graveyard.
+   - **To Hand**: Sends a card you're hovering over to your hand.
+   - **Activate**: Activates a card you're hovering over.
+   - **S. Summon ATK**: Special Summons a card you're hovering over in attack position.
+   - **Normal Summon**: Special Summons a card you're hovering over in attack position.
+   - **Set**: Sets a card you're hovering over.
+   - **Declare**: Declares a card you're hovering over.
+   - **Banish**: Banishes a card you're hovering over.
 
 2. **Dark Mode**: Apply a dark mode stylesheet.
 3. **Skip Intro**: Automatically skip the intro movie.
