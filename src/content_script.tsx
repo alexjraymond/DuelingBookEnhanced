@@ -36,6 +36,7 @@ window.onload = function () {
     const chatInputs = document.querySelectorAll('input.cin_txt')
     const osViewports = document.querySelectorAll('.os_viewport')
     const textInputProxies = document.querySelectorAll('.textinput.proxy')
+    const lifeText = document.getElementById('life_txt') as HTMLElement
     const watchers = document.getElementById('watchers') as HTMLElement
     chatInputs.forEach((node) => {
       node.classList.toggle('dark-mode')
@@ -47,7 +48,7 @@ window.onload = function () {
       node.classList.toggle('dark-mode')
     })
     watchers.classList.toggle('dark-mode')
-    console.log('toggling dark mode')
+    lifeText.classList.toggle('dark-mode')
   }
 
   // specific div selectors
