@@ -1,33 +1,56 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { createRoot } from "react-dom/client";
 import Button from './components/Button';
 import logo from './assets/images/dbe_logo.png'
 import { HiOutlineCog8Tooth } from 'react-icons/hi2'
 
+interface Options {
+  disableAllOptions: boolean;
+  skipIntro: boolean;
+  autoConnect: boolean;
+  isNightMode: boolean;
+}
+
+// Function to get the saved options from storage
+const getOptionsFromStorage = (callback: (options: Options) => void) => {
+  chrome.storage.sync.get(["options"], (result) => {
+    const options = result.options || {
+      disableAllOptions: false,
+      skipIntro: false,
+      autoConnect: false,
+      isNightMode: false,
+    };
+    callback(options);
+  });
+};
+
+// Function to get the saved options from storage
+const saveOptionsToStorage = (options:Options) {
+  chrome.storage.sync.set({ options });
+}
+
 const Popup = () => {
-  const [options, setOptions] = useState({
+  const [options, setOptions] = useState<Options>({
     disableAllOptions: false,
     skipIntro: false,
     autoConnect: false,
     isNightMode: false,
   });
 
+  // Load options from storage when the popup is opened
+  useEffect(() => {
+    getOptionsFromStorage((savedOptions) => {
+      setOptions(savedOptions);
+    });
+  }, []);
+
+  // Use useEffect to save options whenever they change
+  useEffect(() => {
+    saveOptionsToStorage(options)
+  }, [options]);
+
   const handleSettingsButtonClick = () => {
     chrome.runtime.openOptionsPage()
-  };
-
-  const toggleNightMode = () => {
-    console.log('youre clicking nightmode');
-    const textBoxes = document.querySelectorAll(".os_viewport");
-    console.log('heres how many textboxes we got', textBoxes)
-    console.log(textBoxes);
-    textBoxes.forEach((textBox) => {
-      if (textBox instanceof HTMLElement) {
-        console.log('yay we dark mode now');
-        textBox.classList.toggle("night-mode"); // Toggle night mode class
-      }
-    });
-    setOptions({ ...options, isNightMode: !options.isNightMode });
   };
 
   const inputItems = [
@@ -53,7 +76,7 @@ const Popup = () => {
       id: "nightMode",
       label: "Night Mode",
       checked: options.isNightMode,
-      onChange: toggleNightMode,
+      onChange: () => setOptions({ ...options, isNightMode: !options.isNightMode }),
     },
   ];
 
