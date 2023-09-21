@@ -23,24 +23,28 @@ window.onload = function () {
   // Check the user's settings on load
   chrome.storage.sync.get('options', (result) => {
     const options = result.options as OptionsTypes;
+    if (options && options.skipIntro && options.autoConnect) autoConnect(skipIntroButton, enterButton)
     if (options && options.skipIntro) skipIntro(skipIntroButton)
     if (options && options.autoConnect) autoConnect(skipIntroButton, enterButton)
+    if (options && options.isNightMode) applyDarkMode();
+    if (options && !options.isNightMode) removeDarkMode();
   });
 
-  // Define a function to handle changes in options
+  // Update the settings when the user makes changes
   function handleOptionsChange(
-    changes: { [key: string]: any }, // Use a more generic type
+    changes: { [key: string]: any },
     namespace: string
   ) {
     if (namespace === "sync") {
-      // Check if the change is of the expected type (OptionsChange)
       if (changes.options && "newValue" in changes.options) {
         const newOptions = changes.options.newValue as OptionsTypes;
-        // Handle the updated options here
         console.log("Options have changed:", newOptions);
 
+        if (newOptions.skipIntro && newOptions.autoConnect) autoConnect
         if (newOptions.skipIntro) skipIntro(skipIntroButton)
         if (newOptions.autoConnect) autoConnect(skipIntroButton, enterButton)
+        if (newOptions.isNightMode) applyDarkMode();
+        if (!newOptions.isNightMode) removeDarkMode();
       }
     }
   }
@@ -78,27 +82,44 @@ window.onload = function () {
     observer.observe(skipIntroButton, { attributes: true, attributeOldValue: true });
   }
 
+  function applyDarkMode() {
+    const osViewports = document.querySelectorAll('.os_viewport');
+    const textInputProxies = document.querySelectorAll('.textinput.proxy');
+    const watchers = document.getElementById('watchers') as HTMLElement;
+    const textInputElements = document.querySelectorAll('input[type="text"]');
+
+    osViewports.forEach((node) => node.classList.add('dark-mode'));
+    textInputProxies.forEach((node) => node.classList.add('dark-mode'));
+    watchers.classList.add('dark-mode');
+    textInputElements.forEach((node) => node.classList.add('dark-mode'))
+  }
+
+  function removeDarkMode() {
+    const osViewports = document.querySelectorAll('.os_viewport');
+    const textInputProxies = document.querySelectorAll('.textinput.proxy');
+    const watchers = document.getElementById('watchers') as HTMLElement;
+    const textInputElements = document.querySelectorAll('input[type="text"]');
+
+    osViewports.forEach((node) => node.classList.remove('dark-mode'));
+    textInputProxies.forEach((node) => node.classList.remove('dark-mode'));
+    watchers.classList.remove('dark-mode');
+    textInputElements.forEach((node) => node.classList.remove('dark-mode'))
+  }
+
   // chat variables
   const chatInput = document.querySelectorAll('input.cin_txt')[1] as HTMLInputElement
   let chatInputFocused = false;
 
   const toggleDarkMode = () => {
-    const chatInputs = document.querySelectorAll('input.cin_txt')
     const osViewports = document.querySelectorAll('.os_viewport')
     const textInputProxies = document.querySelectorAll('.textinput.proxy')
-    const lifeText = document.getElementById('life_txt') as HTMLElement
     const watchers = document.getElementById('watchers') as HTMLElement
-    chatInputs.forEach((node) => {
-      node.classList.toggle('dark-mode')
-    })
-    osViewports.forEach((node) => {
-      node.classList.toggle('dark-mode')
-    })
-    textInputProxies.forEach((node) => {
-      node.classList.toggle('dark-mode')
-    })
+    const textInputElements = document.querySelectorAll('input[type="text"]');
+
+    osViewports.forEach((node) => node.classList.toggle('dark-mode'))
+    textInputProxies.forEach((node) => node.classList.toggle('dark-mode'))
     watchers.classList.toggle('dark-mode')
-    lifeText.classList.toggle('dark-mode')
+    textInputElements.forEach((node) => node.classList.toggle('dark-mode'))
   }
 
   // specific div selectors
