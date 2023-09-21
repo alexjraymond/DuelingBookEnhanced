@@ -11,6 +11,8 @@ export async function loadHotkeysConfig(): Promise<HotkeyMap> {
   });
 }
 
+
+// Don't forget to update the Actions function Map in content_script.tsx !!!!!!
 function getDefaultHotkeys(): HotkeyMap {
   return {
     "escape": {
@@ -44,7 +46,7 @@ function getDefaultHotkeys(): HotkeyMap {
       "action": "Activate"
     },
     "s": {
-      "action": ["SS ATK", "S. Summon ATK"]
+      "action": ["S. Summon ATK", "SS ATK"]
     },
     "n": {
       "action": "Normal Summon"

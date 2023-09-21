@@ -66,6 +66,7 @@ window.onload = async function () {
     "To Hand": () => playCard("To Hand"),
     "Activate": () => playCard("Activate"),
     "S. Summon ATK": () => playCard("S. Summon ATK"),
+    "SS ATK": () => playCard("SS ATK"),
     "Normal Summon": () => playCard("Normal Summon"),
     "Set": () => playCard("Set"),
     "Declare": () => playCard("Declare"),
@@ -183,6 +184,7 @@ window.onload = async function () {
       console.log(act)
       console.log(actions)
     for (const element of cardHoverMenuActions) {
+
       const span = element?.getElementsByTagName('span')[0];
       if (span && span.textContent === action) {
         span.click();
