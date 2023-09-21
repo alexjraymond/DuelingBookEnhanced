@@ -30,7 +30,7 @@
     },
     "d": {
       "div": null,
-      "action": "To Graveyard"
+      "action": "Declare"
     },
     "h": {
       "div": null,
@@ -51,6 +51,12 @@
     "j": {
       "div": null,
       "action": "Set"
+    },
+    "q": {
+      "action": ["To Graveyard", "To Grave"]
+    },
+    "w": {
+      "action": "Banish"
     }
   }
 }

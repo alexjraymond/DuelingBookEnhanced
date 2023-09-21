@@ -1,5 +1,5 @@
 type HotkeyMap = {
-  [key: string]: { action: string };
+  [key: string]: { action: string | [string, string] };
 };
 
 export async function loadHotkeysConfig(): Promise<HotkeyMap> {
@@ -35,7 +35,7 @@ function getDefaultHotkeys(): HotkeyMap {
       "action": "Toggle Chat Box"
     },
     "d": {
-      "action": "To Graveyard"
+      "action": "Declare"
     },
     "h": {
       "action": "To Hand"
@@ -51,6 +51,12 @@ function getDefaultHotkeys(): HotkeyMap {
     },
     "j": {
       "action": "Set"
-    }
+    },
+    "q": {
+      "action": ["To Graveyard", "To Grave"]
+    },
+    "w": {
+      "action": "Banish"
+    },
   };
 }

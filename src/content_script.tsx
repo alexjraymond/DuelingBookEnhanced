@@ -62,11 +62,14 @@ window.onload = async function () {
     "Thumbs Up": handleThumbsUpButton,
     "Toggle Chat Box": handleChatBox,
     "To Graveyard": () => playCard("To Graveyard"),
+    "To Grave": () => playCard("To Grave"),
     "To Hand": () => playCard("To Hand"),
     "Activate": () => playCard("Activate"),
     "S. Summon ATK": () => playCard("S. Summon ATK"),
     "Normal Summon": () => playCard("Normal Summon"),
     "Set": () => playCard("Set"),
+    "Declare": () => playCard("Declare"),
+    "Banish": () => playCard("Banish")
   };
 
   const hotkeyHashMap = await loadHotkeysConfig();
