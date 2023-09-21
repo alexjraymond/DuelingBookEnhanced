@@ -3,31 +3,7 @@ import { createRoot } from "react-dom/client";
 import Button from './components/Button';
 import logo from './assets/images/dbe_logo.png'
 import { HiOutlineCog8Tooth } from 'react-icons/hi2'
-
-interface Options {
-  disableAllOptions: boolean;
-  skipIntro: boolean;
-  autoConnect: boolean;
-  isNightMode: boolean;
-}
-
-// Function to get the saved options from storage
-const getOptionsFromStorage = (callback: (options: Options) => void) => {
-  chrome.storage.sync.get(["options"], (result) => {
-    const options = result.options || {
-      disableAllOptions: false,
-      skipIntro: false,
-      autoConnect: false,
-      isNightMode: false,
-    };
-    callback(options);
-  });
-};
-
-// Function to get the saved options from storage
-const saveOptionsToStorage = (options:Options) {
-  chrome.storage.sync.set({ options });
-}
+import { getOptionsFromStorage, saveOptionsToStorage, Options } from './utilities/optionsUtility'
 
 const Popup = () => {
   const [options, setOptions] = useState<Options>({
@@ -79,7 +55,6 @@ const Popup = () => {
       onChange: () => setOptions({ ...options, isNightMode: !options.isNightMode }),
     },
   ];
-
 
   return (
     <div className="flex flex-col gap-4">
