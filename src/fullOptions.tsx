@@ -98,7 +98,7 @@ export const Options = () => {
       case "Advanced":
         return <div>Advanced Settings Here</div>;
       case "Help":
-        return <div>Help Content Here</div>;
+        return <div>Known Issues & Upcoming Features Content Here</div>;
       default:
         return null;
     }
