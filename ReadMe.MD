@@ -10,26 +10,25 @@ Dueling Book Enhanced is a collection of features designed to enhance your exper
 
 1. **Hotkeys**: Use hotkeys for immediate actions.
 
-  
+   - **Close View Menu** (escape): Closes the view menu.
+   - **View Graveyard** (g): Toggles the display of your graveyard.
+   - **View Main Deck** (v): Toggles the display of your main deck.
+   - **View Extra Deck** (e): Toggles the display of your extra deck.
+   - **Think** (t): Press the thinking button and send a chat message indicating that you're thinking.
+   - **Thumbs Up** (f): Press the thumbs-up button.
+   - **Toggle Chat Box** (enter): Start or finish typing in the chat box with a single keypress.
 
-   - **Close View Menu**: Closes the view menu.
-   - **View Graveyard**: Toggles the display of your graveyard.
-   - **View Main Deck**: Toggles the display of your main deck.
-   - **View Extra Deck**: Toggles the display of your extra deck.
-   - **Think**: Press the thinking button and send a chat message indicating that you're thinking.
-   - **Thumbs Up**: Press the thumbs-up button.
-   - **Toggle Chat Box**: Start or finish typing in the chat box with a single keypress.
+   **The hotkeys below require you to hover over a card.**
 
-    **The hotkeys below require you to hover over a card.**
-   
-   - **To Graveyard**: Sends a card to the graveyard.
-   - **To Hand**: Sends a card to your hand.
-   - **Activate**: Activates a card.
-   - **S. Summon ATK**: Special Summons a card in attack position.
-   - **Normal Summon**: Special Summons a card in attack position.
-   - **Set**: Sets a card.
-   - **Declare**: Declares a card.
-   - **Banish**: Banishes a card.
+   - **To Graveyard** (q): Sends a card to the graveyard.
+   - **To Hand** (h): Sends a card to your hand.
+   - **Activate** (a): Activates a card.
+   - **S. Summon ATK / SS ATK** (s): Special Summons a card in attack position.
+   - **Normal Summon** (n): Special Summons a card in attack position.
+   - **Set** (j): Sets a card.
+   - **Declare** (d): Declares a card.
+   - **Banish** (w): Banishes a card.
+
 
 2. **Dark Mode**: Apply a dark mode stylesheet.
 3. **Skip Intro**: Automatically skip the intro movie.
