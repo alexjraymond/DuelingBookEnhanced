@@ -1,0 +1,20 @@
+{
+  "hotkeys": {
+    "escape": {
+      "div": null,
+      "name": "view menu"
+    },
+    "g": {
+      "div": "gY",
+      "name": "GY"
+    },
+    "v": {
+      "div": "deckViewSpan",
+      "name": "deck"
+    },
+    "e": {
+      "div": "deckViewSpan",
+      "name": "extra deck"
+    }
+  }
+}

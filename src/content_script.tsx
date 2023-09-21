@@ -1,4 +1,7 @@
+import fs from 'fs'
 import { OptionsTypes } from "./utilities/optionsUtility";
+import { injectStylesheet, applyDarkMode, removeDarkMode } from "./utilities/darkModeUtility";
+import { autoConnect, skipIntro } from "./utilities/optionsUtility";
 
 window.onload = function () {
   const thunk = document.getElementById('think_btn');
@@ -8,15 +11,6 @@ window.onload = function () {
   const closeViewButton = view?.getElementsByClassName('exit_btn')[0] as HTMLElement;
   const skipIntroButton = document.getElementById('skip_intro_btn') as HTMLElement
   const enterButton = document.getElementById('duel_btn') as HTMLElement
-
-  // Function to inject a CSS file into the page
-  function injectStylesheet(filename:string) {
-    const link = document.createElement('link');
-    link.href = chrome.runtime.getURL(`css/${filename}`);
-    link.type = 'text/css';
-    link.rel = 'stylesheet';
-    document.head.appendChild(link);
-  }
 
   injectStylesheet('dark-mode.css');
 
@@ -52,58 +46,6 @@ window.onload = function () {
   // Add the event listener for options changes
   chrome.storage.onChanged.addListener(handleOptionsChange);
 
-  function skipIntro(skipIntroButton: HTMLElement) {
-    if (skipIntroButton.style.display !== 'none') {
-      console.log('Intro is visible, skipping...');
-      skipIntroButton.click();
-    }
-  }
-
-  function autoConnect(skipIntroButton: HTMLElement, enterButton: HTMLElement) {
-    // Create a MutationObserver to wait for skipIntroButton to become hidden
-    const observer = new MutationObserver((mutationsList) => {
-      for (const mutation of mutationsList) {
-        if (mutation.attributeName === 'style') {
-          const newStyle = (mutation.target as HTMLElement).style.display;
-          const oldStyle = mutation.oldValue;
-          if (newStyle === 'none' && oldStyle !== 'none') {
-            enterButton.click();
-            // Disconnect the observer since we only need to trigger this once
-            observer.disconnect();
-            break;
-          }
-        }
-      }
-    });
-
-    // Start observing the skipIntroButton
-    observer.observe(skipIntroButton, { attributes: true, attributeOldValue: true });
-  }
-
-  function applyDarkMode() {
-    const osViewports = document.querySelectorAll('#duel .os_viewport');
-    const textInputProxies = document.querySelectorAll('.textinput.proxy');
-    const watchers = document.getElementById('watchers') as HTMLElement;
-    const textInputElements = document.querySelectorAll('input[type="text"]');
-
-    osViewports.forEach((node) => node.classList.add('dark-mode'));
-    textInputProxies.forEach((node) => node.classList.add('dark-mode'));
-    watchers.classList.add('dark-mode');
-    textInputElements.forEach((node) => node.classList.add('dark-mode'))
-  }
-
-  function removeDarkMode() {
-    const osViewports = document.querySelectorAll('#duel .os_viewport');
-    const textInputProxies = document.querySelectorAll('.textinput.proxy');
-    const watchers = document.getElementById('watchers') as HTMLElement;
-    const textInputElements = document.querySelectorAll('input[type="text"]');
-
-    osViewports.forEach((node) => node.classList.remove('dark-mode'));
-    textInputProxies.forEach((node) => node.classList.remove('dark-mode'));
-    watchers.classList.remove('dark-mode');
-    textInputElements.forEach((node) => node.classList.remove('dark-mode'))
-  }
-
   // chat variables
   const chatInput = document.querySelectorAll('input.cin_txt')[1] as HTMLInputElement
   let chatInputFocused = false;
@@ -121,25 +63,12 @@ window.onload = function () {
     const handler = e.key.toLowerCase();
     if (!(e.target instanceof HTMLInputElement) || handler === 'enter') {
       console.log('Key pressed:', handler);
-      // hotkey hash table 👍
-    const hotkeyHashMap: Record<string, { div: HTMLElement | null, name: string }> = {
-      'escape': {
-        div: null,
-        name: 'view menu'
-      },
-      'g': {
-        div: gY,
-        name: 'GY'
-      },
-      'v': {
-        div: deckViewSpan,
-        name: 'deck'
-      },
-      'e': {
-        div: deckViewSpan,
-        name: 'extra deck'
-      },
-    };
+      // Read the hotkeys configuration file
+      const rawConfig = fs.readFileSync('hotkeysConfig.json', 'utf-8');
+      const config = JSON.parse(rawConfig);
+
+      // Use the hotkeys from the config
+      const hotkeyHashMap = config.hotkeys;
 
     // toggle view function 👍
     const toggleView = (handler: string) => {
