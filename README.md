@@ -1,6 +1,8 @@
 
 ![Logo](https://i.imgur.com/Z7pklez.png)
 
+##
+
 Duelists - tired of clicking through all your actions on DuelingBook?
 
 
