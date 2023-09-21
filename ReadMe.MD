@@ -51,8 +51,6 @@ Dueling Book Enhanced is under the [MIT License](LICENSE.md).
 
 ## Disclaimer
 
-## Disclaimer
-
 Use Dueling Book Enhanced responsibly and respect the rights of Yu-Gi-Oh! owned by its respective copyright holders, as well as [DuelingBook](https://www.duelingbook.com/html5)'s terms of use. The author is not responsible for the misuse or unauthorized use of these scripts.
 
 ## Badges
