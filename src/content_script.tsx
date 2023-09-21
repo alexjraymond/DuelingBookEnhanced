@@ -81,7 +81,7 @@ window.onload = function () {
   }
 
   function applyDarkMode() {
-    const osViewports = document.querySelectorAll('.os_viewport');
+    const osViewports = document.querySelectorAll('#duel .os_viewport');
     const textInputProxies = document.querySelectorAll('.textinput.proxy');
     const watchers = document.getElementById('watchers') as HTMLElement;
     const textInputElements = document.querySelectorAll('input[type="text"]');
@@ -93,7 +93,7 @@ window.onload = function () {
   }
 
   function removeDarkMode() {
-    const osViewports = document.querySelectorAll('.os_viewport');
+    const osViewports = document.querySelectorAll('#duel .os_viewport');
     const textInputProxies = document.querySelectorAll('.textinput.proxy');
     const watchers = document.getElementById('watchers') as HTMLElement;
     const textInputElements = document.querySelectorAll('input[type="text"]');
@@ -107,18 +107,6 @@ window.onload = function () {
   // chat variables
   const chatInput = document.querySelectorAll('input.cin_txt')[1] as HTMLInputElement
   let chatInputFocused = false;
-
-  const toggleDarkMode = () => {
-    const osViewports = document.querySelectorAll('.os_viewport')
-    const textInputProxies = document.querySelectorAll('.textinput.proxy')
-    const watchers = document.getElementById('watchers') as HTMLElement
-    const textInputElements = document.querySelectorAll('input[type="text"]');
-
-    osViewports.forEach((node) => node.classList.toggle('dark-mode'))
-    textInputProxies.forEach((node) => node.classList.toggle('dark-mode'))
-    watchers.classList.toggle('dark-mode')
-    textInputElements.forEach((node) => node.classList.toggle('dark-mode'))
-  }
 
   // specific div selectors
   const deck = document.getElementById('deck_hidden') as HTMLElement;
