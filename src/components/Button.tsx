@@ -14,7 +14,7 @@ const Button: React.FC<ButtonProps> = ({ buttonText, buttonUrl, ...buttonProps }
         <div>
             <button
                 onClick={buttonLink}
-                className="inline-block min-w-[90px] px-3 py-1 bg-blue-500 text-white text-sm rounded-md cursor-pointer transition-transform duration-200 ease-in h-[40px] rounded px-3 py-2 hover:bg-blue-400"
+                className="inline-block min-w-[90px] bg-blue-500 text-white text-sm cursor-pointer transition-transform duration-200 ease-in h-[40px] rounded px-3 py-2 hover:bg-blue-400"
                 {...buttonProps}
             >
                 {buttonText}
