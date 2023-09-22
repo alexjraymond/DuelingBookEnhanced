@@ -8,6 +8,7 @@ import {BiCoffeeTogo} from 'react-icons/bi'
 import { getOptionsFromStorage, saveOptionsToStorage, OptionsTypes } from './utilities/optionsUtility'
 import ReactDOM from "react-dom";
 import CustomizeHotkeys from "./customizeHotkeys";
+import card from "../public/dbe_logo.png"
 
 
 export const Options = () => {
@@ -94,9 +95,35 @@ export const Options = () => {
         </>
           )
       case "Customize Hotkeys":
-        return <CustomizeHotkeys />;
+        return (
+          <>
+            <div className="flex justify-center">
+                <img src={card} />
+                <img src={card} />
+                <img src={card} />
+                <img src={card} />
+                <img src={card} />
+            </div>
+            <div>
+                <h1 className='text-2xl justify-center flex'>We set 5 cards face down and will be back with this section soon...</h1>
+            </div>
+        </>
+          );
       case "Advanced":
-        return <div>Advanced Settings Here</div>;
+        return (    
+          <>
+            <div className="flex justify-center">
+                <img src={card} />
+                <img src={card} />
+                <img src={card} />
+                <img src={card} />
+                <img src={card} />
+            </div>
+            <div>
+                <h1 className='text-2xl justify-center flex'>We set 5 cards face down and will be back with this section soon...</h1>
+            </div>
+          </>
+        );
       case "Help":
         return <div>Known Issues & Upcoming Features Content Here</div>;
       default:

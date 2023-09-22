@@ -14,21 +14,25 @@ const Popup = () => {
   });
 
 
-  console.log("outside the useeffect")
+
   // Load options from storage when the popup is opened
   useEffect(() => {
-    console.log("inside the useeffect")
     getOptionsFromStorage((savedOptions) => {
       setOptions(savedOptions);
-      console.log("inside getoptionsfromstorage")
-
+      console.log('saved options', savedOptions)
+      
     });
   }, []);
 
   // Use useEffect to save options whenever they change
   useEffect(() => {
-    saveOptionsToStorage(options)
+    if (options) {    
+      saveOptionsToStorage(options)
+      console.log('latest options', options)
+    }
+
   }, [options]);
+  
 
   const handleSettingsButtonClick = () => {
     chrome.runtime.openOptionsPage()

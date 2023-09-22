@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { hotkeys as initialHotkeys } from './data/hotkeysConfig.json';
+import card from "../public/dbe_logo.png"
 
 type HotkeyConfig = {
   [key: string]: {
@@ -22,19 +23,23 @@ const CustomizeHotkeys: React.FC = () => {
     }));
   };
 
+  const thisFunctionIsTheHtml = {
+
+    
+  }
+
   return (
     <div>
-      <h1 className='text-2xl'>COMING SOOOOOOOON</h1>
-      {Object.entries(hotkeySettings).map(([key, config]) => (
-        <div key={key}>
-          <label htmlFor={`hotkey_${key}`}>{typeof config.action === 'string' ? config.action : config.action.join(', ')}</label>
-          <input
-            id={`hotkey_${key}`}
-            value={key}
-            onChange={(e) => handleHotkeyChange(key, e)}
-          />
+      <div className="flex justify-center">
+      <img src={card} />
+      <img src={card} />
+      <img src={card} />
+      <img src={card} />
+      <img src={card} />
+      </div>
+        <div>
+      <h1 className='text-2xl justify-center flex'>We set 5 cards face down and will be back with this section soon...</h1>
         </div>
-      ))}
     </div>
   );
 };
