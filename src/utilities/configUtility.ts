@@ -11,8 +11,7 @@ export async function loadHotkeysConfig(): Promise<HotkeyMap> {
   });
 }
 
-
-// Don't forget to update the Actions function Map in content_script.tsx !!!!!!
+// Don't forget to update the actionsFunctionMap in content_script.tsx
 function getDefaultHotkeys(): HotkeyMap {
   return {
     "escape": {

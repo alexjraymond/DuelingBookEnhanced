@@ -53,6 +53,8 @@ window.onload = async function () {
   deckViewButton = deckMenu?.getElementsByClassName('card_menu_btn')[0] as HTMLElement;
   deckViewSpan = deckViewButton?.getElementsByTagName('span')[0] as HTMLElement;
 
+  let options: OptionsTypes;
+
   const actionFunctionMap: Record<string, () => void> = {
     "Close View Menu": closeViewMenu,
     "View Graveyard": toggleGraveYardView,
@@ -73,18 +75,32 @@ window.onload = async function () {
     "Banish": () => playCard("Banish")
   };
 
-  const hotkeyHashMap = await loadHotkeysConfig();
-  console.log('Loaded hotkeys configuration:', hotkeyHashMap);
+  let hotkeyHashMap = await loadHotkeysConfig();
+
+  async function fetchHotKeyHashMap () {
+    hotkeyHashMap = await loadHotkeysConfig();
+    console.log('Loaded hotkeys configuration:', hotkeyHashMap);
+  }
 
   injectStylesheet('dark-mode.css');
 
   chrome.storage.sync.get('options', (result) => {
-    const options = result.options as OptionsTypes;
-    if (options && options.skipIntro && options.autoConnect) autoConnect(skipIntroButton, enterButton);
-    if (options && options.skipIntro) skipIntro(skipIntroButton);
-    if (options && options.autoConnect) autoConnect(skipIntroButton, enterButton);
-    if (options && options.isNightMode) applyDarkMode();
-    if (options && !options.isNightMode) removeDarkMode();
+    options = result.options as OptionsTypes;
+    if (options && options.disableAllOptions) {
+      // Set all options to false, ensure dark mode is off, and don't run other functions
+      options.skipIntro = false;
+      options.autoConnect = false;
+      options.isNightMode = false;
+      removeDarkMode();
+      hotkeyHashMap = {};
+    } else {
+      fetchHotKeyHashMap()
+      if (options && options.skipIntro && options.autoConnect) autoConnect(skipIntroButton, enterButton);
+      if (options && options.skipIntro) skipIntro(skipIntroButton);
+      if (options && options.autoConnect) autoConnect(skipIntroButton, enterButton);
+      if (options && options.isNightMode) applyDarkMode();
+      if (options && !options.isNightMode) removeDarkMode();
+    }
   });
 
   function handleOptionsChange(changes: { [key: string]: any }, namespace: string) {
@@ -93,11 +109,21 @@ window.onload = async function () {
         const newOptions = changes.options.newValue as OptionsTypes;
         console.log("Options have changed:", newOptions);
 
-        if (newOptions.skipIntro && newOptions.autoConnect) autoConnect(skipIntroButton, enterButton);
-        if (newOptions.skipIntro) skipIntro(skipIntroButton);
-        if (newOptions.autoConnect) autoConnect(skipIntroButton, enterButton);
-        if (newOptions.isNightMode) applyDarkMode();
-        if (!newOptions.isNightMode) removeDarkMode();
+        if (newOptions.disableAllOptions) {
+          // Set all options to false, ensure dark mode is off, and don't run other functions
+          newOptions.skipIntro = false;
+          newOptions.autoConnect = false;
+          newOptions.isNightMode = false;
+          removeDarkMode();
+          hotkeyHashMap = {};
+        } else {
+          fetchHotKeyHashMap()
+          if (newOptions.skipIntro && newOptions.autoConnect) autoConnect(skipIntroButton, enterButton);
+          if (newOptions.skipIntro) skipIntro(skipIntroButton);
+          if (newOptions.autoConnect) autoConnect(skipIntroButton, enterButton);
+          if (newOptions.isNightMode) applyDarkMode();
+          if (!newOptions.isNightMode) removeDarkMode();
+        }
       }
     }
   }
@@ -113,7 +139,27 @@ window.onload = async function () {
   const skipIntroButton = document.getElementById('skip_intro_btn') as HTMLElement;
   const enterButton = document.getElementById('duel_btn') as HTMLElement;
 
-  function handleHotKey(key: string, hotkeyHashMap: Record<string, any>) {
+  function saySomething(message: string) {
+    chatInput.value = message;
+    const enterEvent = new KeyboardEvent('keydown', {
+      key: 'Enter',
+      keyCode: 13,
+      which: 13,
+      bubbles: true,
+    });
+    setTimeout(() => {
+      chatInput.focus();
+      chatInput.dispatchEvent(enterEvent);
+    }, 30);
+    setTimeout(() => {
+      chatInput.blur();
+    }, 30);
+  }
+
+  function handleHotKey(key: string, hotkeyHashMap: Record<string, any>, options: OptionsTypes) {
+    if (options.disableAllOptions) {
+      return;
+    }
     const hotkey = hotkeyHashMap[key];
     if (hotkey) {
       const { action } = hotkey;
@@ -132,6 +178,7 @@ window.onload = async function () {
       }
     }
   }
+
   function toggleGraveYardView() {
     if (view && view.style.display === 'block') {
       console.log("Closing the GY");
@@ -144,20 +191,7 @@ window.onload = async function () {
 
   function handleThinkButton() {
     thunk?.click();
-    chatInput.value = 'hm';
-    const enterEvent = new KeyboardEvent('keydown', {
-      key: 'Enter',
-      keyCode: 13,
-      which: 13,
-      bubbles: true,
-    });
-    setTimeout(() => {
-      chatInput.focus();
-      chatInput.dispatchEvent(enterEvent);
-    }, 30);
-    setTimeout(() => {
-      chatInput.blur();
-    }, 30);
+    saySomething('hm');
   }
 
   function handleThumbsUpButton() {
@@ -177,27 +211,28 @@ window.onload = async function () {
   function playCard(action: string | [string] | [string, string]) {
     const cardHoverMenuDiv = document.getElementById('card_menu_content') as HTMLElement;
     const cardHoverMenuActions = cardHoverMenuDiv?.getElementsByClassName('card_menu_btn') as HTMLCollectionOf<HTMLElement>;
-    
+
     const actions = Array.isArray(action) ? action : [action];
     console.log(action)
     for (const act of actions) {
       console.log(act)
       console.log(actions)
-    for (const element of cardHoverMenuActions) {
+      for (const element of cardHoverMenuActions) {
 
-      const span = element?.getElementsByTagName('span')[0];
-      if (span && span.textContent === action) {
-        span.click();
-        return;
+        const span = element?.getElementsByTagName('span')[0];
+        if (span && span.textContent === action) {
+          span.click();
+          return;
+        }
       }
     }
   }
-  }
-  function handleKeydown(e: KeyboardEvent) {
+
+  function handleKeydown(e: KeyboardEvent, options: OptionsTypes) {
     const handler = e.key.toLowerCase();
     if (!(e.target instanceof HTMLInputElement) || handler === 'enter') {
       console.log('Key pressed:', handler);
-      handleHotKey(handler, hotkeyHashMap);
+      handleHotKey(handler, hotkeyHashMap, options);
       const actionFunction = actionFunctionMap[handler];
       if (actionFunction) {
         actionFunction();
@@ -205,7 +240,54 @@ window.onload = async function () {
     }
   }
 
-  const debouncedKeydown = debounce(handleKeydown, 150);
+  const debouncedKeydown = debounce((e: KeyboardEvent) => handleKeydown(e, options), 150);
 
   document.addEventListener('keydown', debouncedKeydown);
+
+  function adjustDefaultChatsStyling() {
+    const chatTopBg = document.querySelectorAll('#chats .chat_top_bg')
+    chatTopBg.forEach((element) => {
+      const chatTopBgWithStyle = element as HTMLElement
+      chatTopBgWithStyle.style.cursor = 'auto';
+    })
+
+    const cellElements = document.querySelectorAll("#chats div.cell");
+
+    cellElements.forEach((cellElement) => {
+      const cellElementWithStyle = cellElement as HTMLElement;
+      cellElementWithStyle.style.backgroundImage = "none";
+      cellElementWithStyle.style.border = 'ridge #454545';
+      cellElementWithStyle.style.borderWidth = '1px 0';
+
+      if (options && options.isNightMode) cellElementWithStyle.classList.add('dark-mode');
+
+      cellElementWithStyle.style.cursor = 'pointer';
+      cellElementWithStyle.style.transition = 'background-color 0.3s ease';
+
+      cellElementWithStyle.addEventListener('mouseenter', () => cellElementWithStyle.style.backgroundColor = '#90caf9');
+      cellElementWithStyle.addEventListener('mouseleave', () => cellElementWithStyle.style.backgroundColor = '');
+
+    });
+  }
+
+  function observeChatMutations() {
+    const chatContainer = document.getElementById("chats");
+
+    if (!chatContainer) {
+      return;
+    }
+
+    const observer = new MutationObserver((mutationsList) => {
+      for (const mutation of mutationsList) {
+        if (mutation.type === "childList") {
+          adjustDefaultChatsStyling();
+        }
+      }
+    });
+
+    const config = { childList: true, subtree: true };
+    observer.observe(chatContainer, config);
+  }
+
+  observeChatMutations();
 }

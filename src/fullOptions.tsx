@@ -68,16 +68,20 @@ export const Options = () => {
           <p className="text-gray-600 mt-2 mb-4">Determine how DuelingBookEnhanced can improve your experience</p>
           <hr className="border-gray-300 mb-4" />
           <div className="flex flex-col gap-4">
-            {inputItems.map((item) => (
-              <div className="flex items-center" key={item.id}>
+            {inputItems.map((item, index) => (
+              <div
+                className={`flex items-center ${options.disableAllOptions && index > 0 ? 'opacity-50' : ''}`}
+                key={item.id}
+              >
                 <input
                   id={item.id}
                   type="checkbox"
-                  className="mr-2"
+                  className={`mr-2 ${index > 0 && options.disableAllOptions ? '' : 'cursor-pointer'}`}
                   checked={item.checked}
                   onChange={item.onChange}
+                  disabled={index > 0 && options.disableAllOptions}
                 />
-                <label className="flex items-center w-max" htmlFor={item.id}>{item.label}</label>
+                <label className={`flex items-center w-max ${index > 0 && options.disableAllOptions ? '' : 'cursor-pointer'}`} htmlFor={item.id}>{item.label}</label>
               </div>
             ))}
           </div>
@@ -134,7 +138,7 @@ export const Options = () => {
   const inputItems = [
     {
       id: "allOptions",
-      label: "Disable/Enable All Options",
+      label: "Disable All Options",
       checked: options.disableAllOptions,
       onChange: () => setOptions({ ...options, disableAllOptions: !options.disableAllOptions }),
     },
@@ -159,7 +163,7 @@ export const Options = () => {
   ];
 
   return (
-    
+
     <div className="container mx-auto flex items-stretch h-auto p-4">
       <div className="flex flex-col bg-gray-300 rounded-lg shadow-lg mb-8">
         <div ref={containerRef} className="flex items-center mb-4 bg-gray-700 justify-center p-2">
@@ -173,22 +177,22 @@ export const Options = () => {
         </div>
         <p className="text-xl font-semibold text-center">SETTINGS</p>
         <nav className="mt-4 text-white">
-          <button 
-            className="bg-gray-700 hover:bg-gray-500 w-full py-2 mb-2" 
+          <button
+            className="bg-gray-700 hover:bg-gray-500 w-full py-2 mb-2"
             onClick={() => setCurrentSection("General")}>
             General
           </button>
-          <button 
+          <button
           className="bg-gray-700 hover:bg-gray-500 w-full py-2 mb-2"
           onClick={() => setCurrentSection("Customize Hotkeys")}>
             Customize Hotkeys
           </button>
-          <button 
+          <button
             className="bg-gray-700 hover:bg-gray-500 w-full py-2 mb-2"
             onClick={() => setCurrentSection("Advanced")}>
               Advanced
           </button>
-          <button 
+          <button
             className="bg-gray-700 hover:bg-gray-500 w-full py-2 mb-2"
             onClick={() => setCurrentSection("Help")}>
               Help
@@ -214,7 +218,7 @@ export const Options = () => {
         <main>
         {renderMainContent()}
         </main>
-        
+
         <footer className="pt-2">
           <div className="bg-gray-700 text-white p-4 mb-4 rounded-xl flex justify-center items-center align-middle text-lg space-x-4 flex-grow">
             <img src={coffee} alt="coffee" className="w-10 h-10" />
