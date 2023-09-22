@@ -6,6 +6,8 @@ Duelists - Are you tired of clicking through all your actions on [DuelingBook](h
 
 Dueling Book Enhanced is a collection of features designed to enhance your experience on DuelingBook. It includes a TypeScript content script and a React popup, providing various improvements and customization options.
 
+
+
 ## Features
 
 1. **Hotkeys**: Use hotkeys for immediate actions.
@@ -42,11 +44,11 @@ Dueling Book Enhanced is a collection of features designed to enhance your exper
 
 2. Enable developer mode and go to the Google Chrome Manage Extensions page and click `Load Unpacked`
 
-3. Select the `dist` folder 
+3. Select the `dist` folder
 
-4. Visit [DuelingBook](https://www.duelingbook.com/html5) and have fun! 
+4. Visit [DuelingBook](https://www.duelingbook.com/html5) and have fun!
 
-5. Check the default settings for the hotkeys and features on this page above or in the help section of the extensions options page when installed. 
+5. Check the default settings for the hotkeys and features on this page above or in the help section of the extensions options page when installed.
 
 ### Popup
 
@@ -58,7 +60,7 @@ To use the popup:
 
 3. **Finding Full Settings**: Click the extensions options menu either by right-clicking on the extension and clicking `options` or left-clicking the extension and clicking the gear icon.
 
-4. **Customizing Full Settings**:  Edit any options in any of the sections. Note: Not all options may be currently accessible and are labeled `Coming Soon`. 
+4. **Customizing Full Settings**:  Edit any options in any of the sections. Note: Not all options may be currently accessible and are labeled `Coming Soon`.
 
 
 ## Compatibility

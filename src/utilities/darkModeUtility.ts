@@ -25,6 +25,10 @@ export function applyDarkMode() {
 
   onlineUsersOsViewports.forEach((node) => node.classList.add('dark-mode'));
   onlineUsersChatBackground.forEach((node) => node.classList.add('dark-mode'));
+
+  const cellElements = document.querySelectorAll("#chats div.cell");
+
+  cellElements.forEach((cellElement) => cellElement.classList.add('dark-mode'));
 }
 
 export function removeDarkMode() {
@@ -45,4 +49,8 @@ export function removeDarkMode() {
 
   onlineUsersOsViewports.forEach((node) => node.classList.remove('dark-mode'));
   onlineUsersChatBackground.forEach((node) => node.classList.remove('dark-mode'));
+
+  const cellElements = document.querySelectorAll("#chats div.cell");
+
+  cellElements.forEach((cellElement) => cellElement.classList.remove('dark-mode'));
 }
