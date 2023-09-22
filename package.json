@@ -1,7 +1,7 @@
 {
-  "name": "chrome-extension-typescript-starter",
-  "version": "1.0.0",
-  "description": "chrome-extension-typescript-starter",
+  "name": "duelingbookenhanced",
+  "version": "0.1.0",
+  "description": "A Chrome extension to bring QOL additions to DuelingBook.com",
   "main": "index.js",
   "scripts": {
     "start": "webpack serve --config webpack/webpack.dev.js",
@@ -16,7 +16,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/chibat/chrome-extension-typescript-starter.git"
+    "url": "https://github.com/alexjraymond/DuelingBookEnhanced.git"
   },
   "dependencies": {
     "fs": "^0.0.1-security",
