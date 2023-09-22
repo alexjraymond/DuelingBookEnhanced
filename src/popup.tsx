@@ -34,7 +34,7 @@ const Popup = () => {
   const inputItems = [
     {
       id: "allOptions",
-      label: "Disable/Enable All Options",
+      label: "Disable All Options",
       checked: options.disableAllOptions,
       onChange: () => setOptions({ ...options, disableAllOptions: !options.disableAllOptions }),
     },
@@ -76,16 +76,22 @@ const Popup = () => {
         </button>
       </div>
       <div id="input_container" className="p-5 flex flex-col gap-4">
-        {inputItems.map((item) => (
-          <div className="flex items-center" key={item.id}>
+        {inputItems.map((item, index) => (
+          <div
+            className={`flex items-center ${options.disableAllOptions && index > 0 ? 'opacity-50' : ''}`}
+            key={item.id}
+          >
             <input
               id={item.id}
               type="checkbox"
-              className="w-4 h-4 border-2 border-blue-500 rounded-4 bg-transparent outline-none cursor-pointer transition duration-300 ease-in text-white"
+              className={`w-4 h-4 border-2 border-blue-500 rounded-4 bg-transparent outline-none transition duration-300 ease-in text-white ${index > 0 && options.disableAllOptions ? '' : 'cursor-pointer'}`}
               checked={item.checked}
               onChange={item.onChange}
+              disabled={index > 0 && options.disableAllOptions}
             />
-            <label className="ml-5" htmlFor={item.id}>{item.label}</label>
+            <label className={`ml-5 ${index > 0 && options.disableAllOptions ? '' : 'cursor-pointer'}`} htmlFor={item.id}>
+              {item.label}
+            </label>
           </div>
         ))}
         <div id="button-container" className="flex justify-around w-full">
