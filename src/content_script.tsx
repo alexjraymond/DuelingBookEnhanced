@@ -243,4 +243,51 @@ window.onload = async function () {
   const debouncedKeydown = debounce((e: KeyboardEvent) => handleKeydown(e, options), 150);
 
   document.addEventListener('keydown', debouncedKeydown);
+
+  function adjustDefaultChatsStyling() {
+    const chatTopBg = document.querySelectorAll('#chats .chat_top_bg')
+    chatTopBg.forEach((element) => {
+      const chatTopBgWithStyle = element as HTMLElement
+      chatTopBgWithStyle.style.cursor = 'auto';
+    })
+
+    const cellElements = document.querySelectorAll("#chats div.cell");
+
+    cellElements.forEach((cellElement) => {
+      const cellElementWithStyle = cellElement as HTMLElement;
+      cellElementWithStyle.style.backgroundImage = "none";
+      cellElementWithStyle.style.border = 'ridge #454545';
+      cellElementWithStyle.style.borderWidth = '1px 0';
+
+      if (options && options.isNightMode) cellElementWithStyle.classList.add('dark-mode');
+
+      cellElementWithStyle.style.cursor = 'pointer';
+      cellElementWithStyle.style.transition = 'background-color 0.3s ease';
+
+      cellElementWithStyle.addEventListener('mouseenter', () => cellElementWithStyle.style.backgroundColor = '#90caf9');
+      cellElementWithStyle.addEventListener('mouseleave', () => cellElementWithStyle.style.backgroundColor = '');
+
+    });
+  }
+
+  function observeChatMutations() {
+    const chatContainer = document.getElementById("chats");
+
+    if (!chatContainer) {
+      return;
+    }
+
+    const observer = new MutationObserver((mutationsList) => {
+      for (const mutation of mutationsList) {
+        if (mutation.type === "childList") {
+          adjustDefaultChatsStyling();
+        }
+      }
+    });
+
+    const config = { childList: true, subtree: true };
+    observer.observe(chatContainer, config);
+  }
+
+  observeChatMutations();
 }
