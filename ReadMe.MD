@@ -1,4 +1,4 @@
-![Logo](https://i.imgur.com/Z7pklez.png)
+
 
 ## Overview
 
@@ -6,7 +6,7 @@ Duelists - Are you tired of clicking through all your actions on [DuelingBook](h
 
 Dueling Book Enhanced is a collection of features designed to enhance your experience on DuelingBook. It includes a TypeScript content script and a React popup, providing various improvements and customization options.
 
-
+![Logo](https://github.com/alexjraymond/DuelingBookEnhanced/blob/main/src/assets/images/demo-fullsize.gif?raw=true)
 
 ## Features
 
