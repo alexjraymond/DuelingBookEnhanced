@@ -9,6 +9,7 @@ import { getOptionsFromStorage, saveOptionsToStorage, OptionsTypes } from './uti
 import ReactDOM from "react-dom";
 import CustomizeHotkeys from "./customizeHotkeys";
 import card from "../public/dbe_logo.png"
+import KnownIssues from "./knownIssues";
 
 
 export const Options = () => {
@@ -129,7 +130,7 @@ export const Options = () => {
           </>
         );
       case "Help":
-        return <div>Known Issues & Upcoming Features Content Here</div>;
+        return <KnownIssues />;
       default:
         return null;
     }
@@ -195,7 +196,7 @@ export const Options = () => {
           <button
             className="bg-gray-700 hover:bg-gray-500 w-full py-2 mb-2"
             onClick={() => setCurrentSection("Help")}>
-              Help
+              Known Issues
           </button>
         </nav>
       </div>
@@ -210,7 +211,7 @@ export const Options = () => {
           <button
             id="discord_button"
             className="bg-blue-500 font-bold flex justify-center items-center px-7 py-1 rounded-xl hover:bg-blue-400"
-            onClick={() => window.open('https://discord.gg/BHHyHDSh', '_blank')}
+            onClick={() => window.open('https://discord.gg/hbGw3bDMfY', '_blank')}
           >
             <BsDiscord className="w-8 h-8 flex" />
           </button>
