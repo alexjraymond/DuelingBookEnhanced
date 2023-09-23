@@ -26,6 +26,7 @@ Dueling Book Enhanced is a collection of features designed to enhance your exper
    - **To Graveyard** (q): Sends a card to the graveyard.
    - **To Hand** (h): Sends a card to your hand.
    - **Activate** (a): Activates a card.
+   - **To S/T** (a): Places a card in the S/T Zone.
    - **S. Summon ATK / SS ATK** (s): Special Summons a card in attack position.
    - **Normal Summon** (n): Special Summons a card in attack position.
    - **Set** (j): Sets a card.

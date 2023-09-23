@@ -42,7 +42,7 @@ function getDefaultHotkeys(): HotkeyMap {
       "action": "To Hand"
     },
     "a": {
-      "action": "Activate"
+      "action": ["Activate", "To S/T"]
     },
     "s": {
       "action": ["S. Summon ATK", "SS ATK"]

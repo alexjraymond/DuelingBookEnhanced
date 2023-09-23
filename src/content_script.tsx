@@ -67,6 +67,7 @@ window.onload = async function () {
     "To Grave": () => playCard("To Grave"),
     "To Hand": () => playCard("To Hand"),
     "Activate": () => playCard("Activate"),
+    "To S/T": () => playCard("To S/T"),
     "S. Summon ATK": () => playCard("S. Summon ATK"),
     "SS ATK": () => playCard("SS ATK"),
     "Normal Summon": () => playCard("Normal Summon"),

@@ -38,7 +38,7 @@
     },
     "a": {
       "div": null,
-      "action": "Activate"
+      "action": ["Activate", "To S/T"]
     },
     "s": {
       "div": null,
