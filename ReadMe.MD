@@ -21,39 +21,23 @@ Dueling Book Enhanced is a collection of features designed to enhance your exper
 | View Main Deck | V | Toggles the display of your main deck |
 | View Extra Deck | E | Toggles the display of your extra deck |
 | Think | T | Presses the thinking button and sends a message in chat saying that you're thinking |
+| Thumbs Up | F | Presses the thumbs up button | 
+| Toggle Chat Box | Enter | Start or finish typing in the chat box with a single keypress |
 ---
 
-
-  - **Close View Menu** (escape): Closes the view menu.
-   - **View Graveyard** (g): Toggles the display of your graveyard.
-   - **View Main Deck** (v): Toggles the display of your main deck.
-   - **View Extra Deck** (e): Toggles the display of your extra deck.
-   - **Think** (t): Press the thinking button and send a chat message indicating that you're thinking.
-   - **Thumbs Up** (f): Press the thumbs-up button.
-   - **Toggle Chat Box** (enter): Start or finish typing in the chat box with a single keypress.
-
-
-
-   - **Close View Menu** (escape): Closes the view menu.
-   - **View Graveyard** (g): Toggles the display of your graveyard.
-   - **View Main Deck** (v): Toggles the display of your main deck.
-   - **View Extra Deck** (e): Toggles the display of your extra deck.
-   - **Think** (t): Press the thinking button and send a chat message indicating that you're thinking.
-   - **Thumbs Up** (f): Press the thumbs-up button.
-   - **Toggle Chat Box** (enter): Start or finish typing in the chat box with a single keypress.
-
    **The hotkeys below require you to hover over a card.**
-
-   - **To Graveyard** (q): Sends a card to the graveyard.
-   - **To Hand** (h): Sends a card to your hand.
-   - **Activate** (a): Activates a card.
-   - **To S/T** (a): Places a card in the S/T Zone.
-   - **S. Summon ATK / SS ATK** (s): Special Summons a card in attack position.
-   - **Normal Summon** (n): Special Summons a card in attack position.
-   - **Set** (j): Sets a card.
-   - **Declare** (d): Declares a card.
-   - **Banish** (w): Banishes a card.
-
+---
+| **Feature** | **Default Hotkey** | **Description** |
+| ------- | -------------- | ----------- |
+| To Graveyard | Q | Sends a card to the graveyard | 
+| To Hand | H | Sends a card to your hand | 
+| Activate | A | Activates a card |
+| To S/T | A | Places a card in the S/T Zone |
+| S.Summon ATK / SS ATK | S | Special summon a card in attack position |
+| Set | J | Sets a card | 
+| Declare | D | Declares a card |
+| Banish | W | Banishes a card |
+---
 
 2. **Dark Mode**: Apply a dark mode.
 3. **Skip Intro**: Automatically skip the intro movie.
