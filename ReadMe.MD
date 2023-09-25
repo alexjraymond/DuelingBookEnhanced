@@ -17,6 +17,12 @@ Dueling Book Enhanced is a collection of features designed to enhance your exper
 | Feature | Default Hotkey | Description |
 | ------- | -------------- | ----------- |
 | Close View Menu | Escape | Closes the view menu | 
+| View Graveyard | G | Toggles the display of your graveyard | 
+| View Main Deck | V | Toggles the display of your main deck |
+| View Extra Deck | E | Toggles the display of your extra deck |
+| Think | T | Presses the thinking button and sends a message in chat saying that you're thinking |
+
+
   - **Close View Menu** (escape): Closes the view menu.
    - **View Graveyard** (g): Toggles the display of your graveyard.
    - **View Main Deck** (v): Toggles the display of your main deck.
