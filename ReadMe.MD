@@ -9,6 +9,8 @@ Dueling Book Enhanced is a collection of features designed to enhance your exper
 
 ![Demo](https://github.com/alexjraymond/DuelingBookEnhanced/blob/main/src/assets/images/demo-medium.gif?raw=true)
 
+
+
 ## Features
 
 1. **Hotkeys**: Use hotkeys for immediate actions.
@@ -40,8 +42,13 @@ Dueling Book Enhanced is a collection of features designed to enhance your exper
 ---
 
 2. **Dark Mode**: Apply a dark mode.
+
+![SkipAndConnect](https://github.com/alexjraymond/DuelingBookEnhanced/blob/main/src/assets/images/skip-and-connect.gif?raw=true)
+
 3. **Skip Intro**: Automatically skip the intro movie.
 4. **AutoConnect**: Automatically connect to the main menu or last screen if you're already logged in.
+
+![SkipAndConnect](https://github.com/alexjraymond/DuelingBookEnhanced/blob/main/src/assets/images/skip-and-connect.gif?raw=true)
 
 ## Usage and Installation
 
