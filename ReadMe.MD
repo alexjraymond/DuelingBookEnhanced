@@ -16,6 +16,7 @@ Dueling Book Enhanced is a collection of features designed to enhance your exper
 ---
 | Feature | Default Hotkey | Description |
 | ------- | -------------- | ----------- |
+| Close View Menu | Escape | Closes the view menu | 
   - **Close View Menu** (escape): Closes the view menu.
    - **View Graveyard** (g): Toggles the display of your graveyard.
    - **View Main Deck** (v): Toggles the display of your main deck.
