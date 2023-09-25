@@ -9,8 +9,6 @@ Dueling Book Enhanced is a collection of features designed to enhance your exper
 
 ![Demo](https://github.com/alexjraymond/DuelingBookEnhanced/blob/main/src/assets/images/demo-medium.gif?raw=true)
 
-
-
 ## Features
 
 1. **Hotkeys**: Use hotkeys for immediate actions.
