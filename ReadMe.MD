@@ -25,7 +25,7 @@ Dueling Book Enhanced is a collection of features designed to enhance your exper
 | Toggle Chat Box | Enter | Start or finish typing in the chat box with a single keypress |
 ---
 
-   **The hotkeys below require you to hover over a card.**
+   ***The hotkeys below require you to hover over a card.***
 ---
 | **Feature** | **Default Hotkey** | **Description** |
 | ------- | -------------- | ----------- |
