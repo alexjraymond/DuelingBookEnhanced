@@ -34,8 +34,7 @@
 
   "permissions": [
     "activeTab",
-    "storage",
-    "webNavigation"
+    "storage"
   ],
 
   "host_permissions": [
