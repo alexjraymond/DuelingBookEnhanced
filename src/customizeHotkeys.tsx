@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { hotkeys as initialHotkeys } from './data/hotkeysConfig.json';
-import card from "../public/dbe_logo.png"
+import initialHotkeys from './data/hotkeysConfig.json';
 
 type HotkeyConfig = {
   [key: string]: {
@@ -9,8 +8,20 @@ type HotkeyConfig = {
   };
 };
 
+const HotkeySection: React.FC<{ title: string }> = ({ title }) => {
+  return (
+    <div className='container justify-center'>
+      <h1 className='text-2xl text-center font-bold bg-gray-200 rounded-lg'>{title}</h1>
+    </div>
+  );
+};
+
+const hotkeySectionNames = [
+  'View Actions', 'Card Actions', 'User Interface', 'Emotes/Chat Box'
+]
+
 const CustomizeHotkeys: React.FC = () => {
-  const [hotkeySettings, setHotkeySettings] = useState<HotkeyConfig>(initialHotkeys);
+  const [hotkeySettings, setHotkeySettings] = useState<HotkeyConfig>(initialHotkeys.hotkeys);
 
   const handleHotkeyChange = (key: string, event: React.ChangeEvent<HTMLInputElement>) => {
     const newHotkey = event.target.value;
@@ -23,23 +34,12 @@ const CustomizeHotkeys: React.FC = () => {
     }));
   };
 
-  const thisFunctionIsTheHtml = {
-
-    
-  }
-
   return (
-    <div>
-      <div className="flex justify-center">
-      <img src={card} />
-      <img src={card} />
-      <img src={card} />
-      <img src={card} />
-      <img src={card} />
-      </div>
-        <div>
-      <h1 className='text-2xl justify-center flex'>We set 5 cards face down and will be back with this section soon...</h1>
-        </div>
+    <div className="flex flex-col justify-center gap-6 mb-10">
+      <h1 className="text-3xl font-bold">Customize Your Hotkeys</h1>
+      {hotkeySectionNames.map((sectionName, index) => (
+        <HotkeySection key={index} title={sectionName} />
+      ))}
     </div>
   );
 };

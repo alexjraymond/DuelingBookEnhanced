@@ -8,8 +8,8 @@ import {BiCoffeeTogo} from 'react-icons/bi'
 import { getOptionsFromStorage, saveOptionsToStorage, OptionsTypes } from './utilities/optionsUtility'
 import ReactDOM from "react-dom";
 import CustomizeHotkeys from "./customizeHotkeys";
-import card from "../public/dbe_logo.png"
 import KnownIssues from "./knownIssues";
+import ComingSoon from "./components/ComingSoon";
 
 
 export const Options = () => {
@@ -100,35 +100,9 @@ export const Options = () => {
         </>
           )
       case "Customize Hotkeys":
-        return (
-          <>
-            <div className="flex justify-center">
-                <img src={card} />
-                <img src={card} />
-                <img src={card} />
-                <img src={card} />
-                <img src={card} />
-            </div>
-            <div>
-                <h1 className='text-2xl justify-center flex'>We set 5 cards face down and will be back with this section soon...</h1>
-            </div>
-        </>
-          );
+        return <CustomizeHotkeys />
       case "Advanced":
-        return (    
-          <>
-            <div className="flex justify-center">
-                <img src={card} />
-                <img src={card} />
-                <img src={card} />
-                <img src={card} />
-                <img src={card} />
-            </div>
-            <div>
-                <h1 className='text-2xl justify-center flex'>We set 5 cards face down and will be back with this section soon...</h1>
-            </div>
-          </>
-        );
+        return <ComingSoon />
       case "Help":
         return <KnownIssues />;
       default:
@@ -164,7 +138,6 @@ export const Options = () => {
   ];
 
   return (
-
     <div className="container mx-auto flex items-stretch h-auto p-4">
       <div className="flex flex-col bg-gray-300 rounded-lg shadow-lg mb-8">
         <div ref={containerRef} className="flex items-center mb-4 bg-gray-700 justify-center p-2">
@@ -184,8 +157,8 @@ export const Options = () => {
             General
           </button>
           <button
-          className="bg-gray-700 hover:bg-gray-500 w-full py-2 mb-2"
-          onClick={() => setCurrentSection("Customize Hotkeys")}>
+            className="bg-gray-700 hover:bg-gray-500 w-full py-2 mb-2"
+            onClick={() => setCurrentSection("Customize Hotkeys")}>
             Customize Hotkeys
           </button>
           <button
@@ -227,7 +200,7 @@ export const Options = () => {
               <span className="font-bold">Enjoying our Product?</span>
               <span> Share some support</span>
             </div>
-            <button 
+            <button
               className="bg-blue-500 px-7 py-1 rounded-lg font-bold flex justify-center items-center hover:bg-blue-400"
               onClick={() => window.open('https://www.paypal.com/donate/?business=TNF5V5V9E869E&no_recurring=1&item_name=hi+this+is+alex+from+the+duelingbookenhanced+extension+-+if+you+want+to+buy+Joseph+%26+I+a+coffee+or+something+here%27s+where+2doit&currency_code=USD', '_blank')}><BiCoffeeTogo className="w-8 h-8 flex" /></button>
           </div>
