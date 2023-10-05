@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import initialHotkeys from './data/hotkeysConfig.json';
+import defaultHotkeys from './data/hotkeysConfig.json';
+import { loadHotkeysConfig } from './utilities/configUtility';
 
 const validHotkeys = [
   'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
@@ -16,18 +17,15 @@ const validHotkeys = [
 
 type HotkeyConfig = {
   [key: string]: {
-    div: string | null;
     action: string | string[];
   };
 };
 
 const HotkeySection: React.FC<{ title: string; actions: string[] }> = ({ title, actions }) => {
-  const [selectedOptions, setSelectedOptions] = useState<string[]>(Array(actions.length).fill(''));
 
-  const handleOptionChange = (event: React.ChangeEvent<HTMLSelectElement>, index: number) => {
-    const newOptions = [...selectedOptions];
-    newOptions[index] = event.target.value;
-    setSelectedOptions(newOptions);
+  console.log('default hotkeys', defaultHotkeys)
+
+  const handleHotkeyChange = (event: React.ChangeEvent<HTMLSelectElement>, index: number) => {
   };
 
   return (
@@ -38,8 +36,7 @@ const HotkeySection: React.FC<{ title: string; actions: string[] }> = ({ title, 
           <div key={index} className='flex gap-4'>
             <h2 className='inline'>{action}</h2>
             <select
-              value={selectedOptions[index]}
-              onChange={(event) => handleOptionChange(event, index)}
+              onChange={(event) => handleHotkeyChange(event, index)}
               className="border rounded-md text-gray-600"
             >
               {validHotkeys.map((key) => (
@@ -71,24 +68,16 @@ const hotkeySections = [
 ];
 
 const CustomizeHotkeys: React.FC = () => {
-  const [hotkeySettings, setHotkeySettings] = useState<HotkeyConfig>(initialHotkeys.hotkeys);
-
-  const handleHotkeyChange = (key: string, event: React.ChangeEvent<HTMLInputElement>) => {
-    const newHotkey = event.target.value;
-    setHotkeySettings((prevSettings) => ({
-      ...prevSettings,
-      [key]: {
-        ...prevSettings[key],
-        action: newHotkey,
-      },
-    }));
-  };
 
   return (
     <div className="flex flex-col justify-center gap-6 mb-10">
       <h1 className="text-3xl font-bold">Customize Hotkeys</h1>
       {hotkeySections.map((section, index) => (
-        <HotkeySection key={index} title={section.title} actions={section.actions} />
+        <HotkeySection
+          key={index}
+          title={section.title}
+          actions={section.actions}
+        />
       ))}
     </div>
   );

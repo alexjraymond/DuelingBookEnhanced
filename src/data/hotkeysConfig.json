@@ -1,63 +1,48 @@
 {
   "hotkeys": {
     "escape": {
-      "div": null,
       "action": "Close View Menu"
     },
     "g": {
-      "div": "gY",
       "action": "GY"
     },
     "v": {
-      "div": null,
       "action": "View"
     },
     "e": {
-      "div": null,
       "action": "Show"
     },
     "t": {
-      "div": "think_btn",
       "action": "Think"
     },
     "f": {
-      "div": "good_btn",
       "action": "Thumbs Up"
     },
     "enter": {
-      "div": null,
       "action": "Toggle Chat Box"
     },
     "d": {
-      "div": null,
       "action": "Declare"
     },
     "h": {
-      "div": null,
       "action": "To Hand"
     },
     "a": {
-      "div": null,
       "action": ["Activate", "To S/T"]
     },
     "s": {
-      "div": null,
       "action": ["S. Summon ATK", "SS ATK"]
     },
     "n": {
-      "div": null,
       "action": "Normal Summon"
     },
     "j": {
-      "div": null,
       "action": "Set"
     },
     "q": {
-      "div": null,
       "action": ["To Graveyard", "To Grave"]
     },
     "w": {
-      "div": null,
       "action": "Banish"
     }
   }
