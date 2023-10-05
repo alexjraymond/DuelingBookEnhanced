@@ -74,6 +74,10 @@ To use the popup:
 
 4. **Customizing Full Settings**:  Edit any options in any of the sections. Note: Not all options may be currently accessible and are labeled `Coming Soon`.
 
+## Installation
+
+While we are waiting on the Google Chrome Store to accept our latest development build, feel free to join our discord (https://discord.gg/vxN6HvSwPJ) to get the latest beta access.
+
 
 ## Compatibility
 
