@@ -58,6 +58,6 @@ function getDefaultHotkeys(): HotkeyMap {
     },
     "w": {
       "action": "Banish"
-    },
+    }
   };
 }

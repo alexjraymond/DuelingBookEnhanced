@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import defaultHotkeysData from './data/hotkeysConfig.json';
 import { loadHotkeysConfig } from './utilities/configUtility';
 
@@ -18,11 +18,24 @@ const validHotkeys = [
 const defaultHotkeys = defaultHotkeysData.hotkeys;
 
 const HotkeySection: React.FC<{ title: string; actions: string[] }> = ({ title, actions }) => {
+  const [selectedHotkeys, setSelectedHotkeys] = useState<{ [key: string]: string }>({});
 
-  console.log('default hotkeys', defaultHotkeys)
+  useEffect(() => {
+    // initialize selectedHotkeys with default values
+    const initialSelectedHotkeys: { [key: string]: string } = {};
+    actions.forEach((action) => {
+      const hotkey = findHotkeyByAction(action, defaultHotkeys);
+      initialSelectedHotkeys[action] = hotkey;
+    });
+    setSelectedHotkeys(initialSelectedHotkeys);
+  }, [actions]);
 
-  const handleHotkeyChange = (event: React.ChangeEvent<HTMLSelectElement>, index: number) => {
-    console.log('hotkey settings were changed')
+  const handleHotkeyChange = (action: string, hotkey: string) => {
+    setSelectedHotkeys((prevSelectedHotkeys) => {
+      const updatedSelectedHotkeys = { ...prevSelectedHotkeys, [action]: hotkey };
+      console.log('Action:', action, 'Hotkey:', hotkey);
+      return updatedSelectedHotkeys;
+    });
   };
 
   function findHotkeyByAction(action: string, hotkeysConfig: Record<string, { action: string | string[] }>): string {
@@ -46,15 +59,15 @@ const HotkeySection: React.FC<{ title: string; actions: string[] }> = ({ title, 
       <h1 className='text-2xl text-center font-bold bg-gray-200 rounded-lg mb-4'>{title}</h1>
       <div className='flex flex-col gap-2'>
         {actions.map((action, index) => {
-          // Find the corresponding hotkey for the action
+          // find the corresponding hotkey for the action
           const hotkey = findHotkeyByAction(action, defaultHotkeys)
 
           return (
             <div key={index} className='flex gap-4'>
               <h2 className='inline'>{action}</h2>
               <select
-                value={hotkey}
-                onChange={(event) => handleHotkeyChange(event, index)}
+                value={selectedHotkeys[action]}
+                onChange={(e) => handleHotkeyChange(action, e.target.value)}
                 className="border rounded-md text-gray-600"
               >
                 {validHotkeys.map((key) => (
