@@ -4,13 +4,13 @@
       "action": "Close View Menu"
     },
     "g": {
-      "action": "GY"
+      "action": "View Graveyard"
     },
     "v": {
-      "action": "View"
+      "action": "View Main Deck"
     },
     "e": {
-      "action": "Show"
+      "action": "View Extra Deck"
     },
     "t": {
       "action": "Think"
