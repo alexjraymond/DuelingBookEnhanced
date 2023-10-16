@@ -212,7 +212,7 @@ window.onload = async function () {
       console.log('Key pressed:', handler);
 
       // Use the updated `getActionsForHotkey` function
-      const actions = getActionsForHotkey(handler);
+      const actions = getActionsForHotkey(handler, hotkeyHashMap);
       console.log('actions', actions)
 
       if (actions.length > 0) {

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import defaultHotkeysData from './data/hotkeysConfig.json';
 import { loadHotkeysConfig, getDefaultHotkeys, saveHotkeysConfig } from './utilities/configUtility';
 
 const validHotkeys = [
@@ -15,8 +14,6 @@ const validHotkeys = [
   ',', '.', '/', ';', '\'', '[', ']',
 ];
 
-const defaultHotkeys = defaultHotkeysData.hotkeys;
-
 const HotkeySection: React.FC<{ title: string; actions: string[] }> = ({ title, actions }) => {
   const [selectedHotkeys, setSelectedHotkeys] = useState<{ [key: string]: string }>({});
 
@@ -29,13 +26,26 @@ const HotkeySection: React.FC<{ title: string; actions: string[] }> = ({ title, 
   }, []);
 
   useEffect(() => {
-    // initialize selectedHotkeys with default values
-    const initialSelectedHotkeys: { [key: string]: string } = {};
-    actions.forEach((action) => {
-      const hotkey = findHotkeyByAction(action, defaultHotkeys);
-      initialSelectedHotkeys[action] = hotkey;
-    });
-    setSelectedHotkeys(initialSelectedHotkeys);
+    async function initializeSelectedHotkeys() {
+      try {
+        const currentHotkeys = await loadHotkeysConfig();
+        console.log('current hotkeys', currentHotkeys);
+
+        // Initialize selectedHotkeys based on the currentHotkeys
+        const initialSelectedHotkeys: { [key: string]: string } = {};
+        actions.forEach((action) => {
+          const hotkey = findHotkeyByAction(action, currentHotkeys);
+          initialSelectedHotkeys[action] = hotkey;
+        });
+
+        // Set selectedHotkeys based on the loaded hotkeys
+        setSelectedHotkeys(initialSelectedHotkeys);
+      } catch (error) {
+        console.error('Error loading hotkeys:', error);
+      }
+    }
+
+    initializeSelectedHotkeys();
   }, [actions]);
 
   const handleHotkeyChange = async (action: string, hotkey: string) => {
@@ -72,22 +82,26 @@ const HotkeySection: React.FC<{ title: string; actions: string[] }> = ({ title, 
     }
   };
 
+  type HotkeyEntry = {
+    action: string | string[];
+    hotkey: string;
+  };
 
-  function findHotkeyByAction(action: string, hotkeysConfig: Record<string, { action: string | string[] }>): string {
-    for (const hotkey in hotkeysConfig) {
-      const actions = hotkeysConfig[hotkey].action;
-      const parts = action.split('/');
+  function findHotkeyByAction(action: string, hotkeysConfig: HotkeyEntry[]): string {
+    for (const hotkeyItem of hotkeysConfig) {
+      const actions = hotkeyItem.action;
 
       if (Array.isArray(actions)) {
-        if (actions.includes(parts[0]) || actions.includes(parts[1])) {
-          return hotkey;
+        if (actions.includes(action)) {
+          return hotkeyItem.hotkey;
         }
-      } else if (actions === parts[0] || actions === parts[1]) {
-        return hotkey;
+      } else if (actions === action) {
+        return hotkeyItem.hotkey;
       }
     }
     return '';
   }
+
 
   return (
     <div className='container justify-center'>

@@ -44,8 +44,7 @@ export function getDefaultHotkeys(): HotkeyEntry[] {
   ];
 }
 
-export function getActionsForHotkey(hotkey: string): string[] {
-  const hotkeyMap = getDefaultHotkeys();
+export function getActionsForHotkey(hotkey: string, hotkeyMap: HotkeyEntry[]): string[] {
   const matchingActions: string[] = [];
 
   for (const entry of hotkeyMap) {
