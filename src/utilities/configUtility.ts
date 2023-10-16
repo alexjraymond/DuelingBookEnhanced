@@ -11,8 +11,16 @@ export async function loadHotkeysConfig(): Promise<HotkeyMap> {
   });
 }
 
-// Don't forget to update the actionsFunctionMap in content_script.tsx
-function getDefaultHotkeys(): HotkeyMap {
+export async function saveHotkeysConfig(hotkeys: HotkeyMap): Promise<void> {
+  return new Promise<void>((resolve) => {
+    chrome.storage.sync.set({ hotkeysConfig: hotkeys }, () => {
+      resolve();
+    });
+  });
+}
+
+// don't forget to update the actionsFunctionMap in content_script.tsx
+export function getDefaultHotkeys(): HotkeyMap {
   return {
     "escape": {
       "action": "Close View Menu"

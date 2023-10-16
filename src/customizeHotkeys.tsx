@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import defaultHotkeysData from './data/hotkeysConfig.json';
-import { loadHotkeysConfig } from './utilities/configUtility';
+import { loadHotkeysConfig, getDefaultHotkeys, saveHotkeysConfig } from './utilities/configUtility';
+import Button from './components/Button';
+
+
 
 const validHotkeys = [
   'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
@@ -19,6 +22,14 @@ const defaultHotkeys = defaultHotkeysData.hotkeys;
 
 const HotkeySection: React.FC<{ title: string; actions: string[] }> = ({ title, actions }) => {
   const [selectedHotkeys, setSelectedHotkeys] = useState<{ [key: string]: string }>({});
+
+  useEffect(() => {
+    async function loadAndLogHotkeys() {
+      const currentHotkeys = await loadHotkeysConfig();
+      console.log('current hotkeys', currentHotkeys);
+    }
+    loadAndLogHotkeys();
+  }, []);
 
   useEffect(() => {
     // initialize selectedHotkeys with default values
@@ -99,6 +110,11 @@ const hotkeySections = [
   }
 ];
 
+const resetDefaults = async () => {
+  const defaultHotkeys = getDefaultHotkeys();
+  await saveHotkeysConfig(defaultHotkeys);
+};
+
 const CustomizeHotkeys: React.FC = () => {
 
   return (
@@ -111,6 +127,15 @@ const CustomizeHotkeys: React.FC = () => {
           actions={section.actions}
         />
       ))}
+      <hr />
+      <div className="flex justify-center">
+        <button
+          onClick={resetDefaults}
+          className="inline-block w-28 bg-blue-500 text-white text-sm cursor-pointer transition-transform duration-200 ease-in h-[40px] rounded px-3 py-2 hover:bg-blue-400"
+        >
+          Reset Defaults
+        </button>
+      </div>
     </div>
   );
 };
