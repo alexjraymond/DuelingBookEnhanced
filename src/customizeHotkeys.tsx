@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import defaultHotkeysData from './data/hotkeysConfig.json';
 import { loadHotkeysConfig, getDefaultHotkeys, saveHotkeysConfig } from './utilities/configUtility';
-import Button from './components/Button';
-
-
 
 const validHotkeys = [
   'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
@@ -41,13 +38,40 @@ const HotkeySection: React.FC<{ title: string; actions: string[] }> = ({ title, 
     setSelectedHotkeys(initialSelectedHotkeys);
   }, [actions]);
 
-  const handleHotkeyChange = (action: string, hotkey: string) => {
-    setSelectedHotkeys((prevSelectedHotkeys) => {
-      const updatedSelectedHotkeys = { ...prevSelectedHotkeys, [action]: hotkey };
-      console.log('Action:', action, 'Hotkey:', hotkey);
-      return updatedSelectedHotkeys;
-    });
+  const handleHotkeyChange = async (action: string, hotkey: string) => {
+    try {
+      const currentHotkeys = await loadHotkeysConfig();
+      const actionParts = action.split('/');
+      const actions = [];
+
+      if (actionParts.length > 1) {
+        actions.push(...actionParts);
+      } else {
+        actions.push(action);
+      }
+
+      const updatedSelectedHotkeys = { ...selectedHotkeys };
+
+      for (const hotkeyItem of currentHotkeys) {
+        if (actions.includes(hotkeyItem.action)) {
+          updatedSelectedHotkeys[hotkeyItem.action] = hotkeyItem.hotkey;
+        }
+
+        for (const hotkeyItem of currentHotkeys) {
+          if (actions.includes(hotkeyItem.action)) {
+            hotkeyItem.hotkey = hotkey;
+          }
+        }
+      }
+      console.log('current hotkeys updated', currentHotkeys)
+      setSelectedHotkeys(updatedSelectedHotkeys);
+      await saveHotkeysConfig(currentHotkeys);
+
+    } catch (error) {
+      console.error('Error loading or updating hotkeys:', error);
+    }
   };
+
 
   function findHotkeyByAction(action: string, hotkeysConfig: Record<string, { action: string | string[] }>): string {
     for (const hotkey in hotkeysConfig) {
@@ -70,8 +94,6 @@ const HotkeySection: React.FC<{ title: string; actions: string[] }> = ({ title, 
       <h1 className='text-2xl text-center font-bold bg-gray-200 rounded-lg mb-4'>{title}</h1>
       <div className='flex flex-col gap-2'>
         {actions.map((action, index) => {
-          // find the corresponding hotkey for the action
-          const hotkey = findHotkeyByAction(action, defaultHotkeys)
 
           return (
             <div key={index} className='flex gap-4'>
