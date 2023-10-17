@@ -7,9 +7,10 @@ interface HotkeySectionProps {
   actions: string[];
   selectedHotkeys: { [key: string]: string };
   setSelectedHotkeys: (hotkeys: { [key: string]: string }) => void;
+  resetCounter: number;
 }
 
-export const HotkeySection: React.FC<HotkeySectionProps> = ({ title, actions, selectedHotkeys, setSelectedHotkeys }) => {
+export const HotkeySection: React.FC<HotkeySectionProps> = ({ title, actions, selectedHotkeys, setSelectedHotkeys, resetCounter }) => {
 
   useEffect(() => {
     async function loadAndLogHotkeys() {
@@ -17,7 +18,7 @@ export const HotkeySection: React.FC<HotkeySectionProps> = ({ title, actions, se
       console.log('current hotkeys', currentHotkeys);
     }
     loadAndLogHotkeys();
-  }, []);
+  }, [resetCounter]);
 
   useEffect(() => {
     async function initializeSelectedHotkeys() {
@@ -87,18 +88,22 @@ export const HotkeySection: React.FC<HotkeySectionProps> = ({ title, actions, se
   function findHotkeyByAction(action: string, hotkeysConfig: HotkeyEntry[]): string {
     for (const hotkeyItem of hotkeysConfig) {
       const actions = hotkeyItem.action;
-
-      if (Array.isArray(actions)) {
-        if (actions.includes(action)) {
+      console.log('actions', actions)
+      if (actions === action) {
+        return hotkeyItem.hotkey;
+      } else if (action.includes('/')) {
+        const actionParts = action.split('/');
+        console.log('action parts', actionParts)
+        if (typeof actions === 'string' && actionParts.includes(actions)) {
+          return hotkeyItem.hotkey;
+        } else if (Array.isArray(actions) && actionParts.some(part => actions.includes(part))) {
           return hotkeyItem.hotkey;
         }
-      } else if (actions === action) {
-        return hotkeyItem.hotkey;
       }
     }
+    console.log('action not found', action, hotkeysConfig);
     return '';
   }
-
 
   return (
     <div className='container justify-center'>
