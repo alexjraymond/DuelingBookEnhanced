@@ -39,7 +39,7 @@ export const HotkeySection: React.FC<HotkeySectionProps> = ({ title, actions, se
     }
 
     initializeSelectedHotkeys();
-  }, [actions]);
+  }, [actions, resetCounter]);
 
   const handleHotkeyChange = async (action: string, hotkey: string) => {
     try {
