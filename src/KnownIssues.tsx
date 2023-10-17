@@ -1,43 +1,7 @@
 import React from 'react'
 import Issue from './components/Issue'
-
-const knownIssues = [
-    {
-        issue: 'Night/Dark Mode Inconsistencies',
-        description: "Dark theme doesn't apply to various sections of DB, mainly profile and tertiary spots.",
-    },
-    {
-        issue: "Changed Settings Don't Immediately Take Effect",
-        description: "If you change settings while already on duelingbook.com, you need to reload the page for some settings to update.",
-    },
-]
-
-const plannedFeatures = [
-    {
-        feature: 'Customizable Hotkeys',
-        completed: true,
-    },
-    {
-        feature: 'Changed Settings Immediately Take Effect',
-        completed: false,
-    },
-    {
-        feature: 'Milling Hotkey',
-        completed: false,
-    },
-    {
-        feature: 'LP Add/Subtract',
-        completed: false,
-    },
-    {
-        feature: 'Themes',
-        completed: false,
-    },
-    {
-        feature: 'Chain Link Declarations',
-        completed: false,
-    },
-]
+import { knownIssues } from './data/knownIssues'
+import { plannedFeatures } from './data/plannedFeatures'
 
 const KnownIssues = () => {
     return (

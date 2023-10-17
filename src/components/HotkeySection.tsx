@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { loadHotkeysConfig, saveHotkeysConfig } from "../utilities/configUtility";
 import { validHotkeys } from "../data/validHotkeys";
 
