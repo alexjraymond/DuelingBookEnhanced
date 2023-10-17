@@ -15,7 +15,7 @@ export const Options = () => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [isSmall, setIsSmall] = useState(false);
   const [currentSection, setCurrentSection] = useState("General");
-  const [isSettingsSavedMessageVisible, setIsSettingsSavedMessageVisible] = useState(false);
+  const [isSavedVisible, setIsSavedVisible] = useState(false);
   const [options, setOptions] = useState<OptionsTypes>({
     disableAllOptions: false,
     skipIntro: false,
@@ -58,13 +58,13 @@ export const Options = () => {
 
   const settingsSavedMessageTimer = useRef<NodeJS.Timeout | null>(null);
 
-  const toggleSettingsSavedMessage = () => {
+  const toggleSavedMessage = () => {
 
-    setIsSettingsSavedMessageVisible(false);
+    setIsSavedVisible(false);
     if (settingsSavedMessageTimer.current) clearTimeout(settingsSavedMessageTimer.current);
 
     settingsSavedMessageTimer.current = setTimeout(() => {
-      setIsSettingsSavedMessageVisible(true);
+      setIsSavedVisible(true);
     }, 1);
   };
 
@@ -89,7 +89,7 @@ export const Options = () => {
                     checked={item.checked}
                     onChange={() => {
                       item.onChange();
-                      toggleSettingsSavedMessage();
+                      toggleSavedMessage();
                     }}
                     disabled={index > 0 && options.disableAllOptions}
                   />
@@ -111,7 +111,7 @@ export const Options = () => {
           </>
         )
       case "Customize Hotkeys":
-        return <CustomizeHotkeys />
+        return <CustomizeHotkeys toggleSavedMessage={toggleSavedMessage} />
       case "Advanced":
         return <ComingSoon />
       case "Help":
@@ -204,7 +204,7 @@ export const Options = () => {
 
         <main className="relative">
           {renderMainContent()}
-          {isSettingsSavedMessageVisible && (
+          {isSavedVisible && (
             <div className="flex justify-center">
               <div className="saved-settings-message bg-green-500 text-white px-4 py-2 rounded-md absolute top-0 animate-slide-down opacity-0 text-lg transition-transform duration-500">
                 Settings Saved!

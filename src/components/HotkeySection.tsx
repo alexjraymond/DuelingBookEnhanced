@@ -8,9 +8,10 @@ interface HotkeySectionProps {
   selectedHotkeys: { [key: string]: string };
   setSelectedHotkeys: (hotkeys: { [key: string]: string }) => void;
   resetCounter: number;
+  toggleSavedMessage: () => void;
 }
 
-export const HotkeySection: React.FC<HotkeySectionProps> = ({ title, actions, selectedHotkeys, setSelectedHotkeys, resetCounter }) => {
+export const HotkeySection: React.FC<HotkeySectionProps> = ({ title, actions, selectedHotkeys, setSelectedHotkeys, resetCounter, toggleSavedMessage }) => {
 
   useEffect(() => {
     async function loadAndLogHotkeys() {
@@ -69,6 +70,7 @@ export const HotkeySection: React.FC<HotkeySectionProps> = ({ title, actions, se
       console.log('current hotkeys updated', currentHotkeys)
       setSelectedHotkeys(updatedSelectedHotkeys);
       await saveHotkeysConfig(currentHotkeys);
+      toggleSavedMessage()
 
     } catch (error) {
       console.error('Error loading or updating hotkeys:', error);

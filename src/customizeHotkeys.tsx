@@ -3,8 +3,11 @@ import { HotkeySection } from './components/HotkeySection';
 import { getDefaultHotkeys, saveHotkeysConfig } from './utilities/configUtility';
 import { hotkeySections } from './data/hotkeySections';
 
+interface CustomizeHotkeysTypes {
+  toggleSavedMessage: () => void;
+}
 
-const CustomizeHotkeys: React.FC = () => {
+const CustomizeHotkeys: React.FC<CustomizeHotkeysTypes> = ({ toggleSavedMessage }) => {
   const [selectedHotkeys, setSelectedHotkeys] = useState<{ [key: string]: string }>({});
   const [resetCounter, setResetCounter] = useState(0); // dummy state to force HotkeySection re-render when clicking the reset defaults button
 
@@ -12,13 +15,8 @@ const CustomizeHotkeys: React.FC = () => {
     const defaultHotkeys = getDefaultHotkeys();
     await saveHotkeysConfig(defaultHotkeys);
     setResetCounter(resetCounter + 1);
+    toggleSavedMessage()
   };
-
-  useEffect(() => {
-    console.log('Reset counter incremented:', resetCounter);
-
-  }, [resetCounter])
-
 
   return (
     <div className="flex flex-col justify-center gap-6 mb-10">
@@ -31,6 +29,7 @@ const CustomizeHotkeys: React.FC = () => {
           selectedHotkeys={selectedHotkeys}
           setSelectedHotkeys={setSelectedHotkeys}
           resetCounter={resetCounter}
+          toggleSavedMessage={toggleSavedMessage}
         />
       ))}
       <hr />
