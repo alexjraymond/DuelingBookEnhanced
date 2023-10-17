@@ -7,8 +7,8 @@ import { BsDiscord } from 'react-icons/bs'
 import { BiCoffeeTogo } from 'react-icons/bi'
 import { getOptionsFromStorage, saveOptionsToStorage, OptionsTypes } from './utilities/optionsUtility'
 import ReactDOM from "react-dom";
-import CustomizeHotkeys from "./customizeHotkeys";
-import KnownIssues from "./knownIssues";
+import CustomizeHotkeys from "./CustomizeHotkeys";
+import KnownIssues from "./KnownIssues";
 import ComingSoon from "./components/ComingSoon";
 import { ReloadWarning } from "./components/ReloadWarning";
 
