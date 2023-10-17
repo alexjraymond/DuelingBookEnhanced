@@ -10,6 +10,7 @@ import ReactDOM from "react-dom";
 import CustomizeHotkeys from "./customizeHotkeys";
 import KnownIssues from "./knownIssues";
 import ComingSoon from "./components/ComingSoon";
+import { ReloadWarning } from "./components/ReloadWarning";
 
 export const Options = () => {
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -74,7 +75,8 @@ export const Options = () => {
         return (
           <>
             <h1 className="text-3xl font-bold">General</h1>
-            <p className="text-gray-600 mt-2 mb-4">Determine how DuelingBookEnhanced can improve your experience</p>
+            <p className="text-gray-600 mt-2">Determine how DuelingBookEnhanced can improve your experience</p>
+            <ReloadWarning />
             <hr className="border-gray-300 mb-4" />
             <div className="flex flex-col gap-4">
               {inputItems.map((item, index) => (

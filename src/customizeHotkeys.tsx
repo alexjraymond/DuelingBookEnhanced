@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { HotkeySection } from './components/HotkeySection';
 import { getDefaultHotkeys, saveHotkeysConfig } from './utilities/configUtility';
 import { hotkeySections } from './data/hotkeySections';
+import { ReloadWarning } from './components/ReloadWarning';
 
 interface CustomizeHotkeysTypes {
   toggleSavedMessage: () => void;
@@ -19,8 +20,9 @@ const CustomizeHotkeys: React.FC<CustomizeHotkeysTypes> = ({ toggleSavedMessage 
   };
 
   return (
-    <div className="flex flex-col justify-center gap-6 mb-10">
+    <div className="flex flex-col justify-center gap-2 mb-10">
       <h1 className="text-3xl font-bold">Customize Hotkeys</h1>
+      <ReloadWarning />
       {hotkeySections.map((section, index) => (
         <HotkeySection
           key={index}
