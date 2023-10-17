@@ -54,7 +54,6 @@ module.exports = {
             patterns: [
                 { from: ".", to: "../", context: "public" },
                 { from: path.join(srcDir, "styles", "dark-mode.css"), to: "../css" },
-                { from: path.join(srcDir, "data", "hotkeysConfig.json"), to: "../data" },
             ],
             options: {},
         }),

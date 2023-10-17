@@ -20,6 +20,11 @@ export async function saveHotkeysConfig(hotkeys: HotkeyEntry[]): Promise<void> {
   });
 }
 
+export const resetDefaults = async () => {
+  const defaultHotkeys = getDefaultHotkeys();
+  await saveHotkeysConfig(defaultHotkeys);
+};
+
 // don't forget to update the actionsFunctionMap in content_script.tsx
 export function getDefaultHotkeys(): HotkeyEntry[] {
   return [
