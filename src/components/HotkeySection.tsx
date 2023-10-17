@@ -2,8 +2,14 @@ import React, { useEffect, useState } from "react";
 import { loadHotkeysConfig, saveHotkeysConfig } from "../utilities/configUtility";
 import { validHotkeys } from "../data/validHotkeys";
 
-export const HotkeySection: React.FC<{ title: string; actions: string[] }> = ({ title, actions }) => {
-  const [selectedHotkeys, setSelectedHotkeys] = useState<{ [key: string]: string }>({});
+interface HotkeySectionProps {
+  title: string;
+  actions: string[];
+  selectedHotkeys: { [key: string]: string };
+  setSelectedHotkeys: (hotkeys: { [key: string]: string }) => void;
+}
+
+export const HotkeySection: React.FC<HotkeySectionProps> = ({ title, actions, selectedHotkeys, setSelectedHotkeys }) => {
 
   useEffect(() => {
     async function loadAndLogHotkeys() {
@@ -67,6 +73,11 @@ export const HotkeySection: React.FC<{ title: string; actions: string[] }> = ({ 
       console.error('Error loading or updating hotkeys:', error);
     }
   };
+
+  useEffect(() => {
+    console.log('selected hotkeys changed', selectedHotkeys)
+  }, [selectedHotkeys])
+
 
   type HotkeyEntry = {
     action: string | string[];

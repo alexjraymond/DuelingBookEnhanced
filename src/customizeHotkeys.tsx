@@ -1,9 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { HotkeySection } from './components/HotkeySection';
-import { resetDefaults } from './utilities/configUtility';
+import { getDefaultHotkeys, saveHotkeysConfig } from './utilities/configUtility';
 import { hotkeySections } from './data/hotkeySections';
 
+
 const CustomizeHotkeys: React.FC = () => {
+  const [selectedHotkeys, setSelectedHotkeys] = useState<{ [key: string]: string }>({});
+
+  const resetDefaults = async () => {
+    const defaultHotkeys = getDefaultHotkeys();
+    await saveHotkeysConfig(defaultHotkeys);
+  };
 
   return (
     <div className="flex flex-col justify-center gap-6 mb-10">
@@ -13,6 +20,8 @@ const CustomizeHotkeys: React.FC = () => {
           key={index}
           title={section.title}
           actions={section.actions}
+          selectedHotkeys={selectedHotkeys}
+          setSelectedHotkeys={setSelectedHotkeys}
         />
       ))}
       <hr />
