@@ -99,6 +99,9 @@ export const HotkeySection: React.FC<HotkeySectionProps> = ({ title, actions, se
           }
         }
       }
+
+      updatedSelectedHotkeys[action] = hotkey;
+
       console.log('current hotkeys updated', currentHotkeys)
       setSelectedHotkeys(updatedSelectedHotkeys);
       await saveHotkeysConfig(currentHotkeys);
