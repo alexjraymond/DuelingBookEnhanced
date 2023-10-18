@@ -4,6 +4,10 @@ export const plannedFeatures = [
     completed: true,
   },
   {
+    feature: 'Use Disable Checkbox Instead of Disable Button to Retain Player Hotkey',
+    completed: false,
+  },
+  {
     feature: 'Changed Settings Immediately Take Effect',
     completed: false,
   },
@@ -23,4 +27,4 @@ export const plannedFeatures = [
     feature: 'Chain Link Declarations',
     completed: false,
   },
-]
+];
