@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { loadHotkeysConfig, saveHotkeysConfig } from "../utilities/configUtility";
 import { validHotkeys } from "../data/validHotkeys";
 
@@ -12,6 +12,21 @@ interface HotkeySectionProps {
 }
 
 export const HotkeySection: React.FC<HotkeySectionProps> = ({ title, actions, selectedHotkeys, setSelectedHotkeys, resetCounter, toggleSavedMessage }) => {
+  const [isHotkeyInvalid, setIsHotkeyInvalid] = useState(false)
+  const [conflictState, setConflictState] = useState<ConflictState>({ action: '', hotkey: '' });
+
+  type ConflictState = {
+    action: string;
+    hotkey: string;
+  };
+
+  const selectRefs = useRef<{ [key: string]: React.RefObject<HTMLSelectElement> }>({});
+
+  actions.forEach(action => {
+    if (!selectRefs.current[action]) {
+      selectRefs.current[action] = React.createRef();
+    }
+  });
 
   useEffect(() => {
     async function loadAndLogHotkeys() {
@@ -45,6 +60,23 @@ export const HotkeySection: React.FC<HotkeySectionProps> = ({ title, actions, se
   const handleHotkeyChange = async (action: string, hotkey: string) => {
     try {
       const currentHotkeys = await loadHotkeysConfig();
+
+      // check if the new hotkey is already assigned to another action.
+      const alreadyMappedAction = currentHotkeys.find(hotkeyItem => hotkeyItem.hotkey === hotkey);
+      if (alreadyMappedAction) {
+        setIsHotkeyInvalid(true)
+        setConflictState({ action: `${alreadyMappedAction.action}`, hotkey: `${hotkey}` });
+
+        console.log(`The hotkey: ${hotkey} is already mapped to the action ${alreadyMappedAction.action}`);
+
+        setSelectedHotkeys({
+          ...selectedHotkeys,
+          [action]: currentHotkeys.find(hotkey => hotkey.action === action)?.hotkey || ''
+        });
+
+        return;
+      }
+
       const actionParts = action.split('/');
       const actions = [];
 
@@ -71,7 +103,8 @@ export const HotkeySection: React.FC<HotkeySectionProps> = ({ title, actions, se
       setSelectedHotkeys(updatedSelectedHotkeys);
       await saveHotkeysConfig(currentHotkeys);
       toggleSavedMessage()
-
+      setIsHotkeyInvalid(false)
+      setConflictState({ action: '', hotkey: '' });
     } catch (error) {
       console.error('Error loading or updating hotkeys:', error);
     }
@@ -111,12 +144,16 @@ export const HotkeySection: React.FC<HotkeySectionProps> = ({ title, actions, se
     <div className='container justify-center'>
       <h1 className='text-2xl text-center font-bold bg-gray-200 rounded-lg mb-4'>{title}</h1>
       <div className='flex flex-col gap-2'>
+        {isHotkeyInvalid && conflictState && (
+          <h1 className="text-base font-bold text-red-500">Error! {conflictState.hotkey.toUpperCase()} is already mapped to {conflictState.action}! Pick another hotkey!</h1>
+        )}
         {actions.map((action, index) => {
 
           return (
             <div key={index} className='flex gap-4'>
               <h2 className='inline'>{action}</h2>
               <select
+                ref={selectRefs.current[action]}
                 value={selectedHotkeys[action]}
                 onChange={(e) => handleHotkeyChange(action, e.target.value)}
                 className="border rounded-md text-gray-600"
