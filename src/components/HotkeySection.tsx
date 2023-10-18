@@ -63,7 +63,7 @@ export const HotkeySection: React.FC<HotkeySectionProps> = ({ title, actions, se
 
       // check if the new hotkey is already assigned to another action.
       const alreadyMappedAction = currentHotkeys.find(hotkeyItem => hotkeyItem.hotkey === hotkey);
-      if (alreadyMappedAction) {
+      if (alreadyMappedAction && hotkey !== '') {
         setIsHotkeyInvalid(true)
         setConflictState({ action: `${alreadyMappedAction.action}`, hotkey: `${hotkey}` });
 
@@ -150,7 +150,7 @@ export const HotkeySection: React.FC<HotkeySectionProps> = ({ title, actions, se
         {actions.map((action, index) => {
 
           return (
-            <div key={index} className='flex gap-4'>
+            <div key={index} className='flex gap-4 items-center'>
               <h2 className='inline'>{action}</h2>
               <select
                 ref={selectRefs.current[action]}
@@ -164,6 +164,12 @@ export const HotkeySection: React.FC<HotkeySectionProps> = ({ title, actions, se
                   </option>
                 ))}
               </select>
+              <button
+                onClick={() => handleHotkeyChange(action, '')}
+                className="mx-4 py-2 px-2 bg-red-500 hover:bg-red-300 text-white rounded-lg"
+              >
+                Disable
+              </button>
             </div>
           );
         })}
