@@ -75,9 +75,18 @@ window.onload = async function () {
     "To Grave": () => playCard("To Grave"),
     "Banish": () => playCard("Banish"),
     "Banish FD": () => playCard("Banish FD"),
+    "To B. Deck": () => playCard("To B. Deck"),
     "To Bottom of Deck": () => playCard("To Bottom of Deck"),
-    "To B. Deck": () => playCard("To B. Deck")
+    "Mill 1": () => millAmount("1"),
+    "Mill 2": () => millAmount("2"),
+    "Mill 3": () => millAmount("3"),
+    "Mill 4": () => millAmount("4"),
+    "Mill 5": () => millAmount("5"),
+    "Mill 6": () => millAmount("6")
   };
+  function millAmount(message: string) {
+    saySomething("/mill" + message)
+  }
 
   let hotkeyHashMap = await loadHotkeysConfig();
 
@@ -211,6 +220,7 @@ window.onload = async function () {
 
   function handleKeydown(e: KeyboardEvent) {
     const handler = e.key.toLowerCase();
+
     if (!(e.target instanceof HTMLInputElement) || handler === 'enter') {
       console.log('Key pressed:', handler);
 

@@ -45,8 +45,13 @@ export function getDefaultHotkeys(): HotkeyEntry[] {
     { action: "Banish FD", hotkey: "b" },
     { action: "To Bottom of Deck", hotkey: "z"},
     { action: "To B. Deck", hotkey: "z"},
-    { action: "to top of deck", hotkey: "x"},
-
+    { action: "Mill 1", hotkey: "1"},
+    { action: "Mill 2", hotkey: "2"},
+    { action: "Mill 3", hotkey: "3"},
+    { action: "Mill 4", hotkey: "4"},
+    { action: "Mill 5", hotkey: "5"},
+    { action: "Mill 6", hotkey: "6"},
+    
   ];
 }
 
