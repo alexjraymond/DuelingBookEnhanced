@@ -65,7 +65,7 @@ window.onload = async function () {
     "Toggle Chat Box": handleChatBox,
     "Declare": () => playCard("Declare"),
     "To Hand": () => playCard("To Hand"),
-    "To S/T": () => playCard("Activate"),
+    "To S/T": () => playCard("To S/T"),
     "Activate": () => playCard("Activate"),
     "S. Summon ATK": () => playCard("S. Summon ATK"),
     "SS ATK": () => playCard("SS ATK"),
@@ -74,6 +74,9 @@ window.onload = async function () {
     "To Graveyard": () => playCard("To Graveyard"),
     "To Grave": () => playCard("To Grave"),
     "Banish": () => playCard("Banish"),
+    "Banish FD": () => playCard("Banish FD"),
+    "To Bottom of Deck": () => playCard("To Bottom of Deck"),
+    "To B. Deck": () => playCard("To B. Deck")
   };
 
   let hotkeyHashMap = await loadHotkeysConfig();
