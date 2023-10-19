@@ -84,8 +84,13 @@ window.onload = async function () {
     "Mill 5": () => millAmount("5"),
     "Mill 6": () => millAmount("6")
   };
+  
   function millAmount(message: string) {
+    console.log(message, typeof message)
     saySomething("/mill" + message)
+    setTimeout(() => {
+      chatInput.blur();
+    }, 30);
   }
 
   let hotkeyHashMap = await loadHotkeysConfig();
