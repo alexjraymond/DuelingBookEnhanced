@@ -21,6 +21,7 @@ export async function saveHotkeysConfig(hotkeys: HotkeyEntry[]): Promise<void> {
 }
 
 // don't forget to update the actionsFunctionMap in content_script.tsx
+// each object needs a prop called disable, auto set to false
 export function getDefaultHotkeys(): HotkeyEntry[] {
   return [
     { action: "Close View Menu", hotkey: "escape" },
@@ -40,9 +41,15 @@ export function getDefaultHotkeys(): HotkeyEntry[] {
     { action: "Set", hotkey: "j" },
     { action: "To Graveyard", hotkey: "q" },
     { action: "To Grave", hotkey: "q" },
-    { action: "Banish", hotkey: "w" }
+    { action: "Banish", hotkey: "w" },
+    { action: "Banish FD", hotkey: "b" },
+    { action: "To Bottom of Deck", hotkey: "z"},
+    { action: "To B. Deck", hotkey: "z"},
+    { action: "to top of deck", hotkey: "x"},
+
   ];
 }
+
 
 export function getActionsForHotkey(hotkey: string, hotkeyMap: HotkeyEntry[]): string[] {
   const matchingActions: string[] = [];
