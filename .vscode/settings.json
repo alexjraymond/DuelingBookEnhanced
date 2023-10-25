@@ -8,5 +8,8 @@
             ],
             "url": "http://json.schemastore.org/chrome-manifest"
         }
-    ]
+    ],
+    "editor.fontFamily": "MonoLisa",
+    "editor.fontSize": 14,
+    "editor.fontLigatures": true
 }
