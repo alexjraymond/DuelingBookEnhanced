@@ -1,14 +1,33 @@
 export const hotkeySections = [
   {
     title: 'View Actions',
-    actions: ['View Graveyard', 'View Main Deck', 'View Extra Deck']
+    actions: [
+      'View Extra Deck',
+      'View Graveyard',
+      'View Main Deck',
+    ]
   },
   {
     title: 'Card Actions',
-    actions: ["To Graveyard/To Grave", "To Hand", "Activate/To S/T", "S. Summon ATK/SS ATK", "Normal Summon", "Set", "Declare", "Banish", "Banish FD", "To Bottom of Deck"]
+    actions: [
+      "Activate/To S/T",
+      "Banish",
+      "Banish FD",
+      "Declare",
+      "Normal Summon",
+      "S. Summon ATK/SS ATK",
+      "Set",
+      "To Bottom of Deck",
+      "To Graveyard/To Grave",
+      "To Hand"
+    ]
   },
   {
     title: 'Emotes/Chat Box',
-    actions: ["Think", "Thumbs Up", "Toggle Chat Box"]
+    actions: [
+      "Think",
+      "Thumbs Up",
+      "Toggle Chat Box"
+    ]
   }
 ];

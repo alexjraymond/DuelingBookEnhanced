@@ -11,6 +11,7 @@ let extraDeck: HTMLElement | null;
 let deckMenu: HTMLElement | null;
 let deckViewButton: HTMLElement | null;
 let deckViewSpan: HTMLElement | null;
+let duelField: HTMLElement | null;
 
 function closeViewMenu() {
   closeViewButton?.click();
@@ -52,6 +53,7 @@ window.onload = async function () {
   deckMenu = document.getElementById('card_menu_content') as HTMLElement;
   deckViewButton = deckMenu?.getElementsByClassName('card_menu_btn')[0] as HTMLElement;
   deckViewSpan = deckViewButton?.getElementsByTagName('span')[0] as HTMLElement;
+  duelField = document.getElementById('duel') as HTMLElement;
 
   let options: OptionsTypes;
 
@@ -77,21 +79,13 @@ window.onload = async function () {
     "Banish FD": () => playCard("Banish FD"),
     "To B. Deck": () => playCard("To B. Deck"),
     "To Bottom of Deck": () => playCard("To Bottom of Deck"),
-    "Mill 1": () => millAmount("1"),
-    "Mill 2": () => millAmount("2"),
-    "Mill 3": () => millAmount("3"),
-    "Mill 4": () => millAmount("4"),
-    "Mill 5": () => millAmount("5"),
-    "Mill 6": () => millAmount("6")
+    "Mill 1": () => saySomething('/mill 1'),
+    "Mill 2": () => saySomething('/mill 2'),
+    "Mill 3": () => saySomething('/mill 3'),
+    "Mill 4": () => saySomething('/mill 4'),
+    "Mill 5": () => saySomething('/mill 5'),
+    "Mill 6": () => saySomething('/mill 6')
   };
-  
-  function millAmount(message: string) {
-    console.log(message, typeof message)
-    saySomething("/mill" + message)
-    setTimeout(() => {
-      chatInput.blur();
-    }, 30);
-  }
 
   let hotkeyHashMap = await loadHotkeysConfig();
 
@@ -165,12 +159,10 @@ window.onload = async function () {
       which: 13,
       bubbles: true,
     });
+
+    handleChatBox()
     setTimeout(() => {
-      chatInput.focus();
       chatInput.dispatchEvent(enterEvent);
-    }, 30);
-    setTimeout(() => {
-      chatInput.blur();
     }, 30);
   }
 
@@ -224,12 +216,13 @@ window.onload = async function () {
   }
 
   function handleKeydown(e: KeyboardEvent) {
+
     const handler = e.key.toLowerCase();
 
     if (!(e.target instanceof HTMLInputElement) || handler === 'enter') {
       console.log('Key pressed:', handler);
 
-      // Use the updated `getActionsForHotkey` function
+      // use the updated `getActionsForHotkey` function
       const actions = getActionsForHotkey(handler, hotkeyHashMap);
       console.log('actions', actions)
 
