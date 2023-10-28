@@ -161,9 +161,7 @@ window.onload = async function () {
     });
 
     handleChatBox()
-    setTimeout(() => {
-      chatInput.dispatchEvent(enterEvent);
-    }, 30);
+    chatInput.dispatchEvent(enterEvent);
   }
 
   function toggleGraveYardView() {
