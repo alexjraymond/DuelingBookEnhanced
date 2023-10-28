@@ -175,8 +175,8 @@ window.onload = async function () {
   }
 
   function handleThinkButton() {
-    thunk?.click();
     saySomething('hm');
+    thunk?.click();
   }
 
   function handleThumbsUpButton() {
