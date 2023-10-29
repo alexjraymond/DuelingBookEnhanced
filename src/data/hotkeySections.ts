@@ -17,7 +17,7 @@ export const hotkeySections = [
       "Normal Summon",
       "S. Summon ATK/SS ATK",
       "Set",
-      "To Bottom of Deck",
+      "To Bottom of Deck/To B. Deck",
       "To Graveyard/To Grave",
       "To Hand"
     ]

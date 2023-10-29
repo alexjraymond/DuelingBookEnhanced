@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { loadHotkeysConfig, saveHotkeysConfig } from "../utilities/configUtility";
 import { validHotkeys } from "../data/validHotkeys";
+import { splitActions } from "../utilities/actionsManipulations";
 
 interface HotkeySectionProps {
   title: string;
@@ -15,6 +16,8 @@ export const HotkeySection: React.FC<HotkeySectionProps> = ({ title, actions, se
   const [isHotkeyInvalid, setIsHotkeyInvalid] = useState(false)
   const [conflictState, setConflictState] = useState<ConflictState>({ action: '', hotkey: '' });
   const [currentHotkeys, setCurrentHotkeys] = useState<HotkeyEntry[]>([]);
+  const [disabledActions, setDisabledActions] = useState<string[]>([]);
+
 
   type ConflictState = {
     action: string;
@@ -50,6 +53,12 @@ export const HotkeySection: React.FC<HotkeySectionProps> = ({ title, actions, se
         });
 
         setSelectedHotkeys(initialSelectedHotkeys);
+
+        const newDisabledActions = currentHotkeys
+          .filter((hotkeyItem) => hotkeyItem.disabled)
+          .map((hotkeyItem) => hotkeyItem.action as string);
+
+        setDisabledActions(newDisabledActions);
       } catch (error) {
         console.error('Error loading hotkeys:', error);
       }
@@ -63,19 +72,36 @@ export const HotkeySection: React.FC<HotkeySectionProps> = ({ title, actions, se
       const currentHotkeys = await loadHotkeysConfig();
       console.log('current hotkeys:', currentHotkeys, 'action toggled', action)
 
-      const index = currentHotkeys.findIndex((hotkey) => hotkey.action === action);
+      const actionParts = action.split('/');
+      const actions = [];
 
-      if (index !== -1) {
-        currentHotkeys[index].disabled = !currentHotkeys[index].disabled;
-
-        await saveHotkeysConfig(currentHotkeys);
-        setCurrentHotkeys(currentHotkeys)
+      if (actionParts.length > 1) {
+        actions.push(...actionParts);
+      } else {
+        actions.push(action);
       }
-    }
-    catch (error) {
+
+      for (const hotkeyItem of currentHotkeys) {
+        if (actions.includes(hotkeyItem.action)) {
+          hotkeyItem.disabled = !hotkeyItem.disabled;
+        }
+      }
+
+      await saveHotkeysConfig(currentHotkeys);
+      setCurrentHotkeys(currentHotkeys);
+
+      const newDisabledActions = currentHotkeys
+        .filter((hotkeyItem) => hotkeyItem.disabled)
+        .map((hotkeyItem) => hotkeyItem.action as string);
+
+      setDisabledActions(newDisabledActions);
+      console.log(newDisabledActions, newDisabledActions)
+
+    } catch (error) {
       console.error('Error loading or updating hotkeys:', error);
     }
-  }
+  };
+
 
   const handleHotkeyChange = async (action: string, hotkey: string) => {
     try {
@@ -144,6 +170,11 @@ export const HotkeySection: React.FC<HotkeySectionProps> = ({ title, actions, se
     disabled: boolean;
   };
 
+  function checkIfDisabled(action: string) {
+    const actionParts = splitActions(action)
+    return actionParts.some(part => disabledActions.includes(part));
+  }
+
   function findHotkeyByAction(action: string, hotkeysConfig: HotkeyEntry[]): string {
     for (const hotkeyItem of hotkeysConfig) {
       const actions = hotkeyItem.action;
@@ -172,7 +203,7 @@ export const HotkeySection: React.FC<HotkeySectionProps> = ({ title, actions, se
           <h1 className="text-base font-bold text-red-500">Error! {conflictState.hotkey.toUpperCase()} is already mapped to {conflictState.action}! Pick another hotkey!</h1>
         )}
         {actions.map((action, index) => {
-          const isActionDisabled = currentHotkeys.find((hotkey) => hotkey.action === action)?.disabled || false;
+          const isActionDisabled = checkIfDisabled(action)
           const containerClassName = `flex gap-4 items-center ${isActionDisabled ? 'opacity-50' : ''}`;
 
           return (
@@ -199,6 +230,7 @@ export const HotkeySection: React.FC<HotkeySectionProps> = ({ title, actions, se
                   type="checkbox"
                   id={`${action} checkbox`}
                   onChange={() => toggleDisable(action)}
+                  checked={checkIfDisabled(action)}
                 />
               </div>
             </div>
