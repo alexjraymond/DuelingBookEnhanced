@@ -1,6 +1,7 @@
 export interface HotkeyEntry {
   action: string;
   hotkey: string;
+  disabled: boolean;
 }
 
 export async function loadHotkeysConfig(): Promise<HotkeyEntry[]> {
@@ -24,37 +25,35 @@ export async function saveHotkeysConfig(hotkeys: HotkeyEntry[]): Promise<void> {
 // each object needs a prop called disable, auto set to false
 export function getDefaultHotkeys(): HotkeyEntry[] {
   return [
-    { action: "Close View Menu", hotkey: "escape" },
-    { action: "View Graveyard", hotkey: "g" },
-    { action: "View Main Deck", hotkey: "v" },
-    { action: "View Extra Deck", hotkey: "e" },
-    { action: "Think", hotkey: "t" },
-    { action: "Thumbs Up", hotkey: "f" },
-    { action: "Toggle Chat Box", hotkey: "enter" },
-    { action: "Declare", hotkey: "d" },
-    { action: "To Hand", hotkey: "h" },
-    { action: "Activate", hotkey: "a" },
-    { action: "To S/T", hotkey: "a" },
-    { action: "S. Summon ATK", hotkey: "s" },
-    { action: "SS ATK", hotkey: "s" },
-    { action: "Normal Summon", hotkey: "n" },
-    { action: "Set", hotkey: "j" },
-    { action: "To Graveyard", hotkey: "q" },
-    { action: "To Grave", hotkey: "q" },
-    { action: "Banish", hotkey: "w" },
-    { action: "Banish FD", hotkey: "b" },
-    { action: "To Bottom of Deck", hotkey: "z"},
-    { action: "To B. Deck", hotkey: "z"},
-    { action: "Mill 1", hotkey: "1"},
-    { action: "Mill 2", hotkey: "2"},
-    { action: "Mill 3", hotkey: "3"},
-    { action: "Mill 4", hotkey: "4"},
-    { action: "Mill 5", hotkey: "5"},
-    { action: "Mill 6", hotkey: "6"},
-    
+    { action: "Close View Menu", hotkey: "escape", disabled: false },
+    { action: "View Graveyard", hotkey: "g", disabled: false },
+    { action: "View Main Deck", hotkey: "v", disabled: false },
+    { action: "View Extra Deck", hotkey: "e", disabled: false },
+    { action: "Think", hotkey: "t", disabled: false },
+    { action: "Thumbs Up", hotkey: "f", disabled: false },
+    { action: "Toggle Chat Box", hotkey: "enter", disabled: false },
+    { action: "Declare", hotkey: "d", disabled: false },
+    { action: "To Hand", hotkey: "h", disabled: false },
+    { action: "Activate", hotkey: "a", disabled: false },
+    { action: "To S/T", hotkey: "a", disabled: false },
+    { action: "S. Summon ATK", hotkey: "s", disabled: false },
+    { action: "SS ATK", hotkey: "s", disabled: false },
+    { action: "Normal Summon", hotkey: "n", disabled: false },
+    { action: "Set", hotkey: "j", disabled: false },
+    { action: "To Graveyard", hotkey: "q", disabled: false },
+    { action: "To Grave", hotkey: "q", disabled: false },
+    { action: "Banish", hotkey: "w", disabled: false },
+    { action: "Banish FD", hotkey: "b", disabled: false },
+    { action: "To Bottom of Deck", hotkey: "z", disabled: false },
+    { action: "To B. Deck", hotkey: "z", disabled: false },
+    { action: "Mill 1", hotkey: "1", disabled: false },
+    { action: "Mill 2", hotkey: "2", disabled: false },
+    { action: "Mill 3", hotkey: "3", disabled: false },
+    { action: "Mill 4", hotkey: "4", disabled: false },
+    { action: "Mill 5", hotkey: "5", disabled: false },
+    { action: "Mill 6", hotkey: "6", disabled: false },
   ];
 }
-
 
 export function getActionsForHotkey(hotkey: string, hotkeyMap: HotkeyEntry[]): string[] {
   const matchingActions: string[] = [];
