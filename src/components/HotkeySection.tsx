@@ -14,6 +14,7 @@ interface HotkeySectionProps {
 export const HotkeySection: React.FC<HotkeySectionProps> = ({ title, actions, selectedHotkeys, setSelectedHotkeys, resetCounter, toggleSavedMessage }) => {
   const [isHotkeyInvalid, setIsHotkeyInvalid] = useState(false)
   const [conflictState, setConflictState] = useState<ConflictState>({ action: '', hotkey: '' });
+  const [currentHotkeys, setCurrentHotkeys] = useState<HotkeyEntry[]>([]);
 
   type ConflictState = {
     action: string;
@@ -56,6 +57,25 @@ export const HotkeySection: React.FC<HotkeySectionProps> = ({ title, actions, se
 
     initializeSelectedHotkeys();
   }, [actions, resetCounter]);
+
+  const toggleDisable = async (action: string) => {
+    try {
+      const currentHotkeys = await loadHotkeysConfig();
+      console.log('current hotkeys:', currentHotkeys, 'action toggled', action)
+
+      const index = currentHotkeys.findIndex((hotkey) => hotkey.action === action);
+
+      if (index !== -1) {
+        currentHotkeys[index].disabled = !currentHotkeys[index].disabled;
+
+        await saveHotkeysConfig(currentHotkeys);
+        setCurrentHotkeys(currentHotkeys)
+      }
+    }
+    catch (error) {
+      console.error('Error loading or updating hotkeys:', error);
+    }
+  }
 
   const handleHotkeyChange = async (action: string, hotkey: string) => {
     try {
@@ -121,6 +141,7 @@ export const HotkeySection: React.FC<HotkeySectionProps> = ({ title, actions, se
   type HotkeyEntry = {
     action: string | string[];
     hotkey: string;
+    disabled: boolean;
   };
 
   function findHotkeyByAction(action: string, hotkeysConfig: HotkeyEntry[]): string {
@@ -151,15 +172,18 @@ export const HotkeySection: React.FC<HotkeySectionProps> = ({ title, actions, se
           <h1 className="text-base font-bold text-red-500">Error! {conflictState.hotkey.toUpperCase()} is already mapped to {conflictState.action}! Pick another hotkey!</h1>
         )}
         {actions.map((action, index) => {
+          const isActionDisabled = currentHotkeys.find((hotkey) => hotkey.action === action)?.disabled || false;
+          const containerClassName = `flex gap-4 items-center ${isActionDisabled ? 'opacity-50' : ''}`;
 
           return (
-            <div key={index} className='flex gap-4 items-center'>
+            <div key={index} className={containerClassName}>
               <h2 className='inline'>{action}</h2>
               <select
                 ref={selectRefs.current[action]}
                 value={selectedHotkeys[action]}
                 onChange={(e) => handleHotkeyChange(action, e.target.value)}
                 className="border rounded-md text-gray-600"
+                disabled={isActionDisabled}
               >
                 {validHotkeys.map((key) => (
                   <option key={key} value={key}>
@@ -167,12 +191,16 @@ export const HotkeySection: React.FC<HotkeySectionProps> = ({ title, actions, se
                   </option>
                 ))}
               </select>
-              <button
-                onClick={() => handleHotkeyChange(action, '')}
-                className="mx-4 py-2 px-2 bg-red-500 hover:bg-red-300 text-white rounded-lg"
-              >
-                Disable
-              </button>
+              <div className="flex items-center">
+                <label className="mx-2" htmlFor={`${action} checkbox`}>
+                  Disable
+                </label>
+                <input
+                  type="checkbox"
+                  id={`${action} checkbox`}
+                  onChange={() => toggleDisable(action)}
+                />
+              </div>
             </div>
           );
         })}

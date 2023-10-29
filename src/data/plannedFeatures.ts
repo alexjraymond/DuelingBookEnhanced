@@ -13,7 +13,7 @@ export const plannedFeatures = [
   },
   {
     feature: 'Milling Hotkey',
-    completed: false,
+    completed: true,
   },
   {
     feature: 'LP Add/Subtract',

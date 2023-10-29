@@ -43,6 +43,7 @@ const CustomizeHotkeys: React.FC<CustomizeHotkeysTypes> = ({ toggleSavedMessage 
           Reset Defaults
         </button>
       </div>
+
     </div>
   );
 };
