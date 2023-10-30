@@ -4,7 +4,7 @@ export const knownIssues = [
     description: "Dark theme doesn't apply to various sections of DB, mainly profile and tertiary spots.",
   },
   {
-    issue: "Changed Settings Don't Immediately Take Effect",
-    description: "If you change settings while already on duelingbook.com, you need to reload the page for some settings to update.",
+    issue: "Visual bug",
+    description: "If you change the settings in either the dedicated settings page or in the popup while the other is open, it won't update the changed settings. The settings DO get updated in real-time though. 😘",
   },
 ]

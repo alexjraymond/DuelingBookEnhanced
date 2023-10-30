@@ -5,11 +5,11 @@ export const plannedFeatures = [
   },
   {
     feature: 'Use Disable Checkbox Instead of Disable Button to Retain Player Hotkey',
-    completed: false,
+    completed: true,
   },
   {
     feature: 'Changed Settings Immediately Take Effect',
-    completed: false,
+    completed: true,
   },
   {
     feature: 'Milling Hotkey',
