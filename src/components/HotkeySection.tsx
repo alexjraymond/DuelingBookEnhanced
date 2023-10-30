@@ -15,9 +15,7 @@ interface HotkeySectionProps {
 export const HotkeySection: React.FC<HotkeySectionProps> = ({ title, actions, selectedHotkeys, setSelectedHotkeys, resetCounter, toggleSavedMessage }) => {
   const [isHotkeyInvalid, setIsHotkeyInvalid] = useState(false)
   const [conflictState, setConflictState] = useState<ConflictState>({ action: '', hotkey: '' });
-  const [currentHotkeys, setCurrentHotkeys] = useState<HotkeyEntry[]>([]);
   const [disabledActions, setDisabledActions] = useState<string[]>([]);
-
 
   type ConflictState = {
     action: string;
@@ -72,7 +70,7 @@ export const HotkeySection: React.FC<HotkeySectionProps> = ({ title, actions, se
       const currentHotkeys = await loadHotkeysConfig();
       console.log('current hotkeys:', currentHotkeys, 'action toggled', action)
 
-      const actionParts = action.split('/');
+      const actionParts = splitActions(action)
       const actions = [];
 
       if (actionParts.length > 1) {
@@ -88,7 +86,6 @@ export const HotkeySection: React.FC<HotkeySectionProps> = ({ title, actions, se
       }
 
       await saveHotkeysConfig(currentHotkeys);
-      setCurrentHotkeys(currentHotkeys);
 
       const newDisabledActions = currentHotkeys
         .filter((hotkeyItem) => hotkeyItem.disabled)
@@ -123,7 +120,7 @@ export const HotkeySection: React.FC<HotkeySectionProps> = ({ title, actions, se
         return;
       }
 
-      const actionParts = action.split('/');
+      const actionParts = splitActions(action)
       const actions = [];
 
       if (actionParts.length > 1) {
@@ -178,12 +175,10 @@ export const HotkeySection: React.FC<HotkeySectionProps> = ({ title, actions, se
   function findHotkeyByAction(action: string, hotkeysConfig: HotkeyEntry[]): string {
     for (const hotkeyItem of hotkeysConfig) {
       const actions = hotkeyItem.action;
-      console.log('actions', actions)
       if (actions === action) {
         return hotkeyItem.hotkey;
       } else if (action.includes('/')) {
-        const actionParts = action.split('/');
-        console.log('action parts', actionParts)
+        const actionParts = splitActions(action);
         if (typeof actions === 'string' && actionParts.includes(actions)) {
           return hotkeyItem.hotkey;
         } else if (Array.isArray(actions) && actionParts.some(part => actions.includes(part))) {
@@ -191,7 +186,6 @@ export const HotkeySection: React.FC<HotkeySectionProps> = ({ title, actions, se
         }
       }
     }
-    console.log('action not found', action, hotkeysConfig);
     return '';
   }
 
