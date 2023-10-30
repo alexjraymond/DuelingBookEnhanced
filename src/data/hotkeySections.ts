@@ -23,6 +23,17 @@ export const hotkeySections = [
     ]
   },
   {
+    title: "Mills",
+    actions: [
+      'Mill 1',
+      'Mill 2',
+      'Mill 3',
+      'Mill 4',
+      'Mill 5',
+      'Mill 6',
+    ]
+  },
+  {
     title: 'Emotes/Chat Box',
     actions: [
       "Think",
