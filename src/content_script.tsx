@@ -55,6 +55,9 @@ window.onload = async function () {
   deckViewSpan = deckViewButton?.getElementsByTagName('span')[0] as HTMLElement;
   duelField = document.getElementById('duel') as HTMLElement;
 
+
+
+
   let options: OptionsTypes;
 
   const actionFunctionMap: Record<string, () => void> = {
@@ -113,6 +116,7 @@ window.onload = async function () {
       if (options && options.isNightMode) applyDarkMode();
       if (options && !options.isNightMode) removeDarkMode();
     }
+    chrome.storage.onChanged.addListener(handleOptionsChange);
   });
 
   function handleOptionsChange(changes: { [key: string]: any }, namespace: string) {
@@ -139,6 +143,13 @@ window.onload = async function () {
       }
     }
   }
+
+  chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+    if (message.type === 'HOTKEYS_CHANGED') {
+      console.log('Received updated hotkeys:', message.payload);
+      hotkeyHashMap = message.payload; // update the hotkeys map.
+    }
+  });
 
   chrome.storage.onChanged.addListener(handleOptionsChange);
 

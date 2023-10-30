@@ -16,10 +16,22 @@ export async function loadHotkeysConfig(): Promise<HotkeyEntry[]> {
 export async function saveHotkeysConfig(hotkeys: HotkeyEntry[]): Promise<void> {
   return new Promise<void>((resolve) => {
     chrome.storage.sync.set({ hotkeysConfig: hotkeys }, () => {
+      // notify content scripts that hotkeys have changed
+      chrome.tabs.query({}, (tabs) => {
+        for (const tab of tabs) {
+          if (tab.id !== undefined) {
+            chrome.tabs.sendMessage(tab.id, {
+              type: 'HOTKEYS_CHANGED',
+              payload: hotkeys,
+            });
+          }
+        }
+      });
       resolve();
     });
   });
 }
+
 
 // don't forget to update the actionsFunctionMap in content_script.tsx
 // each object needs a prop called disable, auto set to false
