@@ -214,18 +214,18 @@ window.onload = async function () {
   }
 
   function handleKeydown(e: KeyboardEvent) {
-
     const handler = e.key.toLowerCase();
-
     if (!(e.target instanceof HTMLInputElement) || handler === 'enter') {
       console.log('Key pressed:', handler);
-
-      // use the updated `getActionsForHotkey` function
       const actions = getActionsForHotkey(handler, hotkeyHashMap);
       console.log('actions', actions)
-
       if (actions.length > 0) {
         actions.forEach((action) => {
+          const hotkeyEntry = hotkeyHashMap.find(hk => hk.action === action);
+          if (hotkeyEntry && hotkeyEntry.disabled) {
+            console.log('Hotkey is disabled:', action);
+            return;
+          }
           if (action in actionFunctionMap) {
             actionFunctionMap[action]();
             console.log('Action executed:', action);
