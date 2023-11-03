@@ -64,6 +64,8 @@ export function getDefaultHotkeys(): HotkeyEntry[] {
     { action: "Mill 4", hotkey: "4", disabled: false },
     { action: "Mill 5", hotkey: "5", disabled: false },
     { action: "Mill 6", hotkey: "6", disabled: false },
+    { action: "Sub LP", hotkey: "-", disabled: false },
+    { action: "Add LP", hotkey: "+", disabled: false },
   ];
 }
 

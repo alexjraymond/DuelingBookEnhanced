@@ -11,7 +11,9 @@ let extraDeck: HTMLElement | null;
 let deckMenu: HTMLElement | null;
 let deckViewButton: HTMLElement | null;
 let deckViewSpan: HTMLElement | null;
-let duelField: HTMLElement | null;
+let LPInput: HTMLElement | null;
+let subButton: HTMLElement | null;
+let addButton: HTMLElement | null;
 
 function closeViewMenu() {
   closeViewButton?.click();
@@ -53,10 +55,9 @@ window.onload = async function () {
   deckMenu = document.getElementById('card_menu_content') as HTMLElement;
   deckViewButton = deckMenu?.getElementsByClassName('card_menu_btn')[0] as HTMLElement;
   deckViewSpan = deckViewButton?.getElementsByTagName('span')[0] as HTMLElement;
-  duelField = document.getElementById('duel') as HTMLElement;
-
-
-
+  LPInput = document.getElementById('life_txt') as HTMLElement
+  subButton = document.getElementById('plus_btn') as HTMLElement;
+  addButton = document.getElementById('minus_btn') as HTMLElement;
 
   let options: OptionsTypes;
 
@@ -87,7 +88,9 @@ window.onload = async function () {
     "Mill 3": () => saySomething('/mill 3'),
     "Mill 4": () => saySomething('/mill 4'),
     "Mill 5": () => saySomething('/mill 5'),
-    "Mill 6": () => saySomething('/mill 6')
+    "Mill 6": () => saySomething('/mill 6'),
+    "Sub LP": () => subLP(),
+    "Add LP": () => addLP(),
   };
 
   let hotkeyHashMap = await loadHotkeysConfig();
@@ -155,7 +158,7 @@ window.onload = async function () {
 
   const chatInput = document.querySelectorAll('input.cin_txt')[1] as HTMLInputElement;
   let chatInputFocused = false;
-
+  let LPInputFocused = false;
   const thunk = document.getElementById('think_btn');
   const thumbsUp = document.getElementById('good_btn');
   const graveyard = document.getElementById('grave_hidden');
@@ -173,6 +176,16 @@ window.onload = async function () {
 
     handleChatBox()
     chatInput.dispatchEvent(enterEvent);
+  }
+
+  function subLP() {
+    if (subButton) subButton.click()
+    LPInputFocused = true;
+  }
+
+  function addLP() {
+    if (addButton) addButton.click()
+    LPInputFocused = true;
   }
 
   function toggleGraveYardView() {
@@ -195,10 +208,13 @@ window.onload = async function () {
   }
 
   function handleChatBox() {
-    if (!chatInputFocused) {
+    if (!chatInputFocused && !LPInputFocused) {
       chatInput.focus();
       chatInputFocused = true;
-    } else {
+    } else if (LPInputFocused) {
+      LPInput?.blur();
+      LPInputFocused = false;
+    } else if (chatInputFocused) {
       chatInput.blur();
       chatInputFocused = false;
     }

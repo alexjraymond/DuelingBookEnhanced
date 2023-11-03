@@ -17,7 +17,7 @@ export const plannedFeatures = [
   },
   {
     feature: 'LP Add/Subtract',
-    completed: false,
+    completed: true,
   },
   {
     feature: 'Themes',

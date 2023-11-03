@@ -34,11 +34,18 @@ export const hotkeySections = [
     ]
   },
   {
+    title: 'LP',
+    actions: [
+      "Add LP",
+      "Sub LP",
+    ]
+  },
+  {
     title: 'Emotes/Chat Box',
     actions: [
       "Think",
       "Thumbs Up",
       "Toggle Chat Box"
     ]
-  }
+  },
 ];
