@@ -57,6 +57,7 @@ export const HotkeySection: React.FC<HotkeySectionProps> = ({ title, actions, se
           .map((hotkeyItem) => hotkeyItem.action as string);
 
         setDisabledActions(newDisabledActions);
+
       } catch (error) {
         console.error('Error loading hotkeys:', error);
       }
@@ -93,6 +94,7 @@ export const HotkeySection: React.FC<HotkeySectionProps> = ({ title, actions, se
 
       setDisabledActions(newDisabledActions);
       console.log(newDisabledActions, newDisabledActions)
+      toggleSavedMessage()
 
     } catch (error) {
       console.error('Error loading or updating hotkeys:', error);

@@ -27,4 +27,12 @@ export const plannedFeatures = [
     feature: 'Chain Link Declarations',
     completed: false,
   },
+  {
+    feature: 'Import/Export User Configs',
+    completed: false,
+  },
+  {
+    feature: 'Previous Play button For Replays',
+    completed: false,
+  },
 ];
