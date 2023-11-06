@@ -55,6 +55,7 @@ export function getDefaultHotkeys(): HotkeyEntry[] {
     { action: "SS DEF", hotkey: "x", disabled: false },
     { action: "Normal Summon", hotkey: "n", disabled: false },
     { action: "Set", hotkey: "j", disabled: false },
+    { action: "Detach", hotkey: "q", disabled: false },
     { action: "To Graveyard", hotkey: "q", disabled: false },
     { action: "To Grave", hotkey: "q", disabled: false },
     { action: "Banish", hotkey: "w", disabled: false },

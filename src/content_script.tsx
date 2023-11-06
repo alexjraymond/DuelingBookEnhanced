@@ -80,6 +80,7 @@ window.onload = async function () {
     "SS DEF": () => playCard("SS DEF"),
     "Normal Summon": () => playCard("Normal Summon"),
     "Set": () => playCard("Set"),
+    "Detach": () => playCard("Detach"),
     "To Graveyard": () => playCard("To Graveyard"),
     "To Grave": () => playCard("To Grave"),
     "Banish": () => playCard("Banish"),
