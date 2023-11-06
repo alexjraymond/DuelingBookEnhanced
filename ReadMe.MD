@@ -23,20 +23,35 @@ Dueling Book Enhanced is a collection of features designed to enhance your exper
 | Think | T | Presses the thinking button and sends a message in chat saying that you're thinking |
 | Thumbs Up | F | Presses the thumbs up button | 
 | Toggle Chat Box | Enter | Start or finish typing in the chat box with a single keypress |
+
+| Mill 1 | 1 | Send 1 card from the top of your deck to the graveyard | 
+| Mill 2 | 2 | Send 1 card from the top of your deck to the graveyard | 
+| Mill 3 | 3 | Send 1 card from the top of your deck to the graveyard | 
+| Mill 4 | 4 | Send 1 card from the top of your deck to the graveyard | 
+| Mill 5 | 5 | Send 1 card from the top of your deck to the graveyard | 
+| Mill 6 | 6 | Send 1 card from the top of your deck to the graveyard | 
+
+| Add LP | + | Focuses the LP textbox. Just type the number to add to your LP and then push enter | 
+| Sub LP | - | Focuses the LP textbox. Just type the number to subtract from your LP and then push enter | 
+
 ---
 
    ***The hotkeys below require you to hover over a card.***
 ---
 | **Feature** | **Default Hotkey** | **Description** |
 | ------- | -------------- | ----------- |
-| To Graveyard | Q | Sends a card to the graveyard | 
-| To Hand | H | Sends a card to your hand | 
 | Activate | A | Activates a card |
 | To S/T | A | Places a card in the S/T Zone |
+| Banish | W | Banishes a card |
+| Banish | B | Banishes a card face down|
+| Declare | D | Declares a card |
+| Normal Summon | N | Normal summon a card in attack position |
 | S.Summon ATK / SS ATK | S | Special summon a card in attack position |
 | Set | J | Sets a card | 
-| Declare | D | Declares a card |
-| Banish | W | Banishes a card |
+| To Bottom of Deck / To B. Deck | Z | Places a card to the bottom of your deck |
+| To Graveyard / To Grave | Q | Sends a card to the graveyard | 
+| To Hand | H | Sends a card to your hand | 
+
 ---
 
 2. **Dark Mode**: Apply a dark mode.
