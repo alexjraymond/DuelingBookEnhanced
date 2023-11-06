@@ -67,7 +67,7 @@ window.onload = async function () {
     "View Main Deck": () => handleDeckView('Main'),
     "View Extra Deck": () => handleDeckView('Extra'),
     "Think": handleThinkButton,
-    "Thumbs Up": handleThumbsUpButton,
+    "Thumbs Up": thumbsUpPress,
     "Toggle Chat Box": handleChatBox,
     "Declare": () => playCard("Declare"),
     "To Hand": () => playCard("To Hand"),
@@ -203,8 +203,25 @@ window.onload = async function () {
     thunk?.click();
   }
 
-  function handleThumbsUpButton() {
-    thumbsUp?.click();
+  function thumbsUpPress() {
+    const mouseDownEvent = new MouseEvent('mousedown', {
+      bubbles: true,
+      cancelable: true,
+      view: window,
+    });
+
+    thumbsUp?.dispatchEvent(mouseDownEvent);
+  }
+
+  function thumbsUpRelease() {
+    const mouseUpEvent = new MouseEvent('mouseup', {
+      bubbles: true,
+      cancelable: true,
+      view: window,
+    });
+
+    thumbsUp?.dispatchEvent(mouseUpEvent);
+    thumbsUp?.click()
   }
 
   function handleChatBox() {
@@ -240,7 +257,7 @@ window.onload = async function () {
     }
   }
 
-  function handleKeydown(e: KeyboardEvent) {
+  function handleKeyDown(e: KeyboardEvent) {
     const handler = e.key.toLowerCase();
     if (!(e.target instanceof HTMLInputElement) || handler === 'enter') {
       console.log('Key pressed:', handler);
@@ -266,8 +283,19 @@ window.onload = async function () {
     }
   }
 
-  // adjust this timer for user responsiveness
-  const debouncedKeydown = debounce((e: KeyboardEvent) => handleKeydown(e), 150);
+  function handleKeyUp(e: KeyboardEvent) {
+    const handler = e.key.toLowerCase();
 
-  document.addEventListener('keydown', debouncedKeydown);
+    const actions = getActionsForHotkey(handler, hotkeyHashMap);
+    if (actions.includes("Thumbs Up")) {
+      thumbsUpRelease();
+    }
+  }
+
+  // adjust this timer for user responsiveness
+  const debouncedKeyDown = debounce((e: KeyboardEvent) => handleKeyDown(e), 150);
+  const debouncedKeyUp = debounce((e: KeyboardEvent) => handleKeyUp(e), 200);
+
+  document.addEventListener('keydown', debouncedKeyDown);
+  document.addEventListener('keyup', debouncedKeyUp)
 }
