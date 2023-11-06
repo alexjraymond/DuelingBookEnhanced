@@ -26,13 +26,13 @@ const Popup = () => {
 
   // Use useEffect to save options whenever they change
   useEffect(() => {
-    if (options) {    
+    if (options) {
       saveOptionsToStorage(options)
       console.log('latest options', options)
     }
 
   }, [options]);
-  
+
 
   const handleSettingsButtonClick = () => {
     chrome.runtime.openOptionsPage()

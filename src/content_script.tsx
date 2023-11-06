@@ -1,7 +1,7 @@
 import { OptionsTypes } from "./utilities/optionsUtility";
 import { injectStylesheet, applyDarkMode, removeDarkMode } from "./utilities/darkModeUtility";
 import { autoConnect, skipIntro } from "./utilities/optionsUtility";
-import { loadHotkeysConfig } from "./utilities/configUtility";
+import { loadHotkeysConfig, getActionsForHotkey } from "./utilities/configUtility";
 import { debounce } from "lodash";
 
 let view: HTMLElement | null;
@@ -11,6 +11,9 @@ let extraDeck: HTMLElement | null;
 let deckMenu: HTMLElement | null;
 let deckViewButton: HTMLElement | null;
 let deckViewSpan: HTMLElement | null;
+let LPInput: HTMLElement | null;
+let subButton: HTMLElement | null;
+let addButton: HTMLElement | null;
 
 function closeViewMenu() {
   closeViewButton?.click();
@@ -52,6 +55,9 @@ window.onload = async function () {
   deckMenu = document.getElementById('card_menu_content') as HTMLElement;
   deckViewButton = deckMenu?.getElementsByClassName('card_menu_btn')[0] as HTMLElement;
   deckViewSpan = deckViewButton?.getElementsByTagName('span')[0] as HTMLElement;
+  LPInput = document.getElementById('life_txt') as HTMLElement
+  subButton = document.getElementById('plus_btn') as HTMLElement;
+  addButton = document.getElementById('minus_btn') as HTMLElement;
 
   let options: OptionsTypes;
 
@@ -63,22 +69,33 @@ window.onload = async function () {
     "Think": handleThinkButton,
     "Thumbs Up": handleThumbsUpButton,
     "Toggle Chat Box": handleChatBox,
-    "To Graveyard": () => playCard("To Graveyard"),
-    "To Grave": () => playCard("To Grave"),
+    "Declare": () => playCard("Declare"),
     "To Hand": () => playCard("To Hand"),
-    "Activate": () => playCard("Activate"),
     "To S/T": () => playCard("To S/T"),
+    "Activate": () => playCard("Activate"),
     "S. Summon ATK": () => playCard("S. Summon ATK"),
     "SS ATK": () => playCard("SS ATK"),
     "Normal Summon": () => playCard("Normal Summon"),
     "Set": () => playCard("Set"),
-    "Declare": () => playCard("Declare"),
-    "Banish": () => playCard("Banish")
+    "To Graveyard": () => playCard("To Graveyard"),
+    "To Grave": () => playCard("To Grave"),
+    "Banish": () => playCard("Banish"),
+    "Banish FD": () => playCard("Banish FD"),
+    "To B. Deck": () => playCard("To B. Deck"),
+    "To Bottom of Deck": () => playCard("To Bottom of Deck"),
+    "Mill 1": () => saySomething('/mill 1'),
+    "Mill 2": () => saySomething('/mill 2'),
+    "Mill 3": () => saySomething('/mill 3'),
+    "Mill 4": () => saySomething('/mill 4'),
+    "Mill 5": () => saySomething('/mill 5'),
+    "Mill 6": () => saySomething('/mill 6'),
+    "Sub LP": () => subLP(),
+    "Add LP": () => addLP(),
   };
 
   let hotkeyHashMap = await loadHotkeysConfig();
 
-  async function fetchHotKeyHashMap () {
+  async function fetchHotKeyHashMap() {
     hotkeyHashMap = await loadHotkeysConfig();
     console.log('Loaded hotkeys configuration:', hotkeyHashMap);
   }
@@ -88,12 +105,12 @@ window.onload = async function () {
   chrome.storage.sync.get('options', (result) => {
     options = result.options as OptionsTypes;
     if (options && options.disableAllOptions) {
-      // Set all options to false, ensure dark mode is off, and don't run other functions
+      // set all options to false, ensure dark mode is off, and don't run other functions
       options.skipIntro = false;
       options.autoConnect = false;
       options.isNightMode = false;
       removeDarkMode();
-      hotkeyHashMap = {};
+      hotkeyHashMap = [];
     } else {
       fetchHotKeyHashMap()
       if (options && options.skipIntro && options.autoConnect) autoConnect(skipIntroButton, enterButton);
@@ -102,6 +119,7 @@ window.onload = async function () {
       if (options && options.isNightMode) applyDarkMode();
       if (options && !options.isNightMode) removeDarkMode();
     }
+    chrome.storage.onChanged.addListener(handleOptionsChange);
   });
 
   function handleOptionsChange(changes: { [key: string]: any }, namespace: string) {
@@ -111,12 +129,12 @@ window.onload = async function () {
         console.log("Options have changed:", newOptions);
 
         if (newOptions.disableAllOptions) {
-          // Set all options to false, ensure dark mode is off, and don't run other functions
+          // set all options to false, ensure dark mode is off, and don't run other functions
           newOptions.skipIntro = false;
           newOptions.autoConnect = false;
           newOptions.isNightMode = false;
           removeDarkMode();
-          hotkeyHashMap = {};
+          hotkeyHashMap = [];
         } else {
           fetchHotKeyHashMap()
           if (newOptions.skipIntro && newOptions.autoConnect) autoConnect(skipIntroButton, enterButton);
@@ -129,11 +147,18 @@ window.onload = async function () {
     }
   }
 
+  chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+    if (message.type === 'HOTKEYS_CHANGED') {
+      console.log('Received updated hotkeys:', message.payload);
+      hotkeyHashMap = message.payload; // update the hotkeys map.
+    }
+  });
+
   chrome.storage.onChanged.addListener(handleOptionsChange);
 
   const chatInput = document.querySelectorAll('input.cin_txt')[1] as HTMLInputElement;
   let chatInputFocused = false;
-
+  let LPInputFocused = false;
   const thunk = document.getElementById('think_btn');
   const thumbsUp = document.getElementById('good_btn');
   const graveyard = document.getElementById('grave_hidden');
@@ -148,36 +173,19 @@ window.onload = async function () {
       which: 13,
       bubbles: true,
     });
-    setTimeout(() => {
-      chatInput.focus();
-      chatInput.dispatchEvent(enterEvent);
-    }, 30);
-    setTimeout(() => {
-      chatInput.blur();
-    }, 30);
+
+    handleChatBox()
+    chatInput.dispatchEvent(enterEvent);
   }
 
-  function handleHotKey(key: string, hotkeyHashMap: Record<string, any>, options: OptionsTypes) {
-    if (options.disableAllOptions) {
-      return;
-    }
-    const hotkey = hotkeyHashMap[key];
-    if (hotkey) {
-      const { action } = hotkey;
-      if (Array.isArray(action)) {
-        action.forEach((actionName) => {
-          const actionFunction = actionFunctionMap[actionName];
-          if (actionFunction) {
-            actionFunction();
-          }
-        });
-      } else {
-        const actionFunction = actionFunctionMap[action];
-        if (actionFunction) {
-          actionFunction();
-        }
-      }
-    }
+  function subLP() {
+    if (subButton) subButton.click()
+    LPInputFocused = true;
+  }
+
+  function addLP() {
+    if (addButton) addButton.click()
+    LPInputFocused = true;
   }
 
   function toggleGraveYardView() {
@@ -191,8 +199,8 @@ window.onload = async function () {
   }
 
   function handleThinkButton() {
-    thunk?.click();
     saySomething('hm');
+    thunk?.click();
   }
 
   function handleThumbsUpButton() {
@@ -200,10 +208,13 @@ window.onload = async function () {
   }
 
   function handleChatBox() {
-    if (!chatInputFocused) {
+    if (!chatInputFocused && !LPInputFocused) {
       chatInput.focus();
       chatInputFocused = true;
-    } else {
+    } else if (LPInputFocused) {
+      LPInput?.blur();
+      LPInputFocused = false;
+    } else if (chatInputFocused) {
       chatInput.blur();
       chatInputFocused = false;
     }
@@ -229,19 +240,34 @@ window.onload = async function () {
     }
   }
 
-  function handleKeydown(e: KeyboardEvent, options: OptionsTypes) {
+  function handleKeydown(e: KeyboardEvent) {
     const handler = e.key.toLowerCase();
     if (!(e.target instanceof HTMLInputElement) || handler === 'enter') {
       console.log('Key pressed:', handler);
-      handleHotKey(handler, hotkeyHashMap, options);
-      const actionFunction = actionFunctionMap[handler];
-      if (actionFunction) {
-        actionFunction();
+      const actions = getActionsForHotkey(handler, hotkeyHashMap);
+      console.log('actions', actions)
+      if (actions.length > 0) {
+        actions.forEach((action) => {
+          const hotkeyEntry = hotkeyHashMap.find(hk => hk.action === action);
+          if (hotkeyEntry && hotkeyEntry.disabled) {
+            console.log('Hotkey is disabled:', action);
+            return;
+          }
+          if (action in actionFunctionMap) {
+            actionFunctionMap[action]();
+            console.log('Action executed:', action);
+          } else {
+            console.log('Action function not found for:', action);
+          }
+        });
+      } else {
+        console.log('No matching actions found.');
       }
     }
   }
 
-  const debouncedKeydown = debounce((e: KeyboardEvent) => handleKeydown(e, options), 150);
+  // adjust this timer for user responsiveness
+  const debouncedKeydown = debounce((e: KeyboardEvent) => handleKeydown(e), 150);
 
   document.addEventListener('keydown', debouncedKeydown);
 }

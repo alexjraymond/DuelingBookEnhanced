@@ -4,18 +4,18 @@ import logo from "./assets/images/dbe_logo.png";
 import coffee from "./assets/images/coffee.png";
 import yugiIcon from "./assets/images/yugi-icon.png";
 import { BsDiscord } from 'react-icons/bs'
-import {BiCoffeeTogo} from 'react-icons/bi'
+import { BiCoffeeTogo } from 'react-icons/bi'
 import { getOptionsFromStorage, saveOptionsToStorage, OptionsTypes } from './utilities/optionsUtility'
 import ReactDOM from "react-dom";
-import CustomizeHotkeys from "./customizeHotkeys";
-import card from "../public/dbe_logo.png"
-import KnownIssues from "./knownIssues";
-
+import CustomizeHotkeys from "./CustomizeHotkeys";
+import KnownIssues from "./KnownIssues";
+import ComingSoon from "./components/ComingSoon";
 
 export const Options = () => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [isSmall, setIsSmall] = useState(false);
   const [currentSection, setCurrentSection] = useState("General");
+  const [isSavedVisible, setIsSavedVisible] = useState(false);
   const [options, setOptions] = useState<OptionsTypes>({
     disableAllOptions: false,
     skipIntro: false,
@@ -23,14 +23,14 @@ export const Options = () => {
     isNightMode: false,
   });
 
-  // Load options from storage when the popup is opened
+  // load options from storage when the popup is opened
   useEffect(() => {
     getOptionsFromStorage((savedOptions) => {
       setOptions(savedOptions);
     });
   }, []);
 
-  // Use useEffect to save options whenever they change
+  // save options whenever they change
   useEffect(() => {
     saveOptionsToStorage(options)
   }, [options]);
@@ -56,79 +56,64 @@ export const Options = () => {
     };
   }, []);
 
-  const handleSectionClick = (section: string) => {
-    setCurrentSection(section);
-  }
+  const settingsSavedMessageTimer = useRef<NodeJS.Timeout | null>(null);
+
+  const toggleSavedMessage = () => {
+
+    setIsSavedVisible(false);
+    if (settingsSavedMessageTimer.current) clearTimeout(settingsSavedMessageTimer.current);
+
+    settingsSavedMessageTimer.current = setTimeout(() => {
+      setIsSavedVisible(true);
+    }, 1);
+  };
 
   const renderMainContent = () => {
     switch (currentSection) {
       case "General":
         return (
           <>
-          <h1 className="text-3xl font-bold">General</h1>
-          <p className="text-gray-600 mt-2 mb-4">Determine how DuelingBookEnhanced can improve your experience</p>
-          <hr className="border-gray-300 mb-4" />
-          <div className="flex flex-col gap-4">
-            {inputItems.map((item, index) => (
-              <div
-                className={`flex items-center ${options.disableAllOptions && index > 0 ? 'opacity-50' : ''}`}
-                key={item.id}
-              >
-                <input
-                  id={item.id}
-                  type="checkbox"
-                  className={`mr-2 ${index > 0 && options.disableAllOptions ? '' : 'cursor-pointer'}`}
-                  checked={item.checked}
-                  onChange={item.onChange}
-                  disabled={index > 0 && options.disableAllOptions}
-                />
-                <label className={`flex items-center w-max ${index > 0 && options.disableAllOptions ? '' : 'cursor-pointer'}`} htmlFor={item.id}>{item.label}</label>
+            <h1 className="text-3xl font-bold">General</h1>
+            <p className="text-gray-600 mt-2">Determine how DuelingBookEnhanced can improve your experience</p>
+            <hr className="border-gray-300 mb-4" />
+            <div className="flex flex-col gap-4">
+              {inputItems.map((item, index) => (
+                <div
+                  className={`flex items-center ${options.disableAllOptions && index > 0 ? 'opacity-50' : ''}`}
+                  key={item.id}
+                >
+                  <input
+                    id={item.id}
+                    type="checkbox"
+                    className={`mr-2 ${index > 0 && options.disableAllOptions ? '' : 'cursor-pointer'}`}
+                    checked={item.checked}
+                    onChange={() => {
+                      item.onChange();
+                      toggleSavedMessage();
+                    }}
+                    disabled={index > 0 && options.disableAllOptions}
+                  />
+                  <label className={`flex items-center w-max ${index > 0 && options.disableAllOptions ? '' : 'cursor-pointer'}`} htmlFor={item.id}>{item.label}</label>
+                </div>
+              ))}
+            </div>
+            <hr className="border-gray-300 my-4" />
+            <div className="flex justify-evenly items-center">
+              <div className="flex items-center">
+                <span className="mr-2">Noticed a bug or want to request a feature? Let us know!</span>
+                <Button buttonText="Bugs & Feedback" buttonUrl="https://forms.gle/yLW8pasvEr2rshSQ9" />
               </div>
-            ))}
-          </div>
-          <hr className="border-gray-300 my-4" />
-          <div className="flex justify-evenly items-center">
-            <div className="flex items-center">
-              <span className="mr-2">Noticed a bug or want to request a feature? Let us know!</span>
-              <Button buttonText="Bugs & Feedback" buttonUrl="https://forms.gle/yLW8pasvEr2rshSQ9" />
-            </div>
-            <div className="flex items-center">
-              <span className="mr-2">Ready to play? It's time to duel!</span>
-              <Button buttonText="Open DB" buttonUrl="http://www.DuelingBook.com/html5" />
-            </div>
-          </div>
-        </>
-          )
-      case "Customize Hotkeys":
-        return (
-          <>
-            <div className="flex justify-center">
-                <img src={card} />
-                <img src={card} />
-                <img src={card} />
-                <img src={card} />
-                <img src={card} />
-            </div>
-            <div>
-                <h1 className='text-2xl justify-center flex'>We set 5 cards face down and will be back with this section soon...</h1>
-            </div>
-        </>
-          );
-      case "Advanced":
-        return (    
-          <>
-            <div className="flex justify-center">
-                <img src={card} />
-                <img src={card} />
-                <img src={card} />
-                <img src={card} />
-                <img src={card} />
-            </div>
-            <div>
-                <h1 className='text-2xl justify-center flex'>We set 5 cards face down and will be back with this section soon...</h1>
+              <div className="flex items-center">
+                <span className="mr-2">Ready to play? It's time to duel!</span>
+                <Button buttonText="Open DB" buttonUrl="http://www.DuelingBook.com/html5" />
+              </div>
             </div>
           </>
-        );
+        )
+      case "Customize Hotkeys":
+        return <CustomizeHotkeys toggleSavedMessage={toggleSavedMessage} />
+      case "Advanced":
+        return <ComingSoon />
       case "Help":
         return <KnownIssues />;
       default:
@@ -164,13 +149,12 @@ export const Options = () => {
   ];
 
   return (
-
     <div className="container mx-auto flex items-stretch h-auto p-4">
       <div className="flex flex-col bg-gray-300 rounded-lg shadow-lg mb-8">
         <div ref={containerRef} className="flex items-center mb-4 bg-gray-700 justify-center p-2">
           <img src={logo} alt="DBE Logo" className="w-12 h-12" />
           <h2 className="text-xl font-bold text-white">
-          {isSmall ? "DB" : "DuelingBook"}
+            {isSmall ? "DB" : "DuelingBook"}
             <span className="text-gray-400">
               {isSmall ? "E" : 'Enhanced'}
             </span>
@@ -184,23 +168,24 @@ export const Options = () => {
             General
           </button>
           <button
-          className="bg-gray-700 hover:bg-gray-500 w-full py-2 mb-2"
-          onClick={() => setCurrentSection("Customize Hotkeys")}>
+            className="bg-gray-700 hover:bg-gray-500 w-full py-2 mb-2"
+            onClick={() => setCurrentSection("Customize Hotkeys")}>
             Customize Hotkeys
           </button>
           <button
             className="bg-gray-700 hover:bg-gray-500 w-full py-2 mb-2"
             onClick={() => setCurrentSection("Advanced")}>
-              Advanced
+            Advanced
           </button>
           <button
             className="bg-gray-700 hover:bg-gray-500 w-full py-2 mb-2"
             onClick={() => setCurrentSection("Help")}>
-              Known Issues
+            Known Issues
           </button>
         </nav>
       </div>
       <div className="flex-grow p-4 pt-0 rounded-lg">
+
         <aside className="bg-gray-700 text-white p-4 mb-4 rounded-lg flex justify-center items-center align-middle text-lg space-x-4">
           <div className="flex items-center ">
             <img src={yugiIcon} alt="yugi icon" className="w-16 h-16 justify-center mb-2" />
@@ -216,8 +201,16 @@ export const Options = () => {
             <BsDiscord className="w-8 h-8 flex" />
           </button>
         </aside>
-        <main>
-        {renderMainContent()}
+
+        <main className="relative">
+          {renderMainContent()}
+          {isSavedVisible && (
+            <div className="flex justify-center">
+              <div className="saved-settings-message bg-green-500 text-white px-4 py-2 rounded-md absolute top-0 animate-slide-down opacity-0 text-lg transition-transform duration-500">
+                Settings Saved!
+              </div>
+            </div>
+          )}
         </main>
 
         <footer className="pt-2">
@@ -227,7 +220,7 @@ export const Options = () => {
               <span className="font-bold">Enjoying our Product?</span>
               <span> Share some support</span>
             </div>
-            <button 
+            <button
               className="bg-blue-500 px-7 py-1 rounded-lg font-bold flex justify-center items-center hover:bg-blue-400"
               onClick={() => window.open('https://www.paypal.com/donate/?business=TNF5V5V9E869E&no_recurring=1&item_name=hi+this+is+alex+from+the+duelingbookenhanced+extension+-+if+you+want+to+buy+Joseph+%26+I+a+coffee+or+something+here%27s+where+2doit&currency_code=USD', '_blank')}><BiCoffeeTogo className="w-8 h-8 flex" /></button>
           </div>
