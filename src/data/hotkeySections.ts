@@ -18,6 +18,8 @@ export const hotkeySections = [
       "Overlay",
       "S. Summon ATK/SS ATK",
       "S. Summon DEF/SS DEF",
+      "OL ATK",
+      "OL DEF",
       "Set",
       "To Bottom of Deck/To B. Deck",
       "To Graveyard/To Grave/Detach",
