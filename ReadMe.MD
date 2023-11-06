@@ -11,7 +11,7 @@ Dueling Book Enhanced is a collection of features designed to enhance your exper
 
 ## Features
 
-1. **Fully Customizable Hotkeys**: Use hotkeys for immediate actions. Default hotkeys below:
+1. **Fully Customizable Hotkeys**: Use hotkeys for immediate actions. Individual hotkeys may also be disabled. Default hotkeys below:
 
 ---
 | Feature | Default Hotkey | Description |
