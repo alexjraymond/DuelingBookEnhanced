@@ -112,13 +112,18 @@ window.onload = async function () {
     options = result.options as OptionsTypes;
     if (options && options.disableAllOptions) {
       // set all options to false, ensure dark mode is off, and don't run other functions
+      options.disableHotkeys = true
       options.skipIntro = false;
       options.autoConnect = false;
       options.isNightMode = false;
       removeDarkMode();
       hotkeyHashMap = [];
     } else {
-      fetchHotKeyHashMap()
+      if (options.disableHotkeys) {
+        hotkeyHashMap = []
+      } else {
+        fetchHotKeyHashMap()
+      }
       if (options && options.skipIntro && options.autoConnect) autoConnect(skipIntroButton, enterButton);
       if (options && options.skipIntro) skipIntro(skipIntroButton);
       if (options && options.autoConnect) autoConnect(skipIntroButton, enterButton);
@@ -142,7 +147,11 @@ window.onload = async function () {
           removeDarkMode();
           hotkeyHashMap = [];
         } else {
-          fetchHotKeyHashMap()
+          if (newOptions.disableHotkeys) {
+            hotkeyHashMap = []
+          } else {
+            fetchHotKeyHashMap()
+          }
           if (newOptions.skipIntro && newOptions.autoConnect) autoConnect(skipIntroButton, enterButton);
           if (newOptions.skipIntro) skipIntro(skipIntroButton);
           if (newOptions.autoConnect) autoConnect(skipIntroButton, enterButton);

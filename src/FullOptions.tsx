@@ -18,6 +18,7 @@ export const Options = () => {
   const [isSavedVisible, setIsSavedVisible] = useState(false);
   const [options, setOptions] = useState<OptionsTypes>({
     disableAllOptions: false,
+    disableHotkeys: false,
     skipIntro: false,
     autoConnect: false,
     isNightMode: false,
@@ -127,6 +128,12 @@ export const Options = () => {
       label: "Disable All Options",
       checked: options.disableAllOptions,
       onChange: () => setOptions({ ...options, disableAllOptions: !options.disableAllOptions }),
+    },
+    {
+      id: "disableHotkeys",
+      label: "Disable Hotkeys",
+      checked: options.disableHotkeys,
+      onChange: () => setOptions({ ...options, disableHotkeys: !options.disableHotkeys }),
     },
     {
       id: "skipIntro",
