@@ -46,6 +46,8 @@ export function getDefaultHotkeys(): HotkeyEntry[] {
     { action: "Toggle Chat Box", hotkey: "enter", disabled: false },
     { action: "Declare", hotkey: "d", disabled: false },
     { action: "To Hand", hotkey: "h", disabled: false },
+    { action: "To Extra Deck", hotkey: "h", disabled: false },
+    { action: "To Extra Deck FU", hotkey: "u", disabled: false },
     { action: "Activate", hotkey: "a", disabled: false },
     { action: "To S/T", hotkey: "a", disabled: false },
     { action: "Overlay", hotkey: "o", disabled: false },

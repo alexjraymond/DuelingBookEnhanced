@@ -71,6 +71,8 @@ window.onload = async function () {
     "Toggle Chat Box": handleChatBox,
     "Declare": () => playCard("Declare"),
     "To Hand": () => playCard("To Hand"),
+    "To Extra Deck": () => playCard("To Extra Deck"),
+    "To Extra Deck FU": () => playCard("To Extra Deck FU"),
     "To S/T": () => playCard("To S/T"),
     "Activate": () => playCard("Activate"),
     "Overlay": () => playCard("Overlay"),

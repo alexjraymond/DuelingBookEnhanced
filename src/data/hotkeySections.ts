@@ -23,7 +23,8 @@ export const hotkeySections = [
       "Set",
       "To Bottom of Deck/To B. Deck",
       "To Graveyard/To Grave/Detach",
-      "To Hand"
+      "To Hand/To Extra Deck",
+      "To Extra Deck FU"
     ]
   },
   {
