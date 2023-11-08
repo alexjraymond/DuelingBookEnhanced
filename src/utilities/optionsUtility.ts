@@ -1,5 +1,6 @@
 export interface OptionsTypes {
   disableAllOptions: boolean;
+  disableHotkeys: boolean;
   skipIntro: boolean;
   autoConnect: boolean;
   isNightMode: boolean;

@@ -15,10 +15,14 @@ export const hotkeySections = [
       "Banish FD",
       "Declare",
       "Normal Summon",
+      "Overlay",
       "S. Summon ATK/SS ATK",
+      "S. Summon DEF/SS DEF",
+      "OL ATK",
+      "OL DEF",
       "Set",
       "To Bottom of Deck/To B. Deck",
-      "To Graveyard/To Grave",
+      "To Graveyard/To Grave/Detach",
       "To Hand"
     ]
   },

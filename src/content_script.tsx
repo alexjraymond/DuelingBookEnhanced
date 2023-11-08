@@ -67,16 +67,22 @@ window.onload = async function () {
     "View Main Deck": () => handleDeckView('Main'),
     "View Extra Deck": () => handleDeckView('Extra'),
     "Think": handleThinkButton,
-    "Thumbs Up": handleThumbsUpButton,
+    "Thumbs Up": thumbsUpPress,
     "Toggle Chat Box": handleChatBox,
     "Declare": () => playCard("Declare"),
     "To Hand": () => playCard("To Hand"),
     "To S/T": () => playCard("To S/T"),
     "Activate": () => playCard("Activate"),
+    "Overlay": () => playCard("Overlay"),
     "S. Summon ATK": () => playCard("S. Summon ATK"),
     "SS ATK": () => playCard("SS ATK"),
+    "OL ATK": () => playCard("OL ATK"),
+    "S. Summon DEF": () => playCard("S. Summon DEF"),
+    "SS DEF": () => playCard("SS DEF"),
+    "OL DEF": () => playCard("OL DEF"),
     "Normal Summon": () => playCard("Normal Summon"),
     "Set": () => playCard("Set"),
+    "Detach": () => playCard("Detach"),
     "To Graveyard": () => playCard("To Graveyard"),
     "To Grave": () => playCard("To Grave"),
     "Banish": () => playCard("Banish"),
@@ -106,13 +112,18 @@ window.onload = async function () {
     options = result.options as OptionsTypes;
     if (options && options.disableAllOptions) {
       // set all options to false, ensure dark mode is off, and don't run other functions
+      options.disableHotkeys = true
       options.skipIntro = false;
       options.autoConnect = false;
       options.isNightMode = false;
       removeDarkMode();
       hotkeyHashMap = [];
     } else {
-      fetchHotKeyHashMap()
+      if (options.disableHotkeys) {
+        hotkeyHashMap = []
+      } else {
+        fetchHotKeyHashMap()
+      }
       if (options && options.skipIntro && options.autoConnect) autoConnect(skipIntroButton, enterButton);
       if (options && options.skipIntro) skipIntro(skipIntroButton);
       if (options && options.autoConnect) autoConnect(skipIntroButton, enterButton);
@@ -136,7 +147,11 @@ window.onload = async function () {
           removeDarkMode();
           hotkeyHashMap = [];
         } else {
-          fetchHotKeyHashMap()
+          if (newOptions.disableHotkeys) {
+            hotkeyHashMap = []
+          } else {
+            fetchHotKeyHashMap()
+          }
           if (newOptions.skipIntro && newOptions.autoConnect) autoConnect(skipIntroButton, enterButton);
           if (newOptions.skipIntro) skipIntro(skipIntroButton);
           if (newOptions.autoConnect) autoConnect(skipIntroButton, enterButton);
@@ -203,8 +218,25 @@ window.onload = async function () {
     thunk?.click();
   }
 
-  function handleThumbsUpButton() {
-    thumbsUp?.click();
+  function thumbsUpPress() {
+    const mouseDownEvent = new MouseEvent('mousedown', {
+      bubbles: true,
+      cancelable: true,
+      view: window,
+    });
+
+    thumbsUp?.dispatchEvent(mouseDownEvent);
+  }
+
+  function thumbsUpRelease() {
+    const mouseUpEvent = new MouseEvent('mouseup', {
+      bubbles: true,
+      cancelable: true,
+      view: window,
+    });
+
+    thumbsUp?.dispatchEvent(mouseUpEvent);
+    thumbsUp?.click()
   }
 
   function handleChatBox() {
@@ -240,7 +272,7 @@ window.onload = async function () {
     }
   }
 
-  function handleKeydown(e: KeyboardEvent) {
+  function handleKeyDown(e: KeyboardEvent) {
     const handler = e.key.toLowerCase();
     if (!(e.target instanceof HTMLInputElement) || handler === 'enter') {
       console.log('Key pressed:', handler);
@@ -266,8 +298,19 @@ window.onload = async function () {
     }
   }
 
-  // adjust this timer for user responsiveness
-  const debouncedKeydown = debounce((e: KeyboardEvent) => handleKeydown(e), 150);
+  function handleKeyUp(e: KeyboardEvent) {
+    const handler = e.key.toLowerCase();
 
-  document.addEventListener('keydown', debouncedKeydown);
+    const actions = getActionsForHotkey(handler, hotkeyHashMap);
+    if (actions.includes("Thumbs Up")) {
+      thumbsUpRelease();
+    }
+  }
+
+  // adjust this timer for user responsiveness
+  const debouncedKeyDown = debounce((e: KeyboardEvent) => handleKeyDown(e), 150);
+  const debouncedKeyUp = debounce((e: KeyboardEvent) => handleKeyUp(e), 200);
+
+  document.addEventListener('keydown', debouncedKeyDown);
+  document.addEventListener('keyup', debouncedKeyUp)
 }
