@@ -8,5 +8,5 @@ export const validHotkeys = [
   'AltGraph', 'ShiftLeft', 'ShiftRight', 'ControlLeft', 'ControlRight',
   'Insert', 'Home', 'End', 'PageUp', 'PageDown',
   'Backslash', 'CapsLock',
-  ',', '.', '/', ';', '\'', '[', ']', '+', '-', 'enter'
+  ',', '.', '/', ';', '\'', '[', ']', '+', '-', 'enter', 'escape',
 ];

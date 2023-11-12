@@ -26,6 +26,7 @@ const CustomizeHotkeys: React.FC<CustomizeHotkeysTypes> = ({ toggleSavedMessage 
           key={index}
           title={section.title}
           actions={section.actions}
+          note={section.note}
           selectedHotkeys={selectedHotkeys}
           setSelectedHotkeys={setSelectedHotkeys}
           resetCounter={resetCounter}

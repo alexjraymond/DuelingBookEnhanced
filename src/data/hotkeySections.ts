@@ -2,10 +2,12 @@ export const hotkeySections = [
   {
     title: 'View Actions',
     actions: [
+      'Close View Menu',
       'View Extra Deck',
       'View Graveyard',
       'View Main Deck',
-    ]
+    ],
+    note: 'Note: You can also close any of the menu views by pushing the hotkey again.'
   },
   {
     title: 'Card Actions',
@@ -25,7 +27,8 @@ export const hotkeySections = [
       "To Graveyard/To Grave/Detach",
       "To Hand/To Extra Deck",
       "To Extra Deck FU"
-    ]
+    ],
+    note: 'Note: You must be hovering over a card to use these.'
   },
   {
     title: "Mills",
@@ -36,21 +39,30 @@ export const hotkeySections = [
       'Mill 4',
       'Mill 5',
       'Mill 6',
-    ]
+    ],
+    note: null
   },
   {
     title: 'LP',
     actions: [
       "Add LP",
       "Sub LP",
-    ]
+    ],
+    note: null
   },
   {
     title: 'Emotes/Chat Box',
     actions: [
+      "Toggle Chat Box",
       "Think",
       "Thumbs Up",
-      "Toggle Chat Box"
-    ]
+
+    ],
+    note: null
   },
 ];
+
+export const defaultDisabledActions = [
+  'Close View Menu',
+  'Toggle Chat Box',
+]

@@ -238,7 +238,7 @@ window.onload = async function () {
     });
 
     thumbsUp?.dispatchEvent(mouseUpEvent);
-    thumbsUp?.click()
+    /* adding in thumbsUp?.click() will create toggle for Keep Going! */
   }
 
   function handleChatBox() {
@@ -303,11 +303,15 @@ window.onload = async function () {
   function handleKeyUp(e: KeyboardEvent) {
     const handler = e.key.toLowerCase();
 
-    const actions = getActionsForHotkey(handler, hotkeyHashMap);
-    if (actions.includes("Thumbs Up")) {
-      thumbsUpRelease();
+    if (!(e.target instanceof HTMLInputElement) && chatInput !== document.activeElement && LPInput !== document.activeElement) {
+      console.log(chatInput !== document.activeElement)
+      const actions = getActionsForHotkey(handler, hotkeyHashMap);
+      if (actions.includes("Thumbs Up")) {
+        thumbsUpRelease();
+      }
     }
   }
+
 
   // adjust this timer for user responsiveness
   const debouncedKeyDown = debounce((e: KeyboardEvent) => handleKeyDown(e), 150);
