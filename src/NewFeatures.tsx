@@ -6,7 +6,7 @@ import Footer from './components/Footer'
 
 export const NewFeatures = () => {
   const features: string[] = [
-    '"To Exta Deck" and "To Hand" now share a hotkey ',
+    '"To Extra Deck" and "To Hand" now share a hotkey ',
     'Added hotkey for "To Extra Deck FU" (Default "u") ',
     'Added hotkey for Banishing Top of Deck (no need to hover) (Default "m") ',
     'Added hotkey for Target (Default "r") ',
