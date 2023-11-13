@@ -6,7 +6,7 @@ polling();
 
 chrome.runtime.onInstalled.addListener((details) => {
   if (details.reason === "install" || details.reason === "update") {
-    chrome.tabs.create({url: 'chrome-extension://cbjnilkbeknnlohlemgbeaebaedokcbb/newFeatures.html'})
-  } 
+    chrome.tabs.create({ url: 'newFeatures.html' })
+  }
 
 })
