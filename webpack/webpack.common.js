@@ -7,6 +7,7 @@ module.exports = {
     entry: {
         popup: path.join(srcDir, 'Popup.tsx'),
         fullOptions: path.join(srcDir, 'FullOptions.tsx'),
+        NewFeatures: path.join(srcDir, 'NewFeatures.tsx'),
         background: path.join(srcDir, 'background.ts'),
         content_script: path.join(srcDir, 'content_script.tsx'),
     },

@@ -11,9 +11,12 @@ let extraDeck: HTMLElement | null;
 let deckMenu: HTMLElement | null;
 let deckViewButton: HTMLElement | null;
 let deckViewSpan: HTMLElement | null;
+let deckBanishButton: HTMLElement | null;
+let deckBanishSpan: HTMLElement | null;
 let LPInput: HTMLElement | null;
 let subButton: HTMLElement | null;
 let addButton: HTMLElement | null;
+let chatOption: HTMLElement | null;
 
 function closeViewMenu() {
   closeViewButton?.click();
@@ -47,6 +50,28 @@ function handleDeckView(deckType: string) {
   }
 }
 
+function handleDeckOptions(deckType: string, action: string) {
+  const mouseOverEvent = new MouseEvent('mouseover', {
+    bubbles: true,
+    cancelable: true,
+    view: window,
+  });
+
+  if (deckType === 'Main') {
+    deck?.dispatchEvent(mouseOverEvent);
+  }
+
+  deckMenu = document.getElementById('card_menu_content') as HTMLElement;
+
+  if (action === "banish") {
+    deckBanishButton = deckMenu?.getElementsByClassName('card_menu_btn')[2] as HTMLElement;
+    deckBanishSpan = deckBanishButton?.getElementsByTagName('span')[0] as HTMLElement;
+    console.log('banish button', deckBanishButton)
+    console.log('banish span', deckBanishSpan)
+    deckBanishSpan.click();
+  }
+}
+
 window.onload = async function () {
   view = document.getElementById('view') as HTMLElement;
   closeViewButton = view?.getElementsByClassName('exit_btn')[0] as HTMLElement;
@@ -64,6 +89,7 @@ window.onload = async function () {
   const actionFunctionMap: Record<string, () => void> = {
     "Close View Menu": closeViewMenu,
     "View Graveyard": toggleGraveYardView,
+    "View Banish": toggleBanishedView,
     "View Main Deck": () => handleDeckView('Main'),
     "View Extra Deck": () => handleDeckView('Extra'),
     "Think": handleThinkButton,
@@ -71,6 +97,8 @@ window.onload = async function () {
     "Toggle Chat Box": handleChatBox,
     "Declare": () => playCard("Declare"),
     "To Hand": () => playCard("To Hand"),
+    "To Extra Deck": () => playCard("To Extra Deck"),
+    "To Extra Deck FU": () => playCard("To Extra Deck FU"),
     "To S/T": () => playCard("To S/T"),
     "Activate": () => playCard("Activate"),
     "Overlay": () => playCard("Overlay"),
@@ -86,6 +114,7 @@ window.onload = async function () {
     "To Graveyard": () => playCard("To Graveyard"),
     "To Grave": () => playCard("To Grave"),
     "Banish": () => playCard("Banish"),
+    "Banish T.": () => handleDeckOptions("Main", "banish"),
     "Banish FD": () => playCard("Banish FD"),
     "To B. Deck": () => playCard("To B. Deck"),
     "To Bottom of Deck": () => playCard("To Bottom of Deck"),
@@ -97,6 +126,7 @@ window.onload = async function () {
     "Mill 6": () => saySomething('/mill 6'),
     "Sub LP": () => subLP(),
     "Add LP": () => addLP(),
+    "Target": () => playCard("Target")
   };
 
   let hotkeyHashMap = await loadHotkeysConfig();
@@ -177,6 +207,7 @@ window.onload = async function () {
   const thunk = document.getElementById('think_btn');
   const thumbsUp = document.getElementById('good_btn');
   const graveyard = document.getElementById('grave_hidden');
+  const banished = document.getElementById('banished_hidden');
   const skipIntroButton = document.getElementById('skip_intro_btn') as HTMLElement;
   const enterButton = document.getElementById('duel_btn') as HTMLElement;
 
@@ -190,7 +221,9 @@ window.onload = async function () {
     });
 
     handleChatBox()
-    chatInput.dispatchEvent(enterEvent);
+    setTimeout(() => {
+      chatInput.dispatchEvent(enterEvent);
+    }, 10);
   }
 
   function subLP() {
@@ -205,20 +238,26 @@ window.onload = async function () {
 
   function toggleGraveYardView() {
     if (view && view.style.display === 'block') {
-      console.log("Closing the GY");
       closeViewMenu()
     } else {
       graveyard?.click()
-      console.log("Opening the GY", graveyard);
+    }
+  }
+
+  function toggleBanishedView() {
+    if (view && view.style.display === 'block') {
+      closeViewMenu()
+    } else {
+      banished?.click()
     }
   }
 
   function handleThinkButton() {
-    saySomething('hm');
     thunk?.click();
   }
 
   function thumbsUpPress() {
+    thumbsUp?.click()
     const mouseDownEvent = new MouseEvent('mousedown', {
       bubbles: true,
       cancelable: true,
@@ -236,7 +275,6 @@ window.onload = async function () {
     });
 
     thumbsUp?.dispatchEvent(mouseUpEvent);
-    thumbsUp?.click()
   }
 
   function handleChatBox() {
@@ -301,15 +339,19 @@ window.onload = async function () {
   function handleKeyUp(e: KeyboardEvent) {
     const handler = e.key.toLowerCase();
 
-    const actions = getActionsForHotkey(handler, hotkeyHashMap);
-    if (actions.includes("Thumbs Up")) {
-      thumbsUpRelease();
+    if (!(e.target instanceof HTMLInputElement) && chatInput !== document.activeElement && LPInput !== document.activeElement) {
+      console.log(chatInput !== document.activeElement)
+      const actions = getActionsForHotkey(handler, hotkeyHashMap);
+      if (actions.includes("Thumbs Up")) {
+        thumbsUpRelease();
+      }
     }
   }
 
+
   // adjust this timer for user responsiveness
   const debouncedKeyDown = debounce((e: KeyboardEvent) => handleKeyDown(e), 150);
-  const debouncedKeyUp = debounce((e: KeyboardEvent) => handleKeyUp(e), 200);
+  const debouncedKeyUp = debounce((e: KeyboardEvent) => handleKeyUp(e), 160);
 
   document.addEventListener('keydown', debouncedKeyDown);
   document.addEventListener('keyup', debouncedKeyUp)

@@ -39,13 +39,17 @@ export function getDefaultHotkeys(): HotkeyEntry[] {
   return [
     { action: "Close View Menu", hotkey: "escape", disabled: false },
     { action: "View Graveyard", hotkey: "g", disabled: false },
+    { action: "View Banish", hotkey: ",", disabled: false },
     { action: "View Main Deck", hotkey: "v", disabled: false },
+    { action: "Banish T.", hotkey: "m", disabled: false },
     { action: "View Extra Deck", hotkey: "e", disabled: false },
     { action: "Think", hotkey: "t", disabled: false },
     { action: "Thumbs Up", hotkey: "f", disabled: false },
     { action: "Toggle Chat Box", hotkey: "enter", disabled: false },
     { action: "Declare", hotkey: "d", disabled: false },
     { action: "To Hand", hotkey: "h", disabled: false },
+    { action: "To Extra Deck", hotkey: "h", disabled: false },
+    { action: "To Extra Deck FU", hotkey: "u", disabled: false },
     { action: "Activate", hotkey: "a", disabled: false },
     { action: "To S/T", hotkey: "a", disabled: false },
     { action: "Overlay", hotkey: "o", disabled: false },
@@ -72,6 +76,7 @@ export function getDefaultHotkeys(): HotkeyEntry[] {
     { action: "Mill 6", hotkey: "6", disabled: false },
     { action: "Sub LP", hotkey: "-", disabled: false },
     { action: "Add LP", hotkey: "+", disabled: false },
+    { action: "Target", hotkey: "r", disabled: false },
   ];
 }
 

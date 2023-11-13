@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "DuelingBookEnhanced",
   "description": "A Chrome extension to bring QOL additions to DuelingBook.com",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "options_ui": {
     "page": "FullOptions.html",
     "open_in_tab": true
@@ -34,7 +34,8 @@
     "service_worker": "js/background.js"
   },
   "permissions": [
-    "storage"
+    "storage",
+    "tabs"
   ],
   "host_permissions": [
     "http://www.DuelingBook.com/html5"

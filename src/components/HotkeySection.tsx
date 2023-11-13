@@ -2,17 +2,19 @@ import React, { useEffect, useRef, useState } from "react";
 import { loadHotkeysConfig, saveHotkeysConfig } from "../utilities/configUtility";
 import { validHotkeys } from "../data/validHotkeys";
 import { splitActions } from "../utilities/actionsManipulations";
+import { defaultDisabledActions } from "../data/hotkeySections";
 
 interface HotkeySectionProps {
   title: string;
   actions: string[];
+  note: string | null;
   selectedHotkeys: { [key: string]: string };
   setSelectedHotkeys: (hotkeys: { [key: string]: string }) => void;
   resetCounter: number;
   toggleSavedMessage: () => void;
 }
 
-export const HotkeySection: React.FC<HotkeySectionProps> = ({ title, actions, selectedHotkeys, setSelectedHotkeys, resetCounter, toggleSavedMessage }) => {
+export const HotkeySection: React.FC<HotkeySectionProps> = ({ title, actions, note, selectedHotkeys, setSelectedHotkeys, resetCounter, toggleSavedMessage }) => {
   const [isHotkeyInvalid, setIsHotkeyInvalid] = useState(false)
   const [conflictState, setConflictState] = useState<ConflictState>({ action: '', hotkey: '' });
   const [disabledActions, setDisabledActions] = useState<string[]>([]);
@@ -170,9 +172,10 @@ export const HotkeySection: React.FC<HotkeySectionProps> = ({ title, actions, se
   };
 
   function checkIfDisabled(action: string) {
-    const actionParts = splitActions(action)
+    const actionParts = splitActions(action);
     return actionParts.some(part => disabledActions.includes(part));
   }
+
 
   function findHotkeyByAction(action: string, hotkeysConfig: HotkeyEntry[]): string {
     for (const hotkeyItem of hotkeysConfig) {
@@ -198,38 +201,45 @@ export const HotkeySection: React.FC<HotkeySectionProps> = ({ title, actions, se
         {isHotkeyInvalid && conflictState && (
           <h1 className="text-base font-bold text-red-500">Error! {conflictState.hotkey.toUpperCase()} is already mapped to {conflictState.action}! Pick another hotkey!</h1>
         )}
+        {note && (
+          <h1 className='opacity-80'>({note})</h1>
+        )}
         {actions.map((action, index) => {
           const isActionDisabled = checkIfDisabled(action)
           const containerClassName = `flex gap-4 items-center ${isActionDisabled ? 'opacity-50' : ''}`;
 
           return (
-            <div key={index} className={containerClassName}>
-              <h2 className='inline'>{action}</h2>
-              <select
-                ref={selectRefs.current[action]}
-                value={selectedHotkeys[action]}
-                onChange={(e) => handleHotkeyChange(action, e.target.value)}
-                className="border rounded-md text-gray-600"
-                disabled={isActionDisabled}
-              >
-                {validHotkeys.map((key) => (
-                  <option key={key} value={key}>
-                    {key}
-                  </option>
-                ))}
-              </select>
-              <div className="flex items-center">
-                <label className="mx-2" htmlFor={`${action} checkbox`}>
-                  Disable
-                </label>
-                <input
-                  type="checkbox"
-                  id={`${action} checkbox`}
-                  onChange={() => toggleDisable(action)}
-                  checked={checkIfDisabled(action)}
-                />
+            <>
+              <div key={index} className={containerClassName}>
+                <h2 className='inline'>{action}</h2>
+                <select
+                  ref={selectRefs.current[action]}
+                  value={selectedHotkeys[action]}
+                  onChange={(e) => handleHotkeyChange(action, e.target.value)}
+                  className="border rounded-md text-gray-600"
+                  disabled={isActionDisabled || defaultDisabledActions.includes(action)}
+                >
+                  {validHotkeys.map((key) => (
+                    <option key={key} value={key}>
+                      {key}
+                    </option>
+                  ))}
+                </select>
+                {!defaultDisabledActions.includes(action) && (
+                  <div className="flex items-center">
+                    <label className="mx-2" htmlFor={`${action} checkbox`}>
+                      Disable
+                    </label>
+                    <input
+                      type="checkbox"
+                      id={`${action} checkbox`}
+                      onChange={() => toggleDisable(action)}
+                      checked={checkIfDisabled(action)}
+                    />
+                  </div>
+                )}
               </div>
-            </div>
+            </>
           );
         })}
       </div>

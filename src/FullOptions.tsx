@@ -1,15 +1,13 @@
 import React, { useEffect, useState, useRef } from "react";
 import Button from "./components/Button";
 import logo from "./assets/images/dbe_logo.png";
-import coffee from "./assets/images/coffee.png";
-import yugiIcon from "./assets/images/yugi-icon.png";
-import { BsDiscord } from 'react-icons/bs'
-import { BiCoffeeTogo } from 'react-icons/bi'
 import { getOptionsFromStorage, saveOptionsToStorage, OptionsTypes } from './utilities/optionsUtility'
 import ReactDOM from "react-dom";
 import CustomizeHotkeys from "./CustomizeHotkeys";
 import KnownIssues from "./KnownIssues";
 import ComingSoon from "./components/ComingSoon";
+import JoinDiscord from "./components/JoinDiscord"
+import Footer from "./components/Footer"
 
 export const Options = () => {
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -192,48 +190,20 @@ export const Options = () => {
         </nav>
       </div>
       <div className="flex-grow p-4 pt-0 rounded-lg">
-
-        <aside className="bg-gray-700 text-white p-4 mb-4 rounded-lg flex justify-center items-center align-middle text-lg space-x-4">
-          <div className="flex items-center ">
-            <img src={yugiIcon} alt="yugi icon" className="w-16 h-16 justify-center mb-2" />
-          </div>
-          <p className="">
-            Join our Discord!
-          </p>
-          <button
-            id="discord_button"
-            className="bg-blue-500 font-bold flex justify-center items-center px-7 py-1 rounded-xl hover:bg-blue-400"
-            onClick={() => window.open('https://discord.gg/hbGw3bDMfY', '_blank')}
-          >
-            <BsDiscord className="w-8 h-8 flex" />
-          </button>
-        </aside>
-
-        <main className="relative">
-          {renderMainContent()}
-          {isSavedVisible && (
-            <div className="flex justify-center">
-              <div className="saved-settings-message bg-green-500 text-white px-4 py-2 rounded-md absolute top-0 animate-slide-down opacity-0 text-lg transition-transform duration-500">
-                Settings Saved!
-              </div>
+      <JoinDiscord />
+      <main className="relative">
+        {renderMainContent()}
+        {isSavedVisible && (
+          <div className="flex justify-center">
+            <div className="saved-settings-message bg-green-500 text-white px-4 py-2 rounded-md absolute top-0 animate-slide-down opacity-0 text-lg transition-transform duration-500">
+              Settings Saved!
             </div>
-          )}
-        </main>
-
-        <footer className="pt-2">
-          <div className="bg-gray-700 text-white p-4 mb-4 rounded-xl flex justify-center items-center align-middle text-lg space-x-4 flex-grow">
-            <img src={coffee} alt="coffee" className="w-10 h-10" />
-            <div className="">
-              <span className="font-bold">Enjoying our Product?</span>
-              <span> Share some support</span>
-            </div>
-            <button
-              className="bg-blue-500 px-7 py-1 rounded-lg font-bold flex justify-center items-center hover:bg-blue-400"
-              onClick={() => window.open('https://www.paypal.com/donate/?business=TNF5V5V9E869E&no_recurring=1&item_name=hi+this+is+alex+from+the+duelingbookenhanced+extension+-+if+you+want+to+buy+Joseph+%26+I+a+coffee+or+something+here%27s+where+2doit&currency_code=USD', '_blank')}><BiCoffeeTogo className="w-8 h-8 flex" /></button>
           </div>
-        </footer>
-      </div>
+        )}
+      </main>
+      <Footer />
     </div>
+  </div>
   );
 };
 
