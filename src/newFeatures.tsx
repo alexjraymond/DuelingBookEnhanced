@@ -10,14 +10,12 @@ export const NewFeatures = () => {
 
 
   return (
-    <div className="w-1/4 container mx-auto flex flex-col h-auto p-4 items-center">
+    <div className="bg-gray-300 w-1/4 container mx-auto flex-col flex h-auto p-4 items-center">
+      <div className='bg-gray-700 rounded flex w-full justify-center items-center text-white p-4'>
         <img src={dbe_logo} />
-        <h1 className='text-xl'>What's New</h1>
-
-      <p>  Thank you for using DuelingBookEnhanced, here are some updates for THISVERSION</p>
-
-
-
+        <h1 className='text-2xl'>What's New</h1>
+      </div>
+    <p>  Thank you for using DuelingBookEnhanced, here are some updates for THISVERSION</p>
 
     </div>
   )
