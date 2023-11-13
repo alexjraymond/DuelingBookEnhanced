@@ -6,7 +6,7 @@ export const hotkeySections = [
       'View Extra Deck',
       'View Graveyard',
       'View Main Deck',
-      'Banish Top of Deck'
+      'Banish T.'
     ],
     note: 'Note: You can also close any of the menu views by pushing the hotkey again.'
   },

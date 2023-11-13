@@ -64,7 +64,6 @@ export function getDefaultHotkeys(): HotkeyEntry[] {
     { action: "To Graveyard", hotkey: "q", disabled: false },
     { action: "To Grave", hotkey: "q", disabled: false },
     { action: "Banish", hotkey: "w", disabled: false },
-    { action: "Banish T.", hotkey: "w", disabled: false },
     { action: "Banish FD", hotkey: "b", disabled: false },
     { action: "To Bottom of Deck", hotkey: "z", disabled: false },
     { action: "To B. Deck", hotkey: "z", disabled: false },
