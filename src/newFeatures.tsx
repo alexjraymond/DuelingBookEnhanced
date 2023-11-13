@@ -2,10 +2,17 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import dbe_logo from '../public/dbe_logo.png'
 
+
+
 export const NewFeatures = () => {
-    const featuresList = [
-        'new feature1',
-        'newfeature2'
+    const features: string[] = [
+        '"To Exta Deck" and "To Hand" now share a hotkey ',
+        'Added hotkey for "To Extra Deck FU" (Default "u") ',
+        'Added hotkey for Banishing Top of Deck (no need to hover) (Default ",") ',
+        'Added hotkey for Target (Default "r") ',
+        'Added hotkey for Target (Default "r") ',
+        'Thumbs Up can now be held to toggle'
+
     ]
 
 
@@ -16,7 +23,15 @@ export const NewFeatures = () => {
         <h1 className='text-2xl'>What's New</h1>
       </div>
     <p>  Thank you for using DuelingBookEnhanced, here are some updates for THISVERSION</p>
+      <div>
 
+
+      {features.map((feature, index) => (
+        <li key={index} className='text-gray-600'>
+          {feature}
+        </li>
+      ))}
+            </div>
     </div>
   )
 }
