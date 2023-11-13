@@ -9,10 +9,10 @@ export const NewFeatures = () => {
 
 
   return (
-    <div>
-        <h1>What's New</h1>
+    <div className="container mx-auto flex items-stretch h-auto p-4">
+        <h1 className='text-xl'>What's New</h1>
 
-        Thank you for using DuelingBookEnhanced, here are some updates for THISVERSION
+      <p>  Thank you for using DuelingBookEnhanced, here are some updates for THISVERSION</p>
 
 
 
@@ -20,6 +20,8 @@ export const NewFeatures = () => {
     </div>
   )
 }
+
+
 
 ReactDOM.render(
     <React.StrictMode>

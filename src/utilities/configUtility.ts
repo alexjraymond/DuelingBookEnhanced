@@ -40,6 +40,7 @@ export function getDefaultHotkeys(): HotkeyEntry[] {
     { action: "Close View Menu", hotkey: "escape", disabled: false },
     { action: "View Graveyard", hotkey: "g", disabled: false },
     { action: "View Main Deck", hotkey: "v", disabled: false },
+    { action: "Banish T.", hotkey: "m", disabled: false },
     { action: "View Extra Deck", hotkey: "e", disabled: false },
     { action: "Think", hotkey: "t", disabled: false },
     { action: "Thumbs Up", hotkey: "f", disabled: false },

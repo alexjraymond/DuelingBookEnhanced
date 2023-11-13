@@ -11,6 +11,8 @@ let extraDeck: HTMLElement | null;
 let deckMenu: HTMLElement | null;
 let deckViewButton: HTMLElement | null;
 let deckViewSpan: HTMLElement | null;
+let deckBanishButton: HTMLElement | null;
+let deckBanishSpan: HTMLElement | null;
 let LPInput: HTMLElement | null;
 let subButton: HTMLElement | null;
 let addButton: HTMLElement | null;
@@ -46,6 +48,28 @@ function handleDeckView(deckType: string) {
   } else {
     closeViewMenu()
   }
+}
+
+function handleDeckOptions(deckType: string, action: string) {
+  const mouseOverEvent = new MouseEvent('mouseover', {
+    bubbles: true,
+    cancelable: true,
+    view: window,
+  });
+
+  if (deckType === 'Main') {
+    deck?.dispatchEvent(mouseOverEvent);
+  }
+
+  deckMenu = document.getElementById('card_menu_content') as HTMLElement;
+
+  if (action === "banish") { 
+    deckBanishButton = deckMenu?.getElementsByClassName('card_menu_btn')[2] as HTMLElement;
+    deckBanishSpan = deckBanishButton?.getElementsByTagName('span')[0] as HTMLElement;
+    console.log('banish button', deckBanishButton)
+    console.log('banish span', deckBanishSpan)
+    deckBanishSpan.click();
+  } 
 }
 
 window.onload = async function () {
@@ -89,7 +113,7 @@ window.onload = async function () {
     "To Graveyard": () => playCard("To Graveyard"),
     "To Grave": () => playCard("To Grave"),
     "Banish": () => playCard("Banish"),
-    "Banish T.": () => playCard("Banish"),
+    "Banish T.": () => handleDeckOptions("Main", "banish"),
     "Banish FD": () => playCard("Banish FD"),
     "To B. Deck": () => playCard("To B. Deck"),
     "To Bottom of Deck": () => playCard("To Bottom of Deck"),
