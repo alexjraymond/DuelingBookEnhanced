@@ -63,13 +63,13 @@ function handleDeckOptions(deckType: string, action: string) {
 
   deckMenu = document.getElementById('card_menu_content') as HTMLElement;
 
-  if (action === "banish") { 
+  if (action === "banish") {
     deckBanishButton = deckMenu?.getElementsByClassName('card_menu_btn')[2] as HTMLElement;
     deckBanishSpan = deckBanishButton?.getElementsByTagName('span')[0] as HTMLElement;
     console.log('banish button', deckBanishButton)
     console.log('banish span', deckBanishSpan)
     deckBanishSpan.click();
-  } 
+  }
 }
 
 window.onload = async function () {
@@ -221,7 +221,9 @@ window.onload = async function () {
     });
 
     handleChatBox()
-    chatInput.dispatchEvent(enterEvent);
+    setTimeout(() => {
+      chatInput.dispatchEvent(enterEvent);
+    }, 10);
   }
 
   function subLP() {
@@ -251,9 +253,9 @@ window.onload = async function () {
   }
 
   function handleThinkButton() {
-    if (chatOption) saySomething('hm');
     thunk?.click();
   }
+
 
   function thumbsUpPress() {
     const mouseDownEvent = new MouseEvent('mousedown', {
@@ -263,9 +265,11 @@ window.onload = async function () {
     });
 
     thumbsUp?.dispatchEvent(mouseDownEvent);
+
   }
 
   function thumbsUpRelease() {
+    thumbsUp?.click()
     const mouseUpEvent = new MouseEvent('mouseup', {
       bubbles: true,
       cancelable: true,
@@ -273,7 +277,6 @@ window.onload = async function () {
     });
 
     thumbsUp?.dispatchEvent(mouseUpEvent);
-    /* adding in thumbsUp?.click() will create toggle for Keep Going! */
   }
 
   function handleChatBox() {
@@ -350,7 +353,7 @@ window.onload = async function () {
 
   // adjust this timer for user responsiveness
   const debouncedKeyDown = debounce((e: KeyboardEvent) => handleKeyDown(e), 150);
-  const debouncedKeyUp = debounce((e: KeyboardEvent) => handleKeyUp(e), 200);
+  const debouncedKeyUp = debounce((e: KeyboardEvent) => handleKeyUp(e), 175);
 
   document.addEventListener('keydown', debouncedKeyDown);
   document.addEventListener('keyup', debouncedKeyUp)

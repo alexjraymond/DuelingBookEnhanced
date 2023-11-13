@@ -15,8 +15,8 @@ export const NewFeatures = () => {
   ]
 
   return (
-    
-    <div className="bg-white w-1/4 container mx-auto flex-col flex h-auto p-4 items-center rounded">
+
+    <div className="bg-white w-1/4 container mx-auto flex-col flex h-auto p-4 items-center rounded mt-6">
       <JoinDiscord />
       <div className='bg-gray-700 rounded flex w-full justify-center items-center text-white px-4 py-2 my-4'>
         <img src={dbe_logo} />
