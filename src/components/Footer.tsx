@@ -1,5 +1,5 @@
 import React from "react";
-import coffee from "./assets/images/coffee.png";
+import coffee from "../assets/images/coffee.png";
 import { BiCoffeeTogo } from "react-icons/bi";
 
 export const Footer: React.FC = () => {

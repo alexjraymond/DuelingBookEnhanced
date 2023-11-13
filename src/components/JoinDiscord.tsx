@@ -1,5 +1,5 @@
 import React from "react";
-import yugiIcon from "./assets/images/yugi-icon.png";
+import yugiIcon from "../assets/images/yugi-icon.png";
 import { BsDiscord } from 'react-icons/bs'
 
 export const JoinDiscord: React.FC = () => {
