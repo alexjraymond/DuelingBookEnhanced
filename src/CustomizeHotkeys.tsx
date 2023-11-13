@@ -37,7 +37,7 @@ const CustomizeHotkeys: React.FC<CustomizeHotkeysTypes> = ({ toggleSavedMessage 
       <div className="flex justify-center">
         <button
           onClick={resetDefaults}
-          className="inline-block w-28 bg-blue-500 text-white text-sm cursor-pointer transition-transform duration-200 ease-in h-[40px] rounded px-3 py-2 hover:bg-blue-400"
+          className="inline-block w-32 bg-blue-500 text-white text-sm cursor-pointer transition-transform duration-200 ease-in h-[40px] rounded px-3 py-2 hover:bg-blue-400"
         >
           Reset Defaults
         </button>
