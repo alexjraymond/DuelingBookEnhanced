@@ -8,10 +8,10 @@ export const NewFeatures = () => {
   const features: string[] = [
     '"To Exta Deck" and "To Hand" now share a hotkey ',
     'Added hotkey for "To Extra Deck FU" (Default "u") ',
-    'Added hotkey for Banishing Top of Deck (no need to hover) (Default ",") ',
+    'Added hotkey for Banishing Top of Deck (no need to hover) (Default "m") ',
     'Added hotkey for Target (Default "r") ',
-    'Added hotkey for Target (Default "r") ',
-    'Thumbs Up can now be held to toggle'
+    'Removed various buggy hotkeys such as tab, shift, ctrl, arrow keys, etc ',
+    'This page that you are now seeing! ',
   ]
 
   return (
@@ -20,7 +20,7 @@ export const NewFeatures = () => {
         <img src={dbe_logo} />
         <h1 className='text-2xl'>What's New</h1>
       </div>
-      <p>Thank you for using DuelingBookEnhanced, here are some updates for for 0.2.2: </p>
+      <p>Thank you for using DuelingBookEnhanced, here are some updates for 0.2.2: </p>
       <div className='my-6'>
         {features.map((feature, index) => (
           <li key={index} className='text-gray-600'>
