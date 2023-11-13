@@ -4,7 +4,7 @@ import { BsDiscord } from 'react-icons/bs'
 
 export const JoinDiscord: React.FC = () => {
 	return (
-		<aside className="bg-gray-700 w-full text-white p-4 mb-4 rounded-lg flex justify-center items-center align-middle text-lg space-x-4">
+		<aside className="bg-gray-700 w-full text-white p-4 mb-1 rounded-lg flex justify-center items-center align-middle text-lg space-x-4">
 			<div className="flex items-center ">
 				<img src={yugiIcon} alt="yugi icon" className="w-16 h-16 justify-center mb-2" />
 			</div>

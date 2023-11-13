@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import dbe_logo from '../public/dbe_logo.png'
+import dbe_logo from '../public/dbe_logo_64.png'
 import JoinDiscord from './components/JoinDiscord'
 import Footer from './components/Footer'
 
@@ -15,7 +15,9 @@ export const NewFeatures = () => {
   ]
 
   return (
-    <div className="bg-gray-300 w-1/4 container mx-auto flex-col flex h-auto p-4 items-center">
+    
+    <div className="bg-white w-1/4 container mx-auto flex-col flex h-auto p-4 items-center rounded">
+      <JoinDiscord />
       <div className='bg-gray-700 rounded flex w-full justify-center items-center text-white px-4 py-2 my-4'>
         <img src={dbe_logo} />
         <h1 className='text-2xl'>What's New</h1>
@@ -28,7 +30,7 @@ export const NewFeatures = () => {
           </li>
         ))}
       </div>
-      <JoinDiscord />
+
       <Footer />
     </div>
   )
