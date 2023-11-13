@@ -13,7 +13,7 @@ export const hotkeySections = [
     title: 'Card Actions',
     actions: [
       "Activate/To S/T",
-      "Banish",
+      "Banish/Banish T.",
       "Banish FD",
       "Declare",
       "Normal Summon",

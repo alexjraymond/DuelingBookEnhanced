@@ -14,6 +14,7 @@ let deckViewSpan: HTMLElement | null;
 let LPInput: HTMLElement | null;
 let subButton: HTMLElement | null;
 let addButton: HTMLElement | null;
+let chatOption: HTMLElement | null;
 
 function closeViewMenu() {
   closeViewButton?.click();
@@ -88,6 +89,7 @@ window.onload = async function () {
     "To Graveyard": () => playCard("To Graveyard"),
     "To Grave": () => playCard("To Grave"),
     "Banish": () => playCard("Banish"),
+    "Banish T.": () => playCard("Banish"),
     "Banish FD": () => playCard("Banish FD"),
     "To B. Deck": () => playCard("To B. Deck"),
     "To Bottom of Deck": () => playCard("To Bottom of Deck"),
@@ -99,6 +101,7 @@ window.onload = async function () {
     "Mill 6": () => saySomething('/mill 6'),
     "Sub LP": () => subLP(),
     "Add LP": () => addLP(),
+    "Target": () => playCard("Target")
   };
 
   let hotkeyHashMap = await loadHotkeysConfig();
@@ -216,7 +219,7 @@ window.onload = async function () {
   }
 
   function handleThinkButton() {
-    saySomething('hm');
+    if (chatOption) saySomething('hm');
     thunk?.click();
   }
 
