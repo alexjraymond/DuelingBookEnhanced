@@ -1,11 +1,12 @@
 export const hotkeySections = [
   {
-    title: 'View Actions',
+    title: 'Deck Actions',
     actions: [
       'Close View Menu',
       'View Extra Deck',
       'View Graveyard',
       'View Main Deck',
+      'Banish Top of Deck'
     ],
     note: 'Note: You can also close any of the menu views by pushing the hotkey again.'
   },
@@ -13,7 +14,7 @@ export const hotkeySections = [
     title: 'Card Actions',
     actions: [
       "Activate/To S/T",
-      "Banish/Banish T.",
+      "Banish",
       "Banish FD",
       "Declare",
       "Normal Summon",
