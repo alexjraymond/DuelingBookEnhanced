@@ -256,8 +256,8 @@ window.onload = async function () {
     thunk?.click();
   }
 
-
   function thumbsUpPress() {
+    thumbsUp?.click()
     const mouseDownEvent = new MouseEvent('mousedown', {
       bubbles: true,
       cancelable: true,
@@ -265,11 +265,9 @@ window.onload = async function () {
     });
 
     thumbsUp?.dispatchEvent(mouseDownEvent);
-
   }
 
   function thumbsUpRelease() {
-    thumbsUp?.click()
     const mouseUpEvent = new MouseEvent('mouseup', {
       bubbles: true,
       cancelable: true,
@@ -353,7 +351,7 @@ window.onload = async function () {
 
   // adjust this timer for user responsiveness
   const debouncedKeyDown = debounce((e: KeyboardEvent) => handleKeyDown(e), 150);
-  const debouncedKeyUp = debounce((e: KeyboardEvent) => handleKeyUp(e), 175);
+  const debouncedKeyUp = debounce((e: KeyboardEvent) => handleKeyUp(e), 160);
 
   document.addEventListener('keydown', debouncedKeyDown);
   document.addEventListener('keyup', debouncedKeyUp)
