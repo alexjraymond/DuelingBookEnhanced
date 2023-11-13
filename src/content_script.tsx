@@ -89,6 +89,7 @@ window.onload = async function () {
   const actionFunctionMap: Record<string, () => void> = {
     "Close View Menu": closeViewMenu,
     "View Graveyard": toggleGraveYardView,
+    "View Banish": toggleBanishedView,
     "View Main Deck": () => handleDeckView('Main'),
     "View Extra Deck": () => handleDeckView('Extra'),
     "Think": handleThinkButton,
@@ -206,6 +207,7 @@ window.onload = async function () {
   const thunk = document.getElementById('think_btn');
   const thumbsUp = document.getElementById('good_btn');
   const graveyard = document.getElementById('grave_hidden');
+  const banished = document.getElementById('banished_hidden');
   const skipIntroButton = document.getElementById('skip_intro_btn') as HTMLElement;
   const enterButton = document.getElementById('duel_btn') as HTMLElement;
 
@@ -234,11 +236,17 @@ window.onload = async function () {
 
   function toggleGraveYardView() {
     if (view && view.style.display === 'block') {
-      console.log("Closing the GY");
       closeViewMenu()
     } else {
       graveyard?.click()
-      console.log("Opening the GY", graveyard);
+    }
+  }
+
+  function toggleBanishedView() {
+    if (view && view.style.display === 'block') {
+      closeViewMenu()
+    } else {
+      banished?.click()
     }
   }
 
