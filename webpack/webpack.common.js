@@ -5,8 +5,9 @@ const srcDir = path.join(__dirname, "..", "src");
 
 module.exports = {
     entry: {
-        popup: path.join(srcDir, 'popup.tsx'),
-        fullOptions: path.join(srcDir, 'fullOptions.tsx'),
+        popup: path.join(srcDir, 'Popup.tsx'),
+        fullOptions: path.join(srcDir, 'FullOptions.tsx'),
+        NewFeatures: path.join(srcDir, 'NewFeatures.tsx'),
         background: path.join(srcDir, 'background.ts'),
         content_script: path.join(srcDir, 'content_script.tsx'),
     },
@@ -54,7 +55,6 @@ module.exports = {
             patterns: [
                 { from: ".", to: "../", context: "public" },
                 { from: path.join(srcDir, "styles", "dark-mode.css"), to: "../css" },
-                { from: path.join(srcDir, "data", "hotkeysConfig.json"), to: "../data" },
             ],
             options: {},
         }),

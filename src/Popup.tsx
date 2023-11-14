@@ -8,6 +8,7 @@ import { getOptionsFromStorage, saveOptionsToStorage, OptionsTypes } from './uti
 const Popup = () => {
   const [options, setOptions] = useState<OptionsTypes>({
     disableAllOptions: false,
+    disableHotkeys: false,
     skipIntro: false,
     autoConnect: false,
     isNightMode: false,
@@ -26,13 +27,13 @@ const Popup = () => {
 
   // Use useEffect to save options whenever they change
   useEffect(() => {
-    if (options) {    
+    if (options) {
       saveOptionsToStorage(options)
       console.log('latest options', options)
     }
 
   }, [options]);
-  
+
 
   const handleSettingsButtonClick = () => {
     chrome.runtime.openOptionsPage()
@@ -44,6 +45,12 @@ const Popup = () => {
       label: "Disable All Options",
       checked: options.disableAllOptions,
       onChange: () => setOptions({ ...options, disableAllOptions: !options.disableAllOptions }),
+    },
+    {
+      id: "disableHotkeys",
+      label: "Disable Hotkeys",
+      checked: options.disableHotkeys,
+      onChange: () => setOptions({ ...options, disableHotkeys: !options.disableHotkeys }),
     },
     {
       id: "skipIntro",

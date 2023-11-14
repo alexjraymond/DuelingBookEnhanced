@@ -1,42 +1,41 @@
 {
   "manifest_version": 3,
-
   "name": "DuelingBookEnhanced",
   "description": "A Chrome extension to bring QOL additions to DuelingBook.com",
-  "version": "0.1.5",
-
+  "version": "0.2.2",
   "options_ui": {
-    "page": "fullOptions.html",
+    "page": "FullOptions.html",
     "open_in_tab": true
   },
-
   "action": {
-    "default_popup": "popup.html"
+    "default_popup": "Popup.html"
   },
-
   "icons": {
     "32": "dbe_logo_32.png",
     "64": "dbe_logo_64.png",
     "128": "dbe_logo.png"
   },
-
   "content_scripts": [
-      {
-          "matches": ["https://www.duelingbook.com/*"],
-          "js": ["js/vendor.js", "js/content_script.js", "js/components/Button.js"],
-          "css": ["css/dark-mode.css"]
-      }
+    {
+      "matches": [
+        "https://www.duelingbook.com/*"
+      ],
+      "js": [
+        "js/vendor.js",
+        "js/content_script.js",
+        "js/components/Button.js"
+      ],
+      "css": [
+        "css/dark-mode.css"
+      ]
+    }
   ],
-
   "background": {
     "service_worker": "js/background.js"
   },
-
   "permissions": [
-    "activeTab",
     "storage"
   ],
-
   "host_permissions": [
     "http://www.DuelingBook.com/html5"
   ]

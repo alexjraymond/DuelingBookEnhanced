@@ -1,5 +1,6 @@
 export interface OptionsTypes {
   disableAllOptions: boolean;
+  disableHotkeys: boolean;
   skipIntro: boolean;
   autoConnect: boolean;
   isNightMode: boolean;
@@ -18,8 +19,21 @@ export const getOptionsFromStorage = (callback: (options: OptionsTypes) => void)
 };
 
 export const saveOptionsToStorage = (options: OptionsTypes) => {
-  chrome.storage.sync.set({ options });
+  chrome.storage.sync.set({ options }, () => {
+    // notify content scripts that settings have changed
+    chrome.tabs.query({}, (tabs) => {
+      for (const tab of tabs) {
+        if (tab.id !== undefined) {
+          chrome.tabs.sendMessage(tab.id, {
+            type: 'SETTINGS_CHANGED',
+            payload: options,
+          });
+        }
+      }
+    });
+  });
 };
+
 
 export function skipIntro(skipIntroButton: HTMLElement) {
   if (skipIntroButton.style.display !== 'none') {
