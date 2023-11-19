@@ -17,11 +17,11 @@
 ## Version 0.2.1 (2023-11-07)
 
 ### New Hotkeys
-- SS Def.
+- SS Def. (default: X)
 - Detach (mapped with To Graveyard/To Grave).
-- Overlay.
-- OL ATK.
-- OL DEF.
+- Overlay. (default: O)
+- OL ATK. (default: I)
+- OL DEF. (default: P)
 
 ### New Features
 - Holding the Thumbs Up hotkey triggers "Keep Going!" message.
