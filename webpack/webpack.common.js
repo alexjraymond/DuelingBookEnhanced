@@ -1,6 +1,7 @@
 const webpack = require("webpack");
 const path = require("path");
 const CopyPlugin = require("copy-webpack-plugin");
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const srcDir = path.join(__dirname, "..", "src");
 
 module.exports = {
@@ -10,6 +11,7 @@ module.exports = {
         NewFeatures: path.join(srcDir, 'NewFeatures.tsx'),
         background: path.join(srcDir, 'background.ts'),
         content_script: path.join(srcDir, 'content_script.tsx'),
+        index: path.join(srcDir, 'index.tsx')
     },
     output: {
         path: path.join(__dirname, "../dist/js"),
@@ -58,12 +60,19 @@ module.exports = {
             ],
             options: {},
         }),
+        new HtmlWebpackPlugin({
+            filename: 'index.html',
+            chunks: ['index'], // Should correspond to the entry point name
+        }),
     ],
     devServer: {
+        devMiddleware: {
+            writeToDisk: true
+        },
         static: {
             directory: path.join(__dirname, '../dist'),
         },
-        hot: true,
         port: 3000,
+        hot: true
     },
 };
