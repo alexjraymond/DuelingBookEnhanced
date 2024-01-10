@@ -13,18 +13,28 @@ export function applyDarkMode() {
   const watchers = document.getElementById('watchers') as HTMLElement;
   const textInputElements = document.querySelectorAll('input[type="text"]');
   const previewText = document.getElementById('preview_txt') as HTMLElement;
+  const actionList = document.getElementById('action_list');
 
   duelOsViewports.forEach((node) => node.classList.add('dark-mode'));
   textInputProxies.forEach((node) => node.classList.add('dark-mode'));
   watchers.classList.add('dark-mode');
   textInputElements.forEach((node) => node.classList.add('dark-mode'))
   previewText.classList.add('dark-mode')
+  actionList?.classList.add('dark-mode');
 
   const onlineUsersOsViewports = document.querySelectorAll('#chats .os_viewport')
   const onlineUsersChatBackground = document.querySelectorAll('#chats .chat_background')
 
   onlineUsersOsViewports.forEach((node) => node.classList.add('dark-mode'));
   onlineUsersChatBackground.forEach((node) => node.classList.add('dark-mode'));
+
+  const mainCssRules = document.styleSheets[0].cssRules
+  for (let rule of mainCssRules) {
+    let styleRule = rule as CSSStyleRule;
+    if (styleRule.selectorText?.includes("cell1")) {
+      styleRule.style.removeProperty('background-image');
+    }
+  }
 }
 
 export function removeDarkMode() {
@@ -33,16 +43,26 @@ export function removeDarkMode() {
   const watchers = document.getElementById('watchers') as HTMLElement;
   const textInputElements = document.querySelectorAll('input[type="text"]');
   const previewText = document.getElementById('preview_txt') as HTMLElement;
+  const actionList = document.getElementById('action_list');
 
   duelOsViewports.forEach((node) => node.classList.remove('dark-mode'));
   textInputProxies.forEach((node) => node.classList.remove('dark-mode'));
   watchers.classList.remove('dark-mode');
   textInputElements.forEach((node) => node.classList.remove('dark-mode'))
   previewText.classList.remove('dark-mode')
+  actionList?.classList.remove('dark-mode');
 
   const onlineUsersOsViewports = document.querySelectorAll('#chats .os_viewport')
   const onlineUsersChatBackground = document.querySelectorAll('#chats .chat_background')
 
   onlineUsersOsViewports.forEach((node) => node.classList.remove('dark-mode'));
   onlineUsersChatBackground.forEach((node) => node.classList.remove('dark-mode'));
+
+  const mainCssRules = document.styleSheets[0].cssRules
+  for (let rule of mainCssRules) {
+    let styleRule = rule as CSSStyleRule;
+    if (styleRule.selectorText?.includes("cell1")) {
+      styleRule.style.setProperty('background-image', "url(https://images.duelingbook.com/svg/cell_up.svg)");
+    }
+  }
 }

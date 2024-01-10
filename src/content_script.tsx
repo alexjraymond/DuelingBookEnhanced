@@ -3,6 +3,7 @@ import { injectStylesheet, applyDarkMode, removeDarkMode } from "./utilities/dar
 import { autoConnect, skipIntro } from "./utilities/optionsUtility";
 import { loadHotkeysConfig, getActionsForHotkey } from "./utilities/configUtility";
 import { debounce } from "lodash";
+import { replayTest } from "./utilities/replayTests";
 
 let view: HTMLElement | null;
 let closeViewButton: HTMLElement | null;
@@ -83,6 +84,8 @@ window.onload = async function () {
   LPInput = document.getElementById('life_txt') as HTMLElement
   subButton = document.getElementById('plus_btn') as HTMLElement;
   addButton = document.getElementById('minus_btn') as HTMLElement;
+
+  replayTest();
 
   let options: OptionsTypes;
 
