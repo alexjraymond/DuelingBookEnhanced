@@ -1,15 +1,13 @@
 {
-    "typescript.tsdk": "./node_modules/typescript/lib",
-    "files.eol": "\n",
-    "json.schemas": [
-        {
-            "fileMatch": [
-                "/manifest.json"
-            ],
-            "url": "http://json.schemastore.org/chrome-manifest"
-        }
-    ],
-    "editor.fontFamily": "MonoLisa",
-    "editor.fontSize": 14,
-    "editor.fontLigatures": true
+  "typescript.tsdk": "./node_modules/typescript/lib",
+  "files.eol": "\n",
+  "json.schemas": [
+    {
+      "fileMatch": ["/manifest.json"],
+      "url": "http://json.schemastore.org/chrome-manifest"
+    }
+  ],
+  "editor.fontFamily": "MonoLisa",
+  "editor.fontSize": 14,
+  "editor.fontLigatures": true
 }

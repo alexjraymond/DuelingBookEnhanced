@@ -17,11 +17,15 @@ export function applyDarkMode() {
   duelOsViewports.forEach((node) => node.classList.add('dark-mode'));
   textInputProxies.forEach((node) => node.classList.add('dark-mode'));
   watchers.classList.add('dark-mode');
-  textInputElements.forEach((node) => node.classList.add('dark-mode'))
-  previewText.classList.add('dark-mode')
+  textInputElements.forEach((node) => node.classList.add('dark-mode'));
+  previewText.classList.add('dark-mode');
 
-  const onlineUsersOsViewports = document.querySelectorAll('#chats .os_viewport')
-  const onlineUsersChatBackground = document.querySelectorAll('#chats .chat_background')
+  const onlineUsersOsViewports = document.querySelectorAll(
+    '#chats .os_viewport'
+  );
+  const onlineUsersChatBackground = document.querySelectorAll(
+    '#chats .chat_background'
+  );
 
   onlineUsersOsViewports.forEach((node) => node.classList.add('dark-mode'));
   onlineUsersChatBackground.forEach((node) => node.classList.add('dark-mode'));
@@ -37,12 +41,18 @@ export function removeDarkMode() {
   duelOsViewports.forEach((node) => node.classList.remove('dark-mode'));
   textInputProxies.forEach((node) => node.classList.remove('dark-mode'));
   watchers.classList.remove('dark-mode');
-  textInputElements.forEach((node) => node.classList.remove('dark-mode'))
-  previewText.classList.remove('dark-mode')
+  textInputElements.forEach((node) => node.classList.remove('dark-mode'));
+  previewText.classList.remove('dark-mode');
 
-  const onlineUsersOsViewports = document.querySelectorAll('#chats .os_viewport')
-  const onlineUsersChatBackground = document.querySelectorAll('#chats .chat_background')
+  const onlineUsersOsViewports = document.querySelectorAll(
+    '#chats .os_viewport'
+  );
+  const onlineUsersChatBackground = document.querySelectorAll(
+    '#chats .chat_background'
+  );
 
   onlineUsersOsViewports.forEach((node) => node.classList.remove('dark-mode'));
-  onlineUsersChatBackground.forEach((node) => node.classList.remove('dark-mode'));
+  onlineUsersChatBackground.forEach((node) =>
+    node.classList.remove('dark-mode')
+  );
 }

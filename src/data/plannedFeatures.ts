@@ -4,7 +4,8 @@ export const plannedFeatures = [
     completed: true,
   },
   {
-    feature: 'Use Disable Checkbox Instead of Disable Button to Retain Player Hotkey',
+    feature:
+      'Use Disable Checkbox Instead of Disable Button to Retain Player Hotkey',
     completed: true,
   },
   {

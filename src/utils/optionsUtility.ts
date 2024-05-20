@@ -6,8 +6,10 @@ export interface OptionsTypes {
   isNightMode: boolean;
 }
 
-export const getOptionsFromStorage = (callback: (options: OptionsTypes) => void) => {
-  chrome.storage.sync.get(["options"], (result) => {
+export const getOptionsFromStorage = (
+  callback: (options: OptionsTypes) => void
+) => {
+  chrome.storage.sync.get(['options'], (result) => {
     const options = result.options || {
       disableAllOptions: false,
       skipIntro: false,
@@ -34,7 +36,6 @@ export const saveOptionsToStorage = (options: OptionsTypes) => {
   });
 };
 
-
 export function skipIntro(skipIntroButton: HTMLElement) {
   if (skipIntroButton.style.display !== 'none') {
     console.log('Intro is visible, skipping...');
@@ -42,7 +43,10 @@ export function skipIntro(skipIntroButton: HTMLElement) {
   }
 }
 
-export function autoConnect(skipIntroButton: HTMLElement, enterButton: HTMLElement) {
+export function autoConnect(
+  skipIntroButton: HTMLElement,
+  enterButton: HTMLElement
+) {
   // Create a MutationObserver to wait for skipIntroButton to become hidden
   const observer = new MutationObserver((mutationsList) => {
     for (const mutation of mutationsList) {
@@ -60,5 +64,8 @@ export function autoConnect(skipIntroButton: HTMLElement, enterButton: HTMLEleme
   });
 
   // Start observing the skipIntroButton
-  observer.observe(skipIntroButton, { attributes: true, attributeOldValue: true });
+  observer.observe(skipIntroButton, {
+    attributes: true,
+    attributeOldValue: true,
+  });
 }
