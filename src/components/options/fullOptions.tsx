@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useRef } from 'react';
-import Button from '../Button';
 import logo from '../../assets/images/dbe_logo.png';
 import {
   getOptionsFromStorage,
@@ -118,17 +117,19 @@ export const Options = () => {
                 <span className="mr-2">
                   Noticed a bug or want to request a feature? Let us know!
                 </span>
-                <Button
-                  buttonText="Bugs & Feedback"
-                  buttonUrl="https://forms.gle/yLW8pasvEr2rshSQ9"
-                />
+                <button
+                  onClick={() => window.open("https://forms.gle/yLW8pasvEr2rshSQ9", "_blank")}
+                >
+                  Bugs & Feedback
+                </button>
               </div>
               <div className="flex items-center">
                 <span className="mr-2">Ready to play? It's time to duel!</span>
-                <Button
-                  buttonText="Open DB"
-                  buttonUrl="http://www.DuelingBook.com/html5"
-                />
+                <button
+                  onClick={() => window.open("https://www.duelingbook.com/html5", "_blank")}
+                >
+                  Ready to play? It's time to duel!
+                </button>
               </div>
             </div>
           </>

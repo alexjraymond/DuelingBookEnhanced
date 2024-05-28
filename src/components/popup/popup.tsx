@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { createRoot } from 'react-dom/client';
-import Button from '../Button';
 import logo from '../../assets/images/dbe_logo.png';
 import { HiOutlineCog8Tooth } from 'react-icons/hi2';
 import {
@@ -123,14 +122,17 @@ const Popup = () => {
           </div>
         ))}
         <div id="button-container" className="flex justify-around w-full">
-          <Button
-            buttonText="Bugs & Feedback"
-            buttonUrl="https://forms.gle/yLW8pasvEr2rshSQ9"
-          />
-          <Button
-            buttonText={'Open DB'}
-            buttonUrl="http://www.DuelingBook.com/html5"
-          />
+          <button
+            onClick={() => window.open("https://forms.gle/yLW8pasvEr2rshSQ9", "_blank")}
+          >
+            Bugs & Feedback
+          </button>
+          <button
+            onClick={() => window.open("https://www.duelingbook.com/html5", "_blank")}
+          >
+            Ready to play? It's time to duel!
+          </button>
+
         </div>
       </div>
     </div>
