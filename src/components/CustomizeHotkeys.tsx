@@ -5,6 +5,7 @@ import {
   saveHotkeysConfig,
 } from '../utils/configUtility';
 import { hotkeySections } from '../data/hotkeySections';
+import HotkeyForm from './HotkeyForm';
 
 interface CustomizeHotkeysTypes {
   toggleSavedMessage: () => void;
@@ -49,6 +50,8 @@ const CustomizeHotkeys: React.FC<CustomizeHotkeysTypes> = ({
           Reset Defaults
         </button>
       </div>
+      Hotkey Form
+      <HotkeyForm />
     </div>
   );
 };

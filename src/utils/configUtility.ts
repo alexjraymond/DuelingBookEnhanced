@@ -1,4 +1,4 @@
-import { HotkeySetting } from "../data/hotkeySections";
+import { Hotkey } from "../data/hotkeySections";
 
 export interface HotkeyEntry {
   action: string;

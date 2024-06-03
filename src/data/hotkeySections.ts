@@ -1,4 +1,4 @@
-export interface HotkeySetting {
+export interface Hotkey {
   action: DBAction;
   key: KeyOption;
   disabled: boolean;

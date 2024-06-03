@@ -124,7 +124,6 @@ export const Options = () => {
                 </button>
               </div>
               <div className="flex items-center">
-                <span className="mr-2">Ready to play? It's time to duel!</span>
                 <button
                   onClick={() => window.open("https://www.duelingbook.com/html5", "_blank")}
                 >

@@ -2,7 +2,7 @@ import React from 'react';
 import coffee from '../assets/images/coffee.png';
 import { BiCoffeeTogo } from 'react-icons/bi';
 
-export const Footer: React.FC = () => {
+export default function Footer() {
   return (
     <footer className="pt-2">
       <div className="bg-gray-700 text-white p-4 mb-4 rounded-xl flex justify-center items-center align-middle text-lg space-x-4 flex-grow">
@@ -27,4 +27,3 @@ export const Footer: React.FC = () => {
   );
 };
 
-export default Footer;

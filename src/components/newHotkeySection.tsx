@@ -1,23 +1,25 @@
-import React, { useState, useEffect } from "react";
-import { HotkeySetting } from "../data/hotkeySections";
-import { loadHotkeysConfig } from "../utils/configUtility";
+import React, { useState, useEffect, FormEvent } from "react";
+import { Hotkey } from "../data/hotkeySections";
+import { loadHotkeysConfig, saveHotkeysConfig } from "../utils/configUtility";
 
 export default function HotkeySettings() {
-  const [hotkeys, setHotkeys] = useState<HotkeySetting>();
+  const [hotkeys, setHotkeys] = useState<Hotkey>();
 
-  // Loads and stores the hotkey settings on mount.
+  // Loads and stores the hotkey settings.
   useEffect(() => {
     async function getHotkeyData() {
       const hotkeyData = await loadHotkeysConfig();
       //setHotkeys(hotkeyData);
     }
-
     getHotkeyData();
-  }, [hotkeys])
+  }, [hotkeys]);
 
   return (
-    <>
+    <div>
+      <form
+      >
+      </form>
       Hello World!
-    </>
+    </div>
   );
 }
