@@ -72,6 +72,53 @@ function handleDeckOptions(deckType: string, action: string) {
   }
 }
 
+function injectRewindButton() {
+  console.log("DBE: Attempting to inject rewind button...");
+  if (document.getElementById("backward_btn")) {
+    console.log("DBE: Rewind button (backward_btn) already exists.");
+    return;
+  }
+
+  const rewindBtn = document.createElement("input");
+  rewindBtn.type = "submit";
+  rewindBtn.id = "backward_btn";
+  rewindBtn.value = "Step Backward";
+
+  rewindBtn.addEventListener("click", () => {
+    // Send a message to the background script to execute the rewind action
+    chrome.runtime.sendMessage({ type: "EXECUTE_BACKWARD" });
+  });
+
+  const nextButton = document.querySelector("#next_btn");
+  const controlsContainer = document.querySelector("#duel");
+
+  if (nextButton && nextButton.parentElement === controlsContainer) {
+    // If #next_btn exists and is inside #duel, insert rewindBtn after it
+    nextButton.insertAdjacentElement("afterend", rewindBtn);
+    console.log("DBE: Rewind button injected successfully next to #next_btn.");
+  } else if (controlsContainer) {
+    // Fallback: if #next_btn is not found or not in #duel, append to #duel
+    controlsContainer.appendChild(rewindBtn);
+    console.log("DBE: Rewind button injected successfully into #duel (fallback).");
+  } else {
+    console.error("DBE: Could not find #duel element. Rewind button not injected.");
+  }
+}
+
+function observeDuelElement() {
+  console.log('Observing #duel element...');
+  const observer = new MutationObserver(() => {
+    const controls = document.querySelector("#duel");
+    if (controls) {
+      console.log('Found #duel element, disconnecting observer...');
+      observer.disconnect();
+      injectRewindButton();
+    }
+  });
+
+  observer.observe(document.body, { childList: true, subtree: true });
+}
+
 window.onload = async function() {
   view = document.getElementById('view') as HTMLElement;
   closeViewButton = view?.getElementsByClassName('exit_btn')[0] as HTMLElement;
@@ -83,6 +130,7 @@ window.onload = async function() {
   LPInput = document.getElementById('life_txt') as HTMLElement
   subButton = document.getElementById('plus_btn') as HTMLElement;
   addButton = document.getElementById('minus_btn') as HTMLElement;
+  const isReplay = window.location.href.includes("/replay");
 
   let options: OptionsTypes;
 
@@ -146,6 +194,7 @@ window.onload = async function() {
       options.skipIntro = false;
       options.autoConnect = false;
       options.isNightMode = false;
+      options.showRewindButton = false;
       removeDarkMode();
       hotkeyHashMap = [];
     } else {
@@ -154,6 +203,13 @@ window.onload = async function() {
       } else {
         fetchHotKeyHashMap()
       }
+      console.log('### Options loaded 2:');
+      if (options && options.showRewindButton && isReplay) {
+        console.log('Injecting rewind button...');
+        observeDuelElement();
+      }
+      console.log('### Options loaded replay is ', isReplay);
+      console.log('### Options loaded 3:');
       if (options && options.skipIntro && options.autoConnect) autoConnect(skipIntroButton, enterButton);
       if (options && options.skipIntro) skipIntro(skipIntroButton);
       if (options && options.autoConnect) autoConnect(skipIntroButton, enterButton);
@@ -187,6 +243,11 @@ window.onload = async function() {
           if (newOptions.autoConnect) autoConnect(skipIntroButton, enterButton);
           if (newOptions.isNightMode) applyDarkMode();
           if (!newOptions.isNightMode) removeDarkMode();
+        }
+
+        const isReplay = window.location.href.includes("/replay");
+        if (isReplay && newOptions?.showRewindButton) {
+          observeDuelElement();
         }
       }
     }

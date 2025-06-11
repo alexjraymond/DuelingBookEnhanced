@@ -1,5 +1,10 @@
 # Project Extension Version History
 
+## Version 0.2.3 (2025-05-09)
+
+### New Features
+- Added a rewind feature to undo the last action.
+
 ## Version 0.2.2 (2023-11-17)
 
 ### New Hotkeys

@@ -20,6 +20,7 @@ export const Options = () => {
     skipIntro: false,
     autoConnect: false,
     isNightMode: false,
+    showRewindButton: false,
   });
 
   // load options from storage when the popup is opened
@@ -150,6 +151,13 @@ export const Options = () => {
       label: "Night Mode",
       checked: options.isNightMode,
       onChange: () => setOptions({ ...options, isNightMode: !options.isNightMode }),
+    },
+    {
+      id: "showRewindButton",
+      label: "Show Rewind Button on Replays",
+      checked: options.showRewindButton ?? false,
+      onChange: () =>
+        setOptions({ ...options, showRewindButton: !options.showRewindButton }),
     },
   ];
 

@@ -33,6 +33,6 @@ export const plannedFeatures = [
   },
   {
     feature: 'Previous Play button For Replays',
-    completed: false,
+    completed: true,  
   },
 ];

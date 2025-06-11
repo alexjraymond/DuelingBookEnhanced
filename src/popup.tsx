@@ -70,6 +70,12 @@ const Popup = () => {
       checked: options.isNightMode,
       onChange: () => setOptions({ ...options, isNightMode: !options.isNightMode }),
     },
+    {
+      id: "showRewindButton",
+      label: "Show Rewind Button on Replays",
+      checked: options.showRewindButton ?? false,
+      onChange: () => setOptions({ ...options, showRewindButton: !options.showRewindButton }),
+    },
   ];
 
   return (
