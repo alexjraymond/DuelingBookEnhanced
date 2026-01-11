@@ -3,11 +3,14 @@ name: release
 on:
   push:
     tags:
-      - '*.*.*'   # Matches 1.0.0, 0.2.3, 2.1.5
+      - '*.*.*'      # Matches 1.0.0, 0.2.3, 2.1.5
+      - '*.*.*-*'    # Matches 1.0.0-RC.863a80e, 0.2.3-beta, etc.
 
 jobs:
   build-and-package:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
     - name: Checkout code
