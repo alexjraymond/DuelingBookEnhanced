@@ -1,31 +1,18 @@
 import { HotkeyEntry, MessageType } from "../types";
 import { ACTION_NAMES } from "../data";
+import { getStorage, setStorage, sendMessageToAllTabs } from "../services";
 
 export async function loadHotkeysConfig(): Promise<HotkeyEntry[]> {
-  return new Promise<HotkeyEntry[]>((resolve) => {
-    chrome.storage.sync.get({ hotkeysConfig: [] }, (data) => {
-      const hotkeys = data.hotkeysConfig.length > 0 ? data.hotkeysConfig : getDefaultHotkeys();
-      resolve(hotkeys);
-    });
-  });
+  const storedHotkeys = await getStorage<HotkeyEntry[]>("hotkeysConfig", []);
+  return storedHotkeys.length > 0 ? storedHotkeys : getDefaultHotkeys();
 }
 
 export async function saveHotkeysConfig(hotkeys: HotkeyEntry[]): Promise<void> {
-  return new Promise<void>((resolve) => {
-    chrome.storage.sync.set({ hotkeysConfig: hotkeys }, () => {
-      // notify content scripts that hotkeys have changed
-      chrome.tabs.query({}, (tabs) => {
-        for (const tab of tabs) {
-          if (tab.id !== undefined) {
-            chrome.tabs.sendMessage(tab.id, {
-              type: MessageType.HOTKEYS_CHANGED,
-              payload: hotkeys,
-            });
-          }
-        }
-      });
-      resolve();
-    });
+  await setStorage("hotkeysConfig", hotkeys);
+  // notify content scripts that hotkeys have changed
+  await sendMessageToAllTabs({
+    type: MessageType.HOTKEYS_CHANGED,
+    payload: hotkeys,
   });
 }
 

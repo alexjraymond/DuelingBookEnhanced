@@ -5,24 +5,40 @@ import logo from "./assets/images/dbe_logo.png";
 import { HiOutlineCog8Tooth } from "react-icons/hi2";
 import { getOptionsFromStorage, saveOptionsToStorage, OptionsTypes } from "./utilities";
 import { URLS, DEFAULT_OPTIONS, createInputItems } from "./data";
+import { Logger } from "./services";
+
+const debug = new Logger("popup");
 
 const Popup = () => {
   const [options, setOptions] = useState<OptionsTypes>(DEFAULT_OPTIONS);
 
   // Load options from storage when the popup is opened
   useEffect(() => {
-    getOptionsFromStorage((savedOptions) => {
-      setOptions(savedOptions);
-      console.log("inside getoptionsfromstorage");
-    });
+    async function loadOptions() {
+      try {
+        const savedOptions = await getOptionsFromStorage();
+        setOptions(savedOptions);
+        debug.log("inside getoptionsfromstorage");
+      } catch (error) {
+        debug.error("Error loading options:", error);
+      }
+    }
+    loadOptions();
   }, []);
 
   // Use useEffect to save options whenever they change
   useEffect(() => {
-    if (options) {
-      saveOptionsToStorage(options);
-      console.log("latest options", options);
+    async function saveOptions() {
+      if (options) {
+        try {
+          await saveOptionsToStorage(options);
+          debug.log("latest options", options);
+        } catch (error) {
+          debug.error("Error saving options:", error);
+        }
+      }
     }
+    saveOptions();
   }, [options]);
 
   const handleSettingsButtonClick = () => {
