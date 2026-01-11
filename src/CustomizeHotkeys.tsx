@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { HotkeySection } from "./components";
-import { getDefaultHotkeys, saveHotkeysConfig } from "./utilities";
-import { hotkeySections } from "./data";
+import React, { useState } from 'react';
+import { HotkeySection } from './components/HotkeySection';
+import { getDefaultHotkeys, saveHotkeysConfig } from './utilities/configUtility';
+import { hotkeySections } from './data/hotkeySections';
 
 interface CustomizeHotkeysTypes {
   toggleSavedMessage: () => void;
@@ -15,7 +15,7 @@ const CustomizeHotkeys: React.FC<CustomizeHotkeysTypes> = ({ toggleSavedMessage 
     const defaultHotkeys = getDefaultHotkeys();
     await saveHotkeysConfig(defaultHotkeys);
     setResetCounter(resetCounter + 1);
-    toggleSavedMessage();
+    toggleSavedMessage()
   };
 
   return (
@@ -42,6 +42,7 @@ const CustomizeHotkeys: React.FC<CustomizeHotkeysTypes> = ({ toggleSavedMessage 
           Reset Defaults
         </button>
       </div>
+
     </div>
   );
 };
