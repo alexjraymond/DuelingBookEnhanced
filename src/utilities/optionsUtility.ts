@@ -8,33 +8,26 @@ export interface OptionsTypes {
 
 import { MessageType } from "../types";
 import { DEFAULT_OPTIONS } from "../data";
+import { getStorage, setStorage, sendMessageToAllTabs, Logger } from "../services";
 
-export const getOptionsFromStorage = (callback: (options: OptionsTypes) => void) => {
-  chrome.storage.sync.get(["options"], (result) => {
-    const options = result.options || DEFAULT_OPTIONS;
-    callback(options);
-  });
+const debug = new Logger("optionsUtility");
+
+export const getOptionsFromStorage = async (): Promise<OptionsTypes> => {
+  return await getStorage<OptionsTypes>("options", DEFAULT_OPTIONS);
 };
 
-export const saveOptionsToStorage = (options: OptionsTypes) => {
-  chrome.storage.sync.set({ options }, () => {
-    // notify content scripts that settings have changed
-    chrome.tabs.query({}, (tabs) => {
-      for (const tab of tabs) {
-        if (tab.id !== undefined) {
-          chrome.tabs.sendMessage(tab.id, {
-            type: MessageType.SETTINGS_CHANGED,
-            payload: options,
-          });
-        }
-      }
-    });
+export const saveOptionsToStorage = async (options: OptionsTypes): Promise<void> => {
+  await setStorage("options", options);
+  // notify content scripts that settings have changed
+  await sendMessageToAllTabs({
+    type: MessageType.SETTINGS_CHANGED,
+    payload: options,
   });
 };
 
 export function skipIntro(skipIntroButton: HTMLElement) {
   if (skipIntroButton.style.display !== "none") {
-    console.log("Intro is visible, skipping...");
+    debug.log("Intro is visible, skipping...");
     skipIntroButton.click();
   }
 }

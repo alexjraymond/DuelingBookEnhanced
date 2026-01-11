@@ -6,6 +6,9 @@ import { getOptionsFromStorage, saveOptionsToStorage, OptionsTypes } from "./uti
 import { URLS, DEFAULT_OPTIONS, createInputItems } from "./data";
 import CustomizeHotkeys from "./CustomizeHotkeys";
 import KnownIssues from "./KnownIssues";
+import { Logger } from "./services";
+
+const debug = new Logger("fullOptions");
 
 export const Options = () => {
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -16,14 +19,27 @@ export const Options = () => {
 
   // load options from storage when the popup is opened
   useEffect(() => {
-    getOptionsFromStorage((savedOptions) => {
-      setOptions(savedOptions);
-    });
+    async function loadOptions() {
+      try {
+        const savedOptions = await getOptionsFromStorage();
+        setOptions(savedOptions);
+      } catch (error) {
+        debug.error("Error loading options:", error);
+      }
+    }
+    loadOptions();
   }, []);
 
   // save options whenever they change
   useEffect(() => {
-    saveOptionsToStorage(options);
+    async function saveOptions() {
+      try {
+        await saveOptionsToStorage(options);
+      } catch (error) {
+        debug.error("Error saving options:", error);
+      }
+    }
+    saveOptions();
   }, [options]);
 
   useEffect(() => {

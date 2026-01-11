@@ -11,6 +11,9 @@ import {
 import { MessageType } from "./types";
 import { ACTION_NAMES } from "./data";
 import { debounce } from "lodash";
+import { Logger } from "./services";
+
+const debug = new Logger("content_script");
 
 let view: HTMLElement | null;
 let closeViewButton: HTMLElement | null;
@@ -73,8 +76,8 @@ function handleDeckOptions(deckType: string, action: string) {
   if (action === "banish") {
     deckBanishButton = deckMenu?.getElementsByClassName("card_menu_btn")[2] as HTMLElement;
     deckBanishSpan = deckBanishButton?.getElementsByTagName("span")[0] as HTMLElement;
-    console.log("banish button", deckBanishButton);
-    console.log("banish span", deckBanishSpan);
+    debug.log("banish button", deckBanishButton);
+    debug.log("banish span", deckBanishSpan);
     deckBanishSpan.click();
   }
 }
@@ -140,7 +143,7 @@ window.onload = async function () {
 
   async function fetchHotKeyHashMap() {
     hotkeyHashMap = await loadHotkeysConfig();
-    console.log("Loaded hotkeys configuration:", hotkeyHashMap);
+    debug.log("Loaded hotkeys configuration:", hotkeyHashMap);
   }
 
   injectStylesheet("dark-mode.css");
@@ -178,7 +181,7 @@ window.onload = async function () {
     if (namespace === "sync") {
       if (changes.options && "newValue" in changes.options) {
         const newOptions = changes.options.newValue as OptionsTypes;
-        console.log("Options have changed:", newOptions);
+        debug.log("Options have changed:", newOptions);
 
         if (newOptions.disableAllOptions) {
           // set all options to false, ensure dark mode is off, and don't run other functions
@@ -206,7 +209,7 @@ window.onload = async function () {
 
   chrome.runtime.onMessage.addListener((message) => {
     if (message.type === MessageType.HOTKEYS_CHANGED) {
-      console.log("Received updated hotkeys:", message.payload);
+      debug.log("Received updated hotkeys:", message.payload);
       hotkeyHashMap = message.payload; // update the hotkeys map.
       return true;
     }
@@ -308,10 +311,10 @@ window.onload = async function () {
     ) as HTMLCollectionOf<HTMLElement>;
 
     const actions = Array.isArray(action) ? action : [action];
-    console.log(action);
+    debug.log(action);
     for (const act of actions) {
-      console.log(act);
-      console.log(actions);
+      debug.log(act);
+      debug.log(actions);
       for (const element of cardHoverMenuActions) {
         const span = element?.getElementsByTagName("span")[0];
         if (span && span.textContent === action) {
@@ -325,25 +328,25 @@ window.onload = async function () {
   function handleKeyDown(e: KeyboardEvent) {
     const handler = e.key.toLowerCase();
     if (!(e.target instanceof HTMLInputElement) || handler === "enter") {
-      console.log("Key pressed:", handler);
+      debug.log("Key pressed:", handler);
       const actions = getActionsForHotkey(handler, hotkeyHashMap);
-      console.log("actions", actions);
+      debug.log("actions", actions);
       if (actions.length > 0) {
         actions.forEach((action) => {
           const hotkeyEntry = hotkeyHashMap.find((hk) => hk.action === action);
           if (hotkeyEntry && hotkeyEntry.disabled) {
-            console.log("Hotkey is disabled:", action);
+            debug.log("Hotkey is disabled:", action);
             return;
           }
           if (action in actionFunctionMap) {
             actionFunctionMap[action]();
-            console.log("Action executed:", action);
+            debug.log("Action executed:", action);
           } else {
-            console.log("Action function not found for:", action);
+            debug.log("Action function not found for:", action);
           }
         });
       } else {
-        console.log("No matching actions found.");
+        debug.log("No matching actions found.");
       }
     }
   }
@@ -356,7 +359,7 @@ window.onload = async function () {
       chatInput !== document.activeElement &&
       LPInput !== document.activeElement
     ) {
-      console.log(chatInput !== document.activeElement);
+      debug.log(chatInput !== document.activeElement);
       const actions = getActionsForHotkey(handler, hotkeyHashMap);
       if (actions.includes(ACTION_NAMES.THUMBS_UP)) {
         thumbsUpRelease();
