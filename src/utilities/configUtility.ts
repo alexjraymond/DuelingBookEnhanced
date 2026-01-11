@@ -2,22 +2,38 @@ import { HotkeyEntry, MessageType } from "../types";
 import { ACTION_NAMES } from "../data";
 import { getStorage, setStorage, sendMessageToAllTabs } from "../services";
 
+/**
+ * Loads hotkey configuration from Chrome storage.
+ * Returns stored hotkeys if available, otherwise returns default hotkeys.
+ *
+ * @returns Promise that resolves to an array of hotkey entries
+ */
 export async function loadHotkeysConfig(): Promise<HotkeyEntry[]> {
   const storedHotkeys = await getStorage<HotkeyEntry[]>("hotkeysConfig", []);
   return storedHotkeys.length > 0 ? storedHotkeys : getDefaultHotkeys();
 }
 
+/**
+ * Saves hotkey configuration to Chrome storage and notifies all content scripts.
+ * Sends a HOTKEYS_CHANGED message to all tabs to update active content scripts.
+ *
+ * @param hotkeys - Array of hotkey entries to save
+ * @returns Promise that resolves when the save and notification are complete
+ */
 export async function saveHotkeysConfig(hotkeys: HotkeyEntry[]): Promise<void> {
   await setStorage("hotkeysConfig", hotkeys);
-  // notify content scripts that hotkeys have changed
   await sendMessageToAllTabs({
     type: MessageType.HOTKEYS_CHANGED,
     payload: hotkeys,
   });
 }
 
-// don't forget to update the actionsFunctionMap in content_script.tsx
-// each object needs a prop called disable, auto set to false
+/**
+ * Returns the default hotkey configuration.
+ * Each entry maps an action name to a keyboard key and includes a disabled flag.
+ *
+ * @returns Array of default hotkey entries with predefined key mappings
+ */
 export function getDefaultHotkeys(): HotkeyEntry[] {
   return [
     { action: ACTION_NAMES.CLOSE_VIEW_MENU, hotkey: "escape", disabled: false },
@@ -63,6 +79,14 @@ export function getDefaultHotkeys(): HotkeyEntry[] {
   ];
 }
 
+/**
+ * Finds all actions that are mapped to a specific hotkey.
+ * Since multiple actions can share the same hotkey, this returns an array of action names.
+ *
+ * @param hotkey - The keyboard key to search for (e.g., "g", "escape")
+ * @param hotkeyMap - Array of hotkey entries to search through
+ * @returns Array of action names that are mapped to the given hotkey
+ */
 export function getActionsForHotkey(hotkey: string, hotkeyMap: HotkeyEntry[]): string[] {
   const matchingActions: string[] = [];
 

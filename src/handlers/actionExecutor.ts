@@ -18,7 +18,13 @@ export function closeViewMenu(cache: DOMElementCache): void {
 }
 
 /**
- * Handles deck view actions (Main or Extra deck).
+ * Handles deck view actions for Main or Extra deck.
+ * Simulates a mouseover event on the deck element to trigger the deck menu,
+ * then searches for and clicks the "View" or "Show" button in the menu.
+ * If neither is found, closes the view menu.
+ *
+ * @param deckType - Type of deck to view ("Main" or "Extra")
+ * @param cache - DOM element cache containing deck elements
  */
 export function handleDeckView(deckType: string, cache: DOMElementCache): void {
   const mouseOverEvent = new MouseEvent("mouseover", {
@@ -49,7 +55,13 @@ export function handleDeckView(deckType: string, cache: DOMElementCache): void {
 }
 
 /**
- * Handles deck options actions (banish, etc.).
+ * Handles deck options actions like banishing cards from the deck.
+ * Simulates a mouseover event on the deck element to trigger the deck menu,
+ * then finds and clicks the appropriate action button (currently supports "banish").
+ *
+ * @param deckType - Type of deck ("Main" or "Extra") - currently only "Main" is used
+ * @param action - Action to perform (e.g., "banish")
+ * @param cache - DOM element cache containing deck elements
  */
 export function handleDeckOptions(deckType: string, action: string, cache: DOMElementCache): void {
   const mouseOverEvent = new MouseEvent("mouseover", {
@@ -74,7 +86,11 @@ export function handleDeckOptions(deckType: string, action: string, cache: DOMEl
 }
 
 /**
- * Sends a message to the chat input.
+ * Sends a message to the chat input by setting the value and simulating an Enter key press.
+ * Focuses the chat input, sets the message text, then dispatches a keyboard event after a short delay.
+ *
+ * @param message - The message text to send to chat
+ * @param cache - DOM element cache containing the chat input element
  */
 export function saySomething(message: string, cache: DOMElementCache): void {
   if (!cache.chatInput) return;
@@ -87,9 +103,8 @@ export function saySomething(message: string, cache: DOMElementCache): void {
     bubbles: true,
   });
 
-  // Note: handleChatBox requires state parameters, but here we just need to focus chat
-  // This is a simplified call for saySomething - full toggle is handled by the action map
   cache.chatInput?.focus();
+  // Small delay ensures the input is focused before dispatching the Enter event
   setTimeout(() => {
     cache.chatInput?.dispatchEvent(enterEvent);
   }, 10);
@@ -191,6 +206,11 @@ export function handleChatBox(
 
 /**
  * Executes a card play action by finding and clicking the appropriate menu button.
+ * Searches the card hover menu for a button with matching text content.
+ * Supports multiple action names as fallbacks (e.g., ["TO_GRAVE", "TO_GRAVEYARD"]).
+ * Stops at the first matching action found.
+ *
+ * @param action - Action name(s) to search for. Can be a string or array of strings for fallback options
  */
 export function playCard(action: string | [string] | [string, string]): void {
   const cardHoverMenuDiv = document.getElementById("card_menu_content") as HTMLElement;
@@ -215,6 +235,12 @@ export function playCard(action: string | [string] | [string, string]): void {
 
 /**
  * Creates the action function map that maps action names to their execution functions.
+ * This map is used by the hotkey handler to execute actions when hotkeys are pressed.
+ * Each action name from ACTION_NAMES is mapped to a function that performs the corresponding game action.
+ *
+ * @param cache - DOM element cache containing all game UI elements
+ * @param state - Current state object containing focus states and setters
+ * @returns Record mapping action names to their execution functions
  */
 export function createActionFunctionMap(
   cache: DOMElementCache,
