@@ -1,3 +1,3 @@
 export function splitActions(action: string) {
-  return action.includes('/') ? action.split('/') : [action];
+  return action.includes("/") ? action.split("/") : [action];
 }
