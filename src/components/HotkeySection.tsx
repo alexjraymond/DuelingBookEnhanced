@@ -2,6 +2,9 @@ import React, { useEffect, useRef, useState } from "react";
 import { loadHotkeysConfig, saveHotkeysConfig, splitActions } from "../utilities";
 import { validHotkeys, defaultDisabledActions } from "../data";
 import { HotkeyEntry } from "../types";
+import { Logger } from "../services";
+
+const debug = new Logger("HotkeySection");
 
 interface HotkeySectionProps {
   title: string;
@@ -60,7 +63,7 @@ export const HotkeySection: React.FC<HotkeySectionProps> = ({
   useEffect(() => {
     async function loadAndLogHotkeys() {
       const currentHotkeys = await loadHotkeysConfig();
-      console.log("current hotkeys", currentHotkeys);
+      debug.log("current hotkeys", currentHotkeys);
     }
     loadAndLogHotkeys();
   }, [resetCounter]);
@@ -69,7 +72,7 @@ export const HotkeySection: React.FC<HotkeySectionProps> = ({
     async function initializeSelectedHotkeys() {
       try {
         const currentHotkeys = await loadHotkeysConfig();
-        console.log("current hotkeys", currentHotkeys);
+        debug.log("current hotkeys", currentHotkeys);
 
         const initialSelectedHotkeys: { [key: string]: string } = {};
         actions.forEach((action) => {
@@ -85,7 +88,7 @@ export const HotkeySection: React.FC<HotkeySectionProps> = ({
 
         setDisabledActions(newDisabledActions);
       } catch (error) {
-        console.error("Error loading hotkeys:", error);
+        debug.error("Error loading hotkeys:", error);
       }
     }
 
@@ -95,7 +98,7 @@ export const HotkeySection: React.FC<HotkeySectionProps> = ({
   const toggleDisable = async (action: string) => {
     try {
       const currentHotkeys = await loadHotkeysConfig();
-      console.log("current hotkeys:", currentHotkeys, "action toggled", action);
+      debug.log("current hotkeys:", currentHotkeys, "action toggled", action);
 
       const actionParts = splitActions(action);
       const actions = [];
@@ -119,10 +122,10 @@ export const HotkeySection: React.FC<HotkeySectionProps> = ({
         .map((hotkeyItem) => hotkeyItem.action as string);
 
       setDisabledActions(newDisabledActions);
-      console.log(newDisabledActions, newDisabledActions);
+      debug.log(newDisabledActions, newDisabledActions);
       toggleSavedMessage();
     } catch (error) {
-      console.error("Error loading or updating hotkeys:", error);
+      debug.error("Error loading or updating hotkeys:", error);
     }
   };
 
@@ -136,7 +139,7 @@ export const HotkeySection: React.FC<HotkeySectionProps> = ({
         setIsHotkeyInvalid(true);
         setConflictState({ action: `${alreadyMappedAction.action}`, hotkey: `${hotkey}` });
 
-        console.log(
+        debug.log(
           `The hotkey: ${hotkey} is already mapped to the action ${alreadyMappedAction.action}`
         );
 
@@ -173,19 +176,19 @@ export const HotkeySection: React.FC<HotkeySectionProps> = ({
 
       updatedSelectedHotkeys[action] = hotkey;
 
-      console.log("current hotkeys updated", currentHotkeys);
+      debug.log("current hotkeys updated", currentHotkeys);
       setSelectedHotkeys(updatedSelectedHotkeys);
       await saveHotkeysConfig(currentHotkeys);
       toggleSavedMessage();
       setIsHotkeyInvalid(false);
       setConflictState({ action: "", hotkey: "" });
     } catch (error) {
-      console.error("Error loading or updating hotkeys:", error);
+      debug.error("Error loading or updating hotkeys:", error);
     }
   };
 
   useEffect(() => {
-    console.log("selected hotkeys changed", selectedHotkeys);
+    debug.log("selected hotkeys changed", selectedHotkeys);
   }, [selectedHotkeys]);
 
   function checkIfDisabled(action: string) {
