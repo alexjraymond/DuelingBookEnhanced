@@ -8,6 +8,8 @@ import {
   loadHotkeysConfig,
   getActionsForHotkey,
 } from "./utilities";
+import { MessageType } from "./types";
+import { ACTION_NAMES } from "./data";
 import { debounce } from "lodash";
 
 let view: HTMLElement | null;
@@ -92,46 +94,46 @@ window.onload = async function () {
   let options: OptionsTypes;
 
   const actionFunctionMap: Record<string, () => void> = {
-    "Close View Menu": closeViewMenu,
-    "View Graveyard": toggleGraveYardView,
-    "View Banish": toggleBanishedView,
-    "View Main Deck": () => handleDeckView("Main"),
-    "View Extra Deck": () => handleDeckView("Extra"),
-    Think: handleThinkButton,
-    "Thumbs Up": thumbsUpPress,
-    "Toggle Chat Box": handleChatBox,
-    Declare: () => playCard("Declare"),
-    "To Hand": () => playCard("To Hand"),
-    "To Extra Deck": () => playCard("To Extra Deck"),
-    "To Extra Deck FU": () => playCard("To Extra Deck FU"),
-    "To S/T": () => playCard("To S/T"),
-    Activate: () => playCard("Activate"),
-    Overlay: () => playCard("Overlay"),
-    "S. Summon ATK": () => playCard("S. Summon ATK"),
-    "SS ATK": () => playCard("SS ATK"),
-    "OL ATK": () => playCard("OL ATK"),
-    "S. Summon DEF": () => playCard("S. Summon DEF"),
-    "SS DEF": () => playCard("SS DEF"),
-    "OL DEF": () => playCard("OL DEF"),
-    "Normal Summon": () => playCard("Normal Summon"),
-    Set: () => playCard("Set"),
-    Detach: () => playCard("Detach"),
-    "To Graveyard": () => playCard("To Graveyard"),
-    "To Grave": () => playCard("To Grave"),
-    Banish: () => playCard("Banish"),
-    "Banish T.": () => handleDeckOptions("Main", "banish"),
-    "Banish FD": () => playCard("Banish FD"),
-    "To B. Deck": () => playCard("To B. Deck"),
-    "To Bottom of Deck": () => playCard("To Bottom of Deck"),
-    "Mill 1": () => saySomething("/mill 1"),
-    "Mill 2": () => saySomething("/mill 2"),
-    "Mill 3": () => saySomething("/mill 3"),
-    "Mill 4": () => saySomething("/mill 4"),
-    "Mill 5": () => saySomething("/mill 5"),
-    "Mill 6": () => saySomething("/mill 6"),
-    "Sub LP": () => subLP(),
-    "Add LP": () => addLP(),
-    Target: () => playCard("Target"),
+    [ACTION_NAMES.CLOSE_VIEW_MENU]: closeViewMenu,
+    [ACTION_NAMES.VIEW_GRAVEYARD]: toggleGraveYardView,
+    [ACTION_NAMES.VIEW_BANISH]: toggleBanishedView,
+    [ACTION_NAMES.VIEW_MAIN_DECK]: () => handleDeckView("Main"),
+    [ACTION_NAMES.VIEW_EXTRA_DECK]: () => handleDeckView("Extra"),
+    [ACTION_NAMES.THINK]: handleThinkButton,
+    [ACTION_NAMES.THUMBS_UP]: thumbsUpPress,
+    [ACTION_NAMES.TOGGLE_CHAT_BOX]: handleChatBox,
+    [ACTION_NAMES.DECLARE]: () => playCard(ACTION_NAMES.DECLARE),
+    [ACTION_NAMES.TO_HAND]: () => playCard(ACTION_NAMES.TO_HAND),
+    [ACTION_NAMES.TO_EXTRA_DECK]: () => playCard(ACTION_NAMES.TO_EXTRA_DECK),
+    [ACTION_NAMES.TO_EXTRA_DECK_FU]: () => playCard(ACTION_NAMES.TO_EXTRA_DECK_FU),
+    [ACTION_NAMES.TO_ST]: () => playCard(ACTION_NAMES.TO_ST),
+    [ACTION_NAMES.ACTIVATE]: () => playCard(ACTION_NAMES.ACTIVATE),
+    [ACTION_NAMES.OVERLAY]: () => playCard(ACTION_NAMES.OVERLAY),
+    [ACTION_NAMES.S_SUMMON_ATK]: () => playCard(ACTION_NAMES.S_SUMMON_ATK),
+    [ACTION_NAMES.SS_ATK]: () => playCard(ACTION_NAMES.SS_ATK),
+    [ACTION_NAMES.OL_ATK]: () => playCard(ACTION_NAMES.OL_ATK),
+    [ACTION_NAMES.S_SUMMON_DEF]: () => playCard(ACTION_NAMES.S_SUMMON_DEF),
+    [ACTION_NAMES.SS_DEF]: () => playCard(ACTION_NAMES.SS_DEF),
+    [ACTION_NAMES.OL_DEF]: () => playCard(ACTION_NAMES.OL_DEF),
+    [ACTION_NAMES.NORMAL_SUMMON]: () => playCard(ACTION_NAMES.NORMAL_SUMMON),
+    [ACTION_NAMES.SET]: () => playCard(ACTION_NAMES.SET),
+    [ACTION_NAMES.DETACH]: () => playCard(ACTION_NAMES.DETACH),
+    [ACTION_NAMES.TO_GRAVEYARD]: () => playCard(ACTION_NAMES.TO_GRAVEYARD),
+    [ACTION_NAMES.TO_GRAVE]: () => playCard(ACTION_NAMES.TO_GRAVE),
+    [ACTION_NAMES.BANISH]: () => playCard(ACTION_NAMES.BANISH),
+    [ACTION_NAMES.BANISH_T]: () => handleDeckOptions("Main", "banish"),
+    [ACTION_NAMES.BANISH_FD]: () => playCard(ACTION_NAMES.BANISH_FD),
+    [ACTION_NAMES.TO_B_DECK]: () => playCard(ACTION_NAMES.TO_B_DECK),
+    [ACTION_NAMES.TO_BOTTOM_OF_DECK]: () => playCard(ACTION_NAMES.TO_BOTTOM_OF_DECK),
+    [ACTION_NAMES.MILL_1]: () => saySomething("/mill 1"),
+    [ACTION_NAMES.MILL_2]: () => saySomething("/mill 2"),
+    [ACTION_NAMES.MILL_3]: () => saySomething("/mill 3"),
+    [ACTION_NAMES.MILL_4]: () => saySomething("/mill 4"),
+    [ACTION_NAMES.MILL_5]: () => saySomething("/mill 5"),
+    [ACTION_NAMES.MILL_6]: () => saySomething("/mill 6"),
+    [ACTION_NAMES.SUB_LP]: () => subLP(),
+    [ACTION_NAMES.ADD_LP]: () => addLP(),
+    [ACTION_NAMES.TARGET]: () => playCard(ACTION_NAMES.TARGET),
   };
 
   let hotkeyHashMap = await loadHotkeysConfig();
@@ -203,7 +205,7 @@ window.onload = async function () {
   }
 
   chrome.runtime.onMessage.addListener((message) => {
-    if (message.type === "HOTKEYS_CHANGED") {
+    if (message.type === MessageType.HOTKEYS_CHANGED) {
       console.log("Received updated hotkeys:", message.payload);
       hotkeyHashMap = message.payload; // update the hotkeys map.
       return true;
@@ -356,7 +358,7 @@ window.onload = async function () {
     ) {
       console.log(chatInput !== document.activeElement);
       const actions = getActionsForHotkey(handler, hotkeyHashMap);
-      if (actions.includes("Thumbs Up")) {
+      if (actions.includes(ACTION_NAMES.THUMBS_UP)) {
         thumbsUpRelease();
       }
     }
