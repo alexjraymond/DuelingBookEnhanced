@@ -7,15 +7,11 @@ export interface OptionsTypes {
 }
 
 import { MessageType } from "../types";
+import { DEFAULT_OPTIONS } from "../data";
 
 export const getOptionsFromStorage = (callback: (options: OptionsTypes) => void) => {
   chrome.storage.sync.get(["options"], (result) => {
-    const options = result.options || {
-      disableAllOptions: false,
-      skipIntro: false,
-      autoConnect: false,
-      isNightMode: false,
-    };
+    const options = result.options || DEFAULT_OPTIONS;
     callback(options);
   });
 };

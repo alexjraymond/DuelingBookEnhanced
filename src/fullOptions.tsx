@@ -3,7 +3,7 @@ import { createRoot } from "react-dom/client";
 import { Button, ComingSoon, JoinDiscord, Footer } from "./components";
 import logo from "./assets/images/dbe_logo.png";
 import { getOptionsFromStorage, saveOptionsToStorage, OptionsTypes } from "./utilities";
-import { URLS } from "./data";
+import { URLS, DEFAULT_OPTIONS, createInputItems } from "./data";
 import CustomizeHotkeys from "./CustomizeHotkeys";
 import KnownIssues from "./KnownIssues";
 
@@ -12,13 +12,7 @@ export const Options = () => {
   const [isSmall, setIsSmall] = useState(false);
   const [currentSection, setCurrentSection] = useState("General");
   const [isSavedVisible, setIsSavedVisible] = useState(false);
-  const [options, setOptions] = useState<OptionsTypes>({
-    disableAllOptions: false,
-    disableHotkeys: false,
-    skipIntro: false,
-    autoConnect: false,
-    isNightMode: false,
-  });
+  const [options, setOptions] = useState<OptionsTypes>(DEFAULT_OPTIONS);
 
   // load options from storage when the popup is opened
   useEffect(() => {
@@ -132,38 +126,7 @@ export const Options = () => {
     }
   };
 
-  const inputItems = [
-    {
-      id: "allOptions",
-      label: "Disable All Options",
-      checked: options.disableAllOptions,
-      onChange: () => setOptions({ ...options, disableAllOptions: !options.disableAllOptions }),
-    },
-    {
-      id: "disableHotkeys",
-      label: "Disable Hotkeys",
-      checked: options.disableHotkeys,
-      onChange: () => setOptions({ ...options, disableHotkeys: !options.disableHotkeys }),
-    },
-    {
-      id: "skipIntro",
-      label: "Skip Intro",
-      checked: options.skipIntro,
-      onChange: () => setOptions({ ...options, skipIntro: !options.skipIntro }),
-    },
-    {
-      id: "autoConnect",
-      label: "Auto-Connect (must be logged in!)",
-      checked: options.autoConnect,
-      onChange: () => setOptions({ ...options, autoConnect: !options.autoConnect }),
-    },
-    {
-      id: "nightMode",
-      label: "Night Mode",
-      checked: options.isNightMode,
-      onChange: () => setOptions({ ...options, isNightMode: !options.isNightMode }),
-    },
-  ];
+  const inputItems = createInputItems(options, setOptions);
 
   return (
     <div className="container mx-auto flex items-stretch h-auto p-4">
