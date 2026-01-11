@@ -7,11 +7,11 @@ import {
   removeDarkMode,
   loadHotkeysConfig,
   getActionsForHotkey,
-} from "./utilities";
-import { MessageType } from "./types";
-import { ACTION_NAMES } from "./data";
+} from "../utilities";
+import { MessageType } from "../types";
+import { ACTION_NAMES } from "../data";
+import { Logger } from "../services";
 import { debounce } from "lodash";
-import { Logger } from "./services";
 
 const debug = new Logger("content_script");
 

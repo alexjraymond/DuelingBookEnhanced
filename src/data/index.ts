@@ -3,6 +3,8 @@ export * from "./defaultOptions";
 export * from "./hotkeySections";
 export * from "./knownIssues";
 export * from "./optionsConfig";
+export * from "./optionsSections";
 export * from "./plannedFeatures";
+export * from "./updateFeatures";
 export * from "./urls";
 export * from "./validHotkeys";

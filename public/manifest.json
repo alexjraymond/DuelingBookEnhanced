@@ -4,7 +4,7 @@
   "description": "A Chrome extension to bring QOL additions to DuelingBook.com",
   "version": "0.2.2",
   "options_ui": {
-    "page": "fullOptions.html",
+    "page": "options.html",
     "open_in_tab": true
   },
   "action": {
@@ -17,26 +17,14 @@
   },
   "content_scripts": [
     {
-      "matches": [
-        "https://www.duelingbook.com/*"
-      ],
-      "js": [
-        "js/vendor.js",
-        "js/content_script.js",
-        "js/components/Button.js"
-      ],
-      "css": [
-        "css/dark-mode.css"
-      ]
+      "matches": ["https://www.duelingbook.com/*"],
+      "js": ["js/vendor.js", "js/content_script.js", "js/components/Button.js"],
+      "css": ["css/dark-mode.css"]
     }
   ],
   "background": {
     "service_worker": "js/background.js"
   },
-  "permissions": [
-    "storage"
-  ],
-  "host_permissions": [
-    "http://www.DuelingBook.com/html5"
-  ]
+  "permissions": ["storage"],
+  "host_permissions": ["http://www.DuelingBook.com/html5"]
 }

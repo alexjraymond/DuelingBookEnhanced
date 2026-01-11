@@ -1,19 +1,23 @@
 import React, { useEffect, useState, useRef } from "react";
-import { createRoot } from "react-dom/client";
-import { Button, ComingSoon, JoinDiscord, Footer } from "./components";
-import logo from "./assets/images/dbe_logo.png";
-import { getOptionsFromStorage, saveOptionsToStorage, OptionsTypes } from "./utilities";
-import { URLS, DEFAULT_OPTIONS, createInputItems } from "./data";
+import { Button, ComingSoon, JoinDiscord, Footer } from "../components";
+import logo from "../assets/images/dbe_logo.png";
+import { HiOutlineCog8Tooth } from "react-icons/hi2";
+import { getOptionsFromStorage, saveOptionsToStorage, OptionsTypes } from "../utilities";
+import { URLS, DEFAULT_OPTIONS, createInputItems, OPTIONS_SECTIONS, SectionId } from "../data";
 import CustomizeHotkeys from "./CustomizeHotkeys";
 import KnownIssues from "./KnownIssues";
-import { Logger } from "./services";
+import { Logger } from "../services";
 
-const debug = new Logger("fullOptions");
+const debug = new Logger("OptionsPage");
 
-export const Options = () => {
+interface OptionsPageProps {
+  mode?: "popup" | "full";
+}
+
+export const OptionsPage: React.FC<OptionsPageProps> = ({ mode = "full" }) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [isSmall, setIsSmall] = useState(false);
-  const [currentSection, setCurrentSection] = useState("General");
+  const [currentSection, setCurrentSection] = useState<SectionId>("General");
   const [isSavedVisible, setIsSavedVisible] = useState(false);
   const [options, setOptions] = useState<OptionsTypes>(DEFAULT_OPTIONS);
 
@@ -73,6 +77,8 @@ export const Options = () => {
       setIsSavedVisible(true);
     }, 1);
   };
+
+  const inputItems = createInputItems(options, setOptions);
 
   const renderMainContent = () => {
     switch (currentSection) {
@@ -142,8 +148,63 @@ export const Options = () => {
     }
   };
 
-  const inputItems = createInputItems(options, setOptions);
+  // Popup mode: simplified view (just General section)
+  if (mode === "popup") {
+    return (
+      <div className="flex flex-col gap-4">
+        <div className="flex justify-between items-center gap-6">
+          <div className="flex items-center">
+            <div className="w-12">
+              <img src={logo} alt="DBE Logo" />
+            </div>
+            <h2 className="font-normal text-xl">
+              DuelingBook<span className="font-bold">Enhanced</span>
+            </h2>
+          </div>
+          <button
+            id="settings-button"
+            className="group bg-transparent border-none cursor-pointer hover:bg-transparent hover:shadow-none p-0 flex justify-center items-center min-w-0"
+            onClick={() => chrome.runtime.openOptionsPage()}
+          >
+            <HiOutlineCog8Tooth className="w-9 h-9 group-hover:text-blue-400" />
+          </button>
+        </div>
+        <div id="input_container" className="p-5 flex flex-col gap-4">
+          {inputItems.map((item, index) => (
+            <div
+              className={`flex items-center ${
+                options.disableAllOptions && index > 0 ? "opacity-50" : ""
+              }`}
+              key={item.id}
+            >
+              <input
+                id={item.id}
+                type="checkbox"
+                className={`w-4 h-4 border-2 border-blue-500 rounded-4 bg-transparent outline-none transition duration-300 ease-in text-white ${
+                  index > 0 && options.disableAllOptions ? "" : "cursor-pointer"
+                }`}
+                checked={item.checked}
+                onChange={item.onChange}
+                disabled={index > 0 && options.disableAllOptions}
+              />
+              <label
+                className={`ml-5 ${index > 0 && options.disableAllOptions ? "" : "cursor-pointer"}`}
+                htmlFor={item.id}
+              >
+                {item.label}
+              </label>
+            </div>
+          ))}
+          <div id="button-container" className="flex justify-around w-full">
+            <Button buttonText="Bugs & Feedback" buttonUrl={URLS.FEEDBACK_FORM} />
+            <Button buttonText="Open DB" buttonUrl={URLS.DUELING_BOOK} />
+          </div>
+        </div>
+      </div>
+    );
+  }
 
+  // Full mode: full options page with navigation
   return (
     <div className="container mx-auto flex items-stretch h-auto p-4">
       <div className="flex flex-col bg-gray-300 rounded-lg shadow-lg mb-8">
@@ -156,30 +217,15 @@ export const Options = () => {
         </div>
         <p className="text-xl font-semibold text-center">SETTINGS</p>
         <nav className="mt-4 text-white">
-          <button
-            className="bg-gray-700 hover:bg-gray-500 w-full py-2 mb-2"
-            onClick={() => setCurrentSection("General")}
-          >
-            General
-          </button>
-          <button
-            className="bg-gray-700 hover:bg-gray-500 w-full py-2 mb-2"
-            onClick={() => setCurrentSection("Customize Hotkeys")}
-          >
-            Customize Hotkeys
-          </button>
-          <button
-            className="bg-gray-700 hover:bg-gray-500 w-full py-2 mb-2"
-            onClick={() => setCurrentSection("Advanced")}
-          >
-            Advanced
-          </button>
-          <button
-            className="bg-gray-700 hover:bg-gray-500 w-full py-2 mb-2"
-            onClick={() => setCurrentSection("Help")}
-          >
-            Known Issues
-          </button>
+          {OPTIONS_SECTIONS.map((section) => (
+            <button
+              key={section.id}
+              className="bg-gray-700 hover:bg-gray-500 w-full py-2 mb-2"
+              onClick={() => setCurrentSection(section.id)}
+            >
+              {section.label}
+            </button>
+          ))}
         </nav>
       </div>
       <div className="flex-grow p-4 pt-0 rounded-lg">
@@ -199,12 +245,3 @@ export const Options = () => {
     </div>
   );
 };
-
-const container = document.getElementById("root");
-const root = createRoot(container!);
-
-root.render(
-  <React.StrictMode>
-    <Options />
-  </React.StrictMode>
-);
