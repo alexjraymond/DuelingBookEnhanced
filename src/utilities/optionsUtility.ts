@@ -6,8 +6,6 @@ export interface OptionsTypes {
   isNightMode: boolean;
 }
 
-import { MessageType } from "../types";
-
 export const getOptionsFromStorage = (callback: (options: OptionsTypes) => void) => {
   chrome.storage.sync.get(["options"], (result) => {
     const options = result.options || {
@@ -27,7 +25,7 @@ export const saveOptionsToStorage = (options: OptionsTypes) => {
       for (const tab of tabs) {
         if (tab.id !== undefined) {
           chrome.tabs.sendMessage(tab.id, {
-            type: MessageType.SETTINGS_CHANGED,
+            type: 'SETTINGS_CHANGED',
             payload: options,
           });
         }
@@ -36,9 +34,10 @@ export const saveOptionsToStorage = (options: OptionsTypes) => {
   });
 };
 
+
 export function skipIntro(skipIntroButton: HTMLElement) {
-  if (skipIntroButton.style.display !== "none") {
-    console.log("Intro is visible, skipping...");
+  if (skipIntroButton.style.display !== 'none') {
+    console.log('Intro is visible, skipping...');
     skipIntroButton.click();
   }
 }
@@ -47,10 +46,10 @@ export function autoConnect(skipIntroButton: HTMLElement, enterButton: HTMLEleme
   // Create a MutationObserver to wait for skipIntroButton to become hidden
   const observer = new MutationObserver((mutationsList) => {
     for (const mutation of mutationsList) {
-      if (mutation.attributeName === "style") {
+      if (mutation.attributeName === 'style') {
         const newStyle = (mutation.target as HTMLElement).style.display;
         const oldStyle = mutation.oldValue;
-        if (newStyle === "none" && oldStyle !== "none") {
+        if (newStyle === 'none' && oldStyle !== 'none') {
           enterButton.click();
           // Disconnect the observer since we only need to trigger this once
           observer.disconnect();

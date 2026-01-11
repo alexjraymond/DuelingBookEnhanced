@@ -1,4 +1,3 @@
-export * from "./actionNames";
 export * from "./hotkeySections";
 export * from "./knownIssues";
 export * from "./plannedFeatures";

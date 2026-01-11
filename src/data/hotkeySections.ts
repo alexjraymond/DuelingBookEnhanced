@@ -1,19 +1,17 @@
-import { ACTION_NAMES } from "./actionNames";
-
 export const hotkeySections = [
   {
-    title: "Deck Actions",
+    title: 'Deck Actions',
     actions: [
-      "Close View Menu",
-      "View Extra Deck",
-      "View Graveyard",
-      "View Main Deck",
-      "Banish T.",
+      'Close View Menu',
+      'View Extra Deck',
+      'View Graveyard',
+      'View Main Deck',
+      'Banish T.'
     ],
-    note: "Note: You can also close any of the menu views by pushing the hotkey again.",
+    note: 'Note: You can also close any of the menu views by pushing the hotkey again.'
   },
   {
-    title: "Card Actions",
+    title: 'Card Actions',
     actions: [
       "Activate/To S/T",
       "Banish",
@@ -29,28 +27,43 @@ export const hotkeySections = [
       "To Bottom of Deck/To B. Deck",
       "To Graveyard/To Grave/Detach",
       "To Hand/To Extra Deck",
-      "To Extra Deck FU",
+      "To Extra Deck FU"
     ],
-    note: "Note: You must be hovering over a card to use these.",
+    note: 'Note: You must be hovering over a card to use these.'
   },
   {
     title: "Mills",
-    actions: ["Mill 1", "Mill 2", "Mill 3", "Mill 4", "Mill 5", "Mill 6"],
-    note: null,
+    actions: [
+      'Mill 1',
+      'Mill 2',
+      'Mill 3',
+      'Mill 4',
+      'Mill 5',
+      'Mill 6',
+    ],
+    note: null
   },
   {
-    title: "LP",
-    actions: ["Add LP", "Sub LP"],
-    note: null,
+    title: 'LP',
+    actions: [
+      "Add LP",
+      "Sub LP",
+    ],
+    note: null
   },
   {
-    title: "Emotes/Chat Box",
-    actions: ["Toggle Chat Box", "Think", "Thumbs Up"],
-    note: null,
+    title: 'Emotes/Chat Box',
+    actions: [
+      "Toggle Chat Box",
+      "Think",
+      "Thumbs Up",
+
+    ],
+    note: null
   },
 ];
 
-export const defaultDisabledActions: string[] = [
-  ACTION_NAMES.CLOSE_VIEW_MENU,
-  ACTION_NAMES.TOGGLE_CHAT_BOX,
-];
+export const defaultDisabledActions = [
+  'Close View Menu',
+  'Toggle Chat Box',
+]

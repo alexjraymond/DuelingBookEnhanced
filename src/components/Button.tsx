@@ -1,26 +1,26 @@
-import React, { ButtonHTMLAttributes } from "react";
+import React, { ButtonHTMLAttributes } from 'react';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  buttonText: string;
-  buttonUrl: string;
+    buttonText: string;
+    buttonUrl: string;
 }
 
 const Button: React.FC<ButtonProps> = ({ buttonText, buttonUrl, ...buttonProps }) => {
-  const buttonLink = () => {
-    window.open(buttonUrl, "_blank");
-  };
+    const buttonLink = () => {
+        window.open(buttonUrl, '_blank');
+    };
 
-  return (
-    <div>
-      <button
-        onClick={buttonLink}
-        className="inline-block min-w-[90px] bg-blue-500 text-white text-sm cursor-pointer transition-transform duration-200 ease-in h-[40px] rounded px-3 py-2 hover:bg-blue-400"
-        {...buttonProps}
-      >
-        {buttonText}
-      </button>
-    </div>
-  );
+    return (
+        <div>
+            <button
+                onClick={buttonLink}
+                className="inline-block min-w-[90px] bg-blue-500 text-white text-sm cursor-pointer transition-transform duration-200 ease-in h-[40px] rounded px-3 py-2 hover:bg-blue-400"
+                {...buttonProps}
+            >
+                {buttonText}
+            </button>
+        </div>
+    );
 };
 
 export default Button;

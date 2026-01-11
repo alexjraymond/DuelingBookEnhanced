@@ -1,2 +1,1 @@
-export * from "./hotkeys";
-export * from "./messages";
+export * from './hotkeys';
