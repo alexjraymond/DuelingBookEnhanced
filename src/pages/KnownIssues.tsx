@@ -1,6 +1,6 @@
 import React from "react";
-import { Issue } from "./components";
-import { knownIssues, plannedFeatures } from "./data";
+import { Issue } from "../components";
+import { knownIssues, plannedFeatures } from "../data";
 
 const KnownIssues = () => {
   return (

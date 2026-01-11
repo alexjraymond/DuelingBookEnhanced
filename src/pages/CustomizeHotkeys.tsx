@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { HotkeySection } from "./components";
-import { getDefaultHotkeys, saveHotkeysConfig } from "./utilities";
-import { hotkeySections } from "./data";
+import { HotkeySection } from "../components";
+import { getDefaultHotkeys, saveHotkeysConfig } from "../utilities";
+import { hotkeySections } from "../data";
 
 interface CustomizeHotkeysTypes {
   toggleSavedMessage: () => void;
