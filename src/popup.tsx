@@ -4,16 +4,10 @@ import { Button } from "./components";
 import logo from "./assets/images/dbe_logo.png";
 import { HiOutlineCog8Tooth } from "react-icons/hi2";
 import { getOptionsFromStorage, saveOptionsToStorage, OptionsTypes } from "./utilities";
-import { URLS } from "./data";
+import { URLS, DEFAULT_OPTIONS, createInputItems } from "./data";
 
 const Popup = () => {
-  const [options, setOptions] = useState<OptionsTypes>({
-    disableAllOptions: false,
-    disableHotkeys: false,
-    skipIntro: false,
-    autoConnect: false,
-    isNightMode: false,
-  });
+  const [options, setOptions] = useState<OptionsTypes>(DEFAULT_OPTIONS);
 
   // Load options from storage when the popup is opened
   useEffect(() => {
@@ -35,38 +29,7 @@ const Popup = () => {
     chrome.runtime.openOptionsPage();
   };
 
-  const inputItems = [
-    {
-      id: "allOptions",
-      label: "Disable All Options",
-      checked: options.disableAllOptions,
-      onChange: () => setOptions({ ...options, disableAllOptions: !options.disableAllOptions }),
-    },
-    {
-      id: "disableHotkeys",
-      label: "Disable Hotkeys",
-      checked: options.disableHotkeys,
-      onChange: () => setOptions({ ...options, disableHotkeys: !options.disableHotkeys }),
-    },
-    {
-      id: "skipIntro",
-      label: "Skip Intro",
-      checked: options.skipIntro,
-      onChange: () => setOptions({ ...options, skipIntro: !options.skipIntro }),
-    },
-    {
-      id: "autoConnect",
-      label: "Auto-Connect (must be logged in!)",
-      checked: options.autoConnect,
-      onChange: () => setOptions({ ...options, autoConnect: !options.autoConnect }),
-    },
-    {
-      id: "nightMode",
-      label: "Night Mode",
-      checked: options.isNightMode,
-      onChange: () => setOptions({ ...options, isNightMode: !options.isNightMode }),
-    },
-  ];
+  const inputItems = createInputItems(options, setOptions);
 
   return (
     <div className="flex flex-col gap-4">
