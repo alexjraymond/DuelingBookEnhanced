@@ -1,18 +1,10 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
-import { JoinDiscord, Footer } from "./components";
-import logo from "./assets/images/dbe_logo_64.png";
+import { JoinDiscord, Footer } from "../components";
+import logo from "../assets/images/dbe_logo_64.png";
+import { UPDATE_FEATURES } from "../data";
 
-export const NewFeatures = () => {
-  const features: string[] = [
-    '"To Extra Deck" and "To Hand" now share a hotkey ',
-    'Added hotkey for "To Extra Deck FU" (Default "u") ',
-    'Added hotkey for Banishing Top of Deck (no need to hover) (Default "m") ',
-    'Added hotkey for Target (Default "r") ',
-    "Removed various buggy hotkeys such as tab, shift, ctrl, arrow keys, etc ",
-    "This page that you are now seeing! ",
-  ];
-
+export const UpdatePage = () => {
   return (
     <div className="bg-white w-1/4 container mx-auto flex-col flex h-auto p-4 items-center rounded mt-6">
       <JoinDiscord />
@@ -22,9 +14,9 @@ export const NewFeatures = () => {
       </div>
       <p>Thank you for using DuelingBookEnhanced, here are some updates for 0.2.2: </p>
       <div className="my-6">
-        {features.map((feature, index) => (
+        {UPDATE_FEATURES.map((item, index) => (
           <li key={index} className="text-gray-600">
-            {feature}
+            {item.feature}
           </li>
         ))}
       </div>
@@ -34,11 +26,10 @@ export const NewFeatures = () => {
   );
 };
 
-const container = document.getElementById("root");
-const root = createRoot(container!);
+const root = createRoot(document.getElementById("root")!);
 
 root.render(
   <React.StrictMode>
-    <NewFeatures />
+    <UpdatePage />
   </React.StrictMode>
 );
