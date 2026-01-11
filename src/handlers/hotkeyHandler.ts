@@ -14,16 +14,32 @@ import { Logger } from "../services";
 
 const debug = new Logger("hotkeyHandler");
 
+/**
+ * State interface for the hotkey handler.
+ * Manages focus states and provides access to the hotkey configuration map.
+ */
 export interface HotkeyHandlerState {
+  /** Whether the chat input field is currently focused */
   chatInputFocused: boolean;
+  /** Whether the LP input field is currently focused */
   LPInputFocused: boolean;
+  /** Function to get the current hotkey configuration map */
   getHotkeyHashMap: () => HotkeyEntry[];
+  /** Function to set the chat input focus state */
   setChatInputFocused: (focused: boolean) => void;
+  /** Function to set the LP input focus state */
   setLPInputFocused: (focused: boolean) => void;
 }
 
 /**
  * Handles keydown events, mapping keys to actions and executing them.
+ * Ignores key presses when typing in input fields (except Enter key).
+ * Checks if the pressed key matches any configured hotkeys and executes the corresponding actions.
+ * Skips disabled hotkeys.
+ *
+ * @param e - Keyboard event from the keydown listener
+ * @param actionFunctionMap - Map of action names to their execution functions
+ * @param state - Hotkey handler state containing hotkey map and focus states
  */
 function handleKeyDown(
   e: KeyboardEvent,
@@ -31,6 +47,7 @@ function handleKeyDown(
   state: HotkeyHandlerState
 ): void {
   const handler = e.key.toLowerCase();
+  // Allow Enter key to work even in input fields (for chat toggle)
   if (!(e.target instanceof HTMLInputElement) || handler === "enter") {
     debug.log("Key pressed:", handler);
     const hotkeyHashMap = state.getHotkeyHashMap();
@@ -58,6 +75,12 @@ function handleKeyDown(
 
 /**
  * Handles keyup events, specifically for thumbs up release.
+ * Only processes keyup events when not typing in input fields.
+ * Checks if the released key was mapped to the thumbs up action and releases the button.
+ *
+ * @param e - Keyboard event from the keyup listener
+ * @param state - Hotkey handler state containing hotkey map and focus states
+ * @param cache - DOM element cache containing game UI elements
  */
 function handleKeyUp(e: KeyboardEvent, state: HotkeyHandlerState, cache: DOMElementCache): void {
   const handler = e.key.toLowerCase();
@@ -78,6 +101,12 @@ function handleKeyUp(e: KeyboardEvent, state: HotkeyHandlerState, cache: DOMElem
 
 /**
  * Sets up keyboard event listeners for hotkey handling.
+ * Creates debounced event handlers to prevent rapid repeated execution.
+ * Returns a cleanup function to remove the event listeners.
+ *
+ * @param cache - DOM element cache containing game UI elements
+ * @param state - Hotkey handler state containing hotkey map and focus states
+ * @returns Cleanup function that removes the event listeners
  */
 export function setupHotkeyListeners(
   cache: DOMElementCache,
@@ -90,7 +119,9 @@ export function setupHotkeyListeners(
     setLPInputFocused: state.setLPInputFocused,
   });
 
-  // Adjust these timers for user responsiveness
+  // Debounce timers (in milliseconds) prevent rapid repeated execution
+  // 150ms for keydown provides good responsiveness without excessive firing
+  // 160ms for keyup is slightly longer to allow keydown events to process first
   const debouncedKeyDown = debounce(
     (e: KeyboardEvent) => handleKeyDown(e, actionFunctionMap, state),
     150
@@ -100,7 +131,6 @@ export function setupHotkeyListeners(
   document.addEventListener("keydown", debouncedKeyDown);
   document.addEventListener("keyup", debouncedKeyUp);
 
-  // Return cleanup function
   return () => {
     document.removeEventListener("keydown", debouncedKeyDown);
     document.removeEventListener("keyup", debouncedKeyUp);

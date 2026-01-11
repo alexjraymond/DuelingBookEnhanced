@@ -13,13 +13,23 @@ import { Logger } from "../services";
 
 const debug = new Logger("optionsManager");
 
+/**
+ * Callback interface for options manager events.
+ * Used to notify the content script when hotkeys are loaded or cleared.
+ */
 export interface OptionsManagerCallbacks {
   onHotkeysLoaded: (hotkeys: HotkeyEntry[]) => void;
   onHotkeysCleared: () => void;
 }
 
 /**
- * Initializes options from Chrome storage and sets up change listeners.
+ * Initializes options from Chrome storage and applies them to the page.
+ * Loads options, applies dark mode stylesheet, loads hotkeys if enabled,
+ * and applies page-specific options like skipIntro and autoConnect.
+ *
+ * @param cache - DOM element cache containing page elements
+ * @param callbacks - Callbacks to notify when hotkeys are loaded or cleared
+ * @returns Promise that resolves to the loaded options configuration
  */
 export async function initializeOptions(
   cache: DOMElementCache,
@@ -32,7 +42,7 @@ export async function initializeOptions(
       const options = result.options as OptionsTypes;
 
       if (options && options.disableAllOptions) {
-        // set all options to false, ensure dark mode is off, and don't run other functions
+        // When disableAllOptions is true, disable all functionality and ensure dark mode is off
         options.disableHotkeys = true;
         options.skipIntro = false;
         options.autoConnect = false;
@@ -61,7 +71,12 @@ export async function initializeOptions(
 }
 
 /**
- * Sets up Chrome storage change listener to handle options updates.
+ * Sets up Chrome storage change listener to handle options updates in real-time.
+ * Watches for changes to the 'options' key in Chrome storage and applies them immediately.
+ * Updates dark mode, hotkeys, skipIntro, and autoConnect based on new option values.
+ *
+ * @param cache - DOM element cache containing page elements
+ * @param callbacks - Callbacks to notify when hotkeys are loaded or cleared
  */
 export function setupOptionsChangeListener(
   cache: DOMElementCache,
@@ -75,7 +90,7 @@ export function setupOptionsChangeListener(
           debug.log("Options have changed:", newOptions);
 
           if (newOptions.disableAllOptions) {
-            // set all options to false, ensure dark mode is off, and don't run other functions
+            // When disableAllOptions is true, disable all functionality and ensure dark mode is off
             newOptions.skipIntro = false;
             newOptions.autoConnect = false;
             newOptions.isNightMode = false;
