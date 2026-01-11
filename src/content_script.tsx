@@ -200,8 +200,6 @@ window.onload = async function() {
     }
   });
 
-  chrome.storage.onChanged.addListener(handleOptionsChange);
-
   const chatInput = document.querySelectorAll('input.cin_txt')[1] as HTMLInputElement;
   let chatInputFocused = false;
   let LPInputFocused = false;

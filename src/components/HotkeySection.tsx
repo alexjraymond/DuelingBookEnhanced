@@ -3,6 +3,7 @@ import { loadHotkeysConfig, saveHotkeysConfig } from "../utilities/configUtility
 import { validHotkeys } from "../data/validHotkeys";
 import { splitActions } from "../utilities/actionsManipulations";
 import { defaultDisabledActions } from "../data/hotkeySections";
+import { HotkeyEntry } from "../types";
 
 interface HotkeySectionProps {
   title: string;
@@ -164,13 +165,6 @@ export const HotkeySection: React.FC<HotkeySectionProps> = ({ title, actions, no
     console.log('selected hotkeys changed', selectedHotkeys)
   }, [selectedHotkeys])
 
-
-  type HotkeyEntry = {
-    action: string | string[];
-    hotkey: string;
-    disabled: boolean;
-  };
-
   function checkIfDisabled(action: string) {
     const actionParts = splitActions(action);
     return actionParts.some(part => disabledActions.includes(part));
@@ -179,14 +173,13 @@ export const HotkeySection: React.FC<HotkeySectionProps> = ({ title, actions, no
 
   function findHotkeyByAction(action: string, hotkeysConfig: HotkeyEntry[]): string {
     for (const hotkeyItem of hotkeysConfig) {
-      const actions = hotkeyItem.action;
-      if (actions === action) {
+      const actionName = hotkeyItem.action;
+      if (actionName === action) {
         return hotkeyItem.hotkey;
       } else if (action.includes('/')) {
+        // Handle actions like "To Extra Deck/To Extra Deck FU" by checking if any part matches
         const actionParts = splitActions(action);
-        if (typeof actions === 'string' && actionParts.includes(actions)) {
-          return hotkeyItem.hotkey;
-        } else if (Array.isArray(actions) && actionParts.some(part => actions.includes(part))) {
+        if (actionParts.includes(actionName)) {
           return hotkeyItem.hotkey;
         }
       }

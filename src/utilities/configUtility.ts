@@ -1,8 +1,4 @@
-export interface HotkeyEntry {
-  action: string;
-  hotkey: string;
-  disabled: boolean;
-}
+import { HotkeyEntry } from '../types';
 
 export async function loadHotkeysConfig(): Promise<HotkeyEntry[]> {
   return new Promise<HotkeyEntry[]>((resolve) => {
