@@ -1,13 +1,11 @@
 import React, { useEffect, useState, useRef } from "react";
-import Button from "./components/Button";
+import { createRoot } from "react-dom/client";
+import { Button, ComingSoon, JoinDiscord, Footer } from "./components";
 import logo from "./assets/images/dbe_logo.png";
-import { getOptionsFromStorage, saveOptionsToStorage, OptionsTypes } from './utilities/optionsUtility'
-import ReactDOM from "react-dom";
+import { getOptionsFromStorage, saveOptionsToStorage, OptionsTypes } from "./utilities";
+import { URLS } from "./data";
 import CustomizeHotkeys from "./CustomizeHotkeys";
 import KnownIssues from "./KnownIssues";
-import ComingSoon from "./components/ComingSoon";
-import JoinDiscord from "./components/JoinDiscord"
-import Footer from "./components/Footer"
 
 export const Options = () => {
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -31,7 +29,7 @@ export const Options = () => {
 
   // save options whenever they change
   useEffect(() => {
-    saveOptionsToStorage(options)
+    saveOptionsToStorage(options);
   }, [options]);
 
   useEffect(() => {
@@ -58,7 +56,6 @@ export const Options = () => {
   const settingsSavedMessageTimer = useRef<NodeJS.Timeout | null>(null);
 
   const toggleSavedMessage = () => {
-
     setIsSavedVisible(false);
     if (settingsSavedMessageTimer.current) clearTimeout(settingsSavedMessageTimer.current);
 
@@ -73,18 +70,24 @@ export const Options = () => {
         return (
           <>
             <h1 className="text-3xl font-bold">General</h1>
-            <p className="text-gray-600 mt-2">Determine how DuelingBookEnhanced can improve your experience</p>
+            <p className="text-gray-600 mt-2">
+              Determine how DuelingBookEnhanced can improve your experience
+            </p>
             <hr className="border-gray-300 mb-4" />
             <div className="flex flex-col gap-4">
               {inputItems.map((item, index) => (
                 <div
-                  className={`flex items-center ${options.disableAllOptions && index > 0 ? 'opacity-50' : ''}`}
+                  className={`flex items-center ${
+                    options.disableAllOptions && index > 0 ? "opacity-50" : ""
+                  }`}
                   key={item.id}
                 >
                   <input
                     id={item.id}
                     type="checkbox"
-                    className={`mr-2 ${index > 0 && options.disableAllOptions ? '' : 'cursor-pointer'}`}
+                    className={`mr-2 ${
+                      index > 0 && options.disableAllOptions ? "" : "cursor-pointer"
+                    }`}
                     checked={item.checked}
                     onChange={() => {
                       item.onChange();
@@ -92,27 +95,36 @@ export const Options = () => {
                     }}
                     disabled={index > 0 && options.disableAllOptions}
                   />
-                  <label className={`flex items-center w-max ${index > 0 && options.disableAllOptions ? '' : 'cursor-pointer'}`} htmlFor={item.id}>{item.label}</label>
+                  <label
+                    className={`flex items-center w-max ${
+                      index > 0 && options.disableAllOptions ? "" : "cursor-pointer"
+                    }`}
+                    htmlFor={item.id}
+                  >
+                    {item.label}
+                  </label>
                 </div>
               ))}
             </div>
             <hr className="border-gray-300 my-4" />
             <div className="flex justify-evenly items-center">
               <div className="flex items-center">
-                <span className="mr-2">Noticed a bug or want to request a feature? Let us know!</span>
-                <Button buttonText="Bugs & Feedback" buttonUrl="https://forms.gle/yLW8pasvEr2rshSQ9" />
+                <span className="mr-2">
+                  Noticed a bug or want to request a feature? Let us know!
+                </span>
+                <Button buttonText="Bugs & Feedback" buttonUrl={URLS.FEEDBACK_FORM} />
               </div>
               <div className="flex items-center">
-                <span className="mr-2">Ready to play? It's time to duel!</span>
-                <Button buttonText="Open DB" buttonUrl="http://www.DuelingBook.com/html5" />
+                <span className="mr-2">Ready to play? It&apos;s time to duel!</span>
+                <Button buttonText="Open DB" buttonUrl={URLS.DUELING_BOOK} />
               </div>
             </div>
           </>
-        )
+        );
       case "Customize Hotkeys":
-        return <CustomizeHotkeys toggleSavedMessage={toggleSavedMessage} />
+        return <CustomizeHotkeys toggleSavedMessage={toggleSavedMessage} />;
       case "Advanced":
-        return <ComingSoon />
+        return <ComingSoon />;
       case "Help":
         return <KnownIssues />;
       default:
@@ -160,31 +172,33 @@ export const Options = () => {
           <img src={logo} alt="DBE Logo" className="w-12 h-12" />
           <h2 className="text-xl font-bold text-white">
             {isSmall ? "DB" : "DuelingBook"}
-            <span className="text-gray-400">
-              {isSmall ? "E" : 'Enhanced'}
-            </span>
+            <span className="text-gray-400">{isSmall ? "E" : "Enhanced"}</span>
           </h2>
         </div>
         <p className="text-xl font-semibold text-center">SETTINGS</p>
         <nav className="mt-4 text-white">
           <button
             className="bg-gray-700 hover:bg-gray-500 w-full py-2 mb-2"
-            onClick={() => setCurrentSection("General")}>
+            onClick={() => setCurrentSection("General")}
+          >
             General
           </button>
           <button
             className="bg-gray-700 hover:bg-gray-500 w-full py-2 mb-2"
-            onClick={() => setCurrentSection("Customize Hotkeys")}>
+            onClick={() => setCurrentSection("Customize Hotkeys")}
+          >
             Customize Hotkeys
           </button>
           <button
             className="bg-gray-700 hover:bg-gray-500 w-full py-2 mb-2"
-            onClick={() => setCurrentSection("Advanced")}>
+            onClick={() => setCurrentSection("Advanced")}
+          >
             Advanced
           </button>
           <button
             className="bg-gray-700 hover:bg-gray-500 w-full py-2 mb-2"
-            onClick={() => setCurrentSection("Help")}>
+            onClick={() => setCurrentSection("Help")}
+          >
             Known Issues
           </button>
         </nav>
@@ -207,9 +221,11 @@ export const Options = () => {
   );
 };
 
-ReactDOM.render(
+const container = document.getElementById("root");
+const root = createRoot(container!);
+
+root.render(
   <React.StrictMode>
     <Options />
-  </React.StrictMode>,
-  document.getElementById('root')
+  </React.StrictMode>
 );
