@@ -57,10 +57,15 @@ export async function initializeOptions(
           callbacks.onHotkeysLoaded(hotkeys);
         }
 
-        if (options && options.skipIntro && options.autoConnect)
-          autoConnect(cache.skipIntroButton!, cache.enterButton!);
-        if (options && options.skipIntro) skipIntro(cache.skipIntroButton!);
-        if (options && options.autoConnect) autoConnect(cache.skipIntroButton!, cache.enterButton!);
+        if (options?.skipIntro && options.autoConnect && cache.skipIntroButton && cache.enterButton) {
+          autoConnect(cache.skipIntroButton, cache.enterButton);
+        }
+        if (options?.skipIntro && cache.skipIntroButton) {
+          skipIntro(cache.skipIntroButton);
+        }
+        if (options?.autoConnect && cache.skipIntroButton && cache.enterButton) {
+          autoConnect(cache.skipIntroButton, cache.enterButton);
+        }
         if (options && options.isNightMode) applyDarkMode();
         if (options && !options.isNightMode) removeDarkMode();
       }
@@ -104,10 +109,20 @@ export function setupOptionsChangeListener(
                 callbacks.onHotkeysLoaded(hotkeys);
               });
             }
-            if (newOptions.skipIntro && newOptions.autoConnect)
-              autoConnect(cache.skipIntroButton!, cache.enterButton!);
-            if (newOptions.skipIntro) skipIntro(cache.skipIntroButton!);
-            if (newOptions.autoConnect) autoConnect(cache.skipIntroButton!, cache.enterButton!);
+            if (
+              newOptions.skipIntro &&
+              newOptions.autoConnect &&
+              cache.skipIntroButton &&
+              cache.enterButton
+            ) {
+              autoConnect(cache.skipIntroButton, cache.enterButton);
+            }
+            if (newOptions.skipIntro && cache.skipIntroButton) {
+              skipIntro(cache.skipIntroButton);
+            }
+            if (newOptions.autoConnect && cache.skipIntroButton && cache.enterButton) {
+              autoConnect(cache.skipIntroButton, cache.enterButton);
+            }
             if (newOptions.isNightMode) applyDarkMode();
             if (!newOptions.isNightMode) removeDarkMode();
           }
