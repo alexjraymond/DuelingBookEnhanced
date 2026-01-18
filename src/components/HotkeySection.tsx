@@ -165,12 +165,7 @@ export const HotkeySection: React.FC<HotkeySectionProps> = ({
       for (const hotkeyItem of currentHotkeys) {
         if (actions.includes(hotkeyItem.action)) {
           updatedSelectedHotkeys[hotkeyItem.action] = hotkeyItem.hotkey;
-        }
-
-        for (const hotkeyItem of currentHotkeys) {
-          if (actions.includes(hotkeyItem.action)) {
-            hotkeyItem.hotkey = hotkey;
-          }
+          hotkeyItem.hotkey = hotkey;
         }
       }
 
