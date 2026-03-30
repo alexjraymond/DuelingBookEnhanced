@@ -8,12 +8,11 @@ console.log(srcDir);
 
 module.exports = {
     entry: {
-        popup: path.join(srcDir, 'popup.tsx'),
-        fullOptions: path.join(srcDir, 'fullOptions.tsx'),
-        newFeatures: path.join(srcDir, 'newFeatures.tsx'),
-        background: path.join(srcDir, 'background.ts'),
-        content_script: path.join(srcDir, 'content_script.tsx'),
-        index: path.join(srcDir, 'index.tsx')
+        popup: path.join(srcDir, 'entry', 'popup.tsx'),
+        options: path.join(srcDir, 'entry', 'options.tsx'),
+        updatePage: path.join(srcDir, 'entry', 'updatePage.tsx'),
+        background: path.join(srcDir, 'entry', 'background.ts'),
+        content_script: path.join(srcDir, 'entry', 'content_script.tsx'),
     },
     output: {
         path: path.join(__dirname, "../dist/js"),
@@ -61,10 +60,6 @@ module.exports = {
                 { from: path.join(srcDir, "styles", "dark-mode.css"), to: "../css" },
             ],
             options: {},
-        }),
-        new HtmlWebpackPlugin({
-            filename: 'index.html',
-            chunks: ['index'], // Should correspond to the entry point name
         }),
     ],
     devServer: {

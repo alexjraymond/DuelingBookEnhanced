@@ -1,8 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
-import { loadHotkeysConfig, saveHotkeysConfig } from "../utilities/configUtility";
-import { validHotkeys } from "../data/validHotkeys";
-import { splitActions } from "../utilities/actionsManipulations";
-import { defaultDisabledActions } from "../data/hotkeySections";
+import { loadHotkeysConfig, saveHotkeysConfig, splitActions } from "../utilities";
+import { validHotkeys, defaultDisabledActions } from "../data";
+import { HotkeyEntry } from "../types";
+import { Logger } from "../services";
+
+const debug = new Logger("HotkeySection");
 
 interface HotkeySectionProps {
   title: string;
@@ -14,9 +16,17 @@ interface HotkeySectionProps {
   toggleSavedMessage: () => void;
 }
 
-export const HotkeySection: React.FC<HotkeySectionProps> = ({ title, actions, note, selectedHotkeys, setSelectedHotkeys, resetCounter, toggleSavedMessage }) => {
-  const [isHotkeyInvalid, setIsHotkeyInvalid] = useState(false)
-  const [conflictState, setConflictState] = useState<ConflictState>({ action: '', hotkey: '' });
+export const HotkeySection: React.FC<HotkeySectionProps> = ({
+  title,
+  actions,
+  note,
+  selectedHotkeys,
+  setSelectedHotkeys,
+  resetCounter,
+  toggleSavedMessage,
+}) => {
+  const [isHotkeyInvalid, setIsHotkeyInvalid] = useState(false);
+  const [conflictState, setConflictState] = useState<ConflictState>({ action: "", hotkey: "" });
   const [disabledActions, setDisabledActions] = useState<string[]>([]);
 
   type ConflictState = {
@@ -26,16 +36,34 @@ export const HotkeySection: React.FC<HotkeySectionProps> = ({ title, actions, no
 
   const selectRefs = useRef<{ [key: string]: React.RefObject<HTMLSelectElement> }>({});
 
-  actions.forEach(action => {
-    if (!selectRefs.current[action]) {
-      selectRefs.current[action] = React.createRef();
+  useEffect(() => {
+    actions.forEach((action) => {
+      if (!selectRefs.current[action]) {
+        selectRefs.current[action] = React.createRef();
+      }
+    });
+  }, [actions]);
+
+  function findHotkeyByAction(action: string, hotkeysConfig: HotkeyEntry[]): string {
+    for (const hotkeyItem of hotkeysConfig) {
+      const actionName = hotkeyItem.action;
+      if (actionName === action) {
+        return hotkeyItem.hotkey;
+      } else if (action.includes("/")) {
+        // Handle actions like "To Extra Deck/To Extra Deck FU" by checking if any part matches
+        const actionParts = splitActions(action);
+        if (actionParts.includes(actionName)) {
+          return hotkeyItem.hotkey;
+        }
+      }
     }
-  });
+    return "";
+  }
 
   useEffect(() => {
     async function loadAndLogHotkeys() {
       const currentHotkeys = await loadHotkeysConfig();
-      console.log('current hotkeys', currentHotkeys);
+      debug.log("current hotkeys", currentHotkeys);
     }
     loadAndLogHotkeys();
   }, [resetCounter]);
@@ -44,7 +72,7 @@ export const HotkeySection: React.FC<HotkeySectionProps> = ({ title, actions, no
     async function initializeSelectedHotkeys() {
       try {
         const currentHotkeys = await loadHotkeysConfig();
-        console.log('current hotkeys', currentHotkeys);
+        debug.log("current hotkeys", currentHotkeys);
 
         const initialSelectedHotkeys: { [key: string]: string } = {};
         actions.forEach((action) => {
@@ -59,21 +87,20 @@ export const HotkeySection: React.FC<HotkeySectionProps> = ({ title, actions, no
           .map((hotkeyItem) => hotkeyItem.action as string);
 
         setDisabledActions(newDisabledActions);
-
       } catch (error) {
-        console.error('Error loading hotkeys:', error);
+        debug.error("Error loading hotkeys:", error);
       }
     }
 
     initializeSelectedHotkeys();
-  }, [actions, resetCounter]);
+  }, [actions, resetCounter, setSelectedHotkeys]);
 
   const toggleDisable = async (action: string) => {
     try {
       const currentHotkeys = await loadHotkeysConfig();
-      console.log('current hotkeys:', currentHotkeys, 'action toggled', action)
+      debug.log("current hotkeys:", currentHotkeys, "action toggled", action);
 
-      const actionParts = splitActions(action)
+      const actionParts = splitActions(action);
       const actions = [];
 
       if (actionParts.length > 1) {
@@ -95,36 +122,36 @@ export const HotkeySection: React.FC<HotkeySectionProps> = ({ title, actions, no
         .map((hotkeyItem) => hotkeyItem.action as string);
 
       setDisabledActions(newDisabledActions);
-      console.log(newDisabledActions, newDisabledActions)
-      toggleSavedMessage()
-
+      debug.log(newDisabledActions, newDisabledActions);
+      toggleSavedMessage();
     } catch (error) {
-      console.error('Error loading or updating hotkeys:', error);
+      debug.error("Error loading or updating hotkeys:", error);
     }
   };
-
 
   const handleHotkeyChange = async (action: string, hotkey: string) => {
     try {
       const currentHotkeys = await loadHotkeysConfig();
 
       // check if the new hotkey is already assigned to another action.
-      const alreadyMappedAction = currentHotkeys.find(hotkeyItem => hotkeyItem.hotkey === hotkey);
-      if (alreadyMappedAction && hotkey !== '') {
-        setIsHotkeyInvalid(true)
+      const alreadyMappedAction = currentHotkeys.find((hotkeyItem) => hotkeyItem.hotkey === hotkey);
+      if (alreadyMappedAction && hotkey !== "") {
+        setIsHotkeyInvalid(true);
         setConflictState({ action: `${alreadyMappedAction.action}`, hotkey: `${hotkey}` });
 
-        console.log(`The hotkey: ${hotkey} is already mapped to the action ${alreadyMappedAction.action}`);
+        debug.log(
+          `The hotkey: ${hotkey} is already mapped to the action ${alreadyMappedAction.action}`
+        );
 
         setSelectedHotkeys({
           ...selectedHotkeys,
-          [action]: currentHotkeys.find(hotkey => hotkey.action === action)?.hotkey || ''
+          [action]: currentHotkeys.find((hotkey) => hotkey.action === action)?.hotkey || "",
         });
 
         return;
       }
 
-      const actionParts = splitActions(action)
+      const actionParts = splitActions(action);
       const actions = [];
 
       if (actionParts.length > 1) {
@@ -138,81 +165,55 @@ export const HotkeySection: React.FC<HotkeySectionProps> = ({ title, actions, no
       for (const hotkeyItem of currentHotkeys) {
         if (actions.includes(hotkeyItem.action)) {
           updatedSelectedHotkeys[hotkeyItem.action] = hotkeyItem.hotkey;
-        }
-
-        for (const hotkeyItem of currentHotkeys) {
-          if (actions.includes(hotkeyItem.action)) {
-            hotkeyItem.hotkey = hotkey;
-          }
+          hotkeyItem.hotkey = hotkey;
         }
       }
 
       updatedSelectedHotkeys[action] = hotkey;
 
-      console.log('current hotkeys updated', currentHotkeys)
+      debug.log("current hotkeys updated", currentHotkeys);
       setSelectedHotkeys(updatedSelectedHotkeys);
       await saveHotkeysConfig(currentHotkeys);
-      toggleSavedMessage()
-      setIsHotkeyInvalid(false)
-      setConflictState({ action: '', hotkey: '' });
+      toggleSavedMessage();
+      setIsHotkeyInvalid(false);
+      setConflictState({ action: "", hotkey: "" });
     } catch (error) {
-      console.error('Error loading or updating hotkeys:', error);
+      debug.error("Error loading or updating hotkeys:", error);
     }
   };
 
   useEffect(() => {
-    console.log('selected hotkeys changed', selectedHotkeys)
-  }, [selectedHotkeys])
-
-
-  type HotkeyEntry = {
-    action: string | string[];
-    hotkey: string;
-    disabled: boolean;
-  };
+    debug.log("selected hotkeys changed", selectedHotkeys);
+  }, [selectedHotkeys]);
 
   function checkIfDisabled(action: string) {
     const actionParts = splitActions(action);
-    return actionParts.some(part => disabledActions.includes(part));
-  }
-
-
-  function findHotkeyByAction(action: string, hotkeysConfig: HotkeyEntry[]): string {
-    for (const hotkeyItem of hotkeysConfig) {
-      const actions = hotkeyItem.action;
-      if (actions === action) {
-        return hotkeyItem.hotkey;
-      } else if (action.includes('/')) {
-        const actionParts = splitActions(action);
-        if (typeof actions === 'string' && actionParts.includes(actions)) {
-          return hotkeyItem.hotkey;
-        } else if (Array.isArray(actions) && actionParts.some(part => actions.includes(part))) {
-          return hotkeyItem.hotkey;
-        }
-      }
-    }
-    return '';
+    return actionParts.some((part) => disabledActions.includes(part));
   }
 
   return (
-    <div className='container justify-center'>
-      <h1 className='text-2xl text-center font-bold bg-gray-200 rounded-lg mb-4'>{title}</h1>
-      <div className='flex flex-col gap-2'>
+    <div className="container justify-center">
+      <h1 className="text-2xl text-center font-bold bg-gray-200 rounded-lg mb-4">{title}</h1>
+      <div className="flex flex-col gap-2">
         {isHotkeyInvalid && conflictState && (
-          <h1 className="text-base font-bold text-red-500">Error! {conflictState.hotkey.toUpperCase()} is already mapped to {conflictState.action}! Pick another hotkey!</h1>
+          <h1 className="text-base font-bold text-red-500">
+            Error! {conflictState.hotkey.toUpperCase()} is already mapped to {conflictState.action}!
+            Pick another hotkey!
+          </h1>
         )}
-        {note && (
-          <h1 className='opacity-80'>({note})</h1>
-        )}
+        {note && <h1 className="opacity-80">({note})</h1>}
         {actions.map((action, index) => {
-          const isActionDisabled = checkIfDisabled(action)
-          const containerClassName = `flex gap-4 items-center ${isActionDisabled ? 'opacity-50' : ''}`;
+          const isActionDisabled = checkIfDisabled(action);
+          const containerClassName = `flex gap-4 items-center ${
+            isActionDisabled ? "opacity-50" : ""
+          }`;
 
           return (
             <>
               <div key={index} className={containerClassName}>
-                <h2 className='inline'>{action}</h2>
+                <h2 className="inline">{action}</h2>
                 <select
+                  // eslint-disable-next-line react-hooks/rules-of-hooks
                   ref={selectRefs.current[action]}
                   value={selectedHotkeys[action]}
                   onChange={(e) => handleHotkeyChange(action, e.target.value)}
