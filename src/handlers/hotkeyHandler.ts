@@ -54,9 +54,12 @@ function handleKeyDown(
     const actions = getActionsForHotkey(handler, hotkeyHashMap);
     debug.log("actions", actions);
     if (actions.length > 0) {
+      // Create action-to-entry map for O(1) lookups instead of O(n²) with Array.find()
+      const actionMap = new Map(hotkeyHashMap.map((entry) => [entry.action, entry]));
+
       actions.forEach((action) => {
-        const hotkeyEntry = hotkeyHashMap.find((hk) => hk.action === action);
-        if (hotkeyEntry && hotkeyEntry.disabled) {
+        const hotkeyEntry = actionMap.get(action);
+        if (hotkeyEntry?.disabled) {
           debug.log("Hotkey is disabled:", action);
           return;
         }
