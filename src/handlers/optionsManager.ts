@@ -23,6 +23,30 @@ export interface OptionsManagerCallbacks {
 }
 
 /**
+ * Helper function to apply skip intro option if enabled.
+ * Performs proper null checks before calling skipIntro.
+ *
+ * @param options - Options configuration object
+ * @param cache - DOM element cache containing page elements
+ */
+function applySkipIntro(options: OptionsTypes | null, cache: DOMElementCache): void {
+  if (!options?.skipIntro || !cache.skipIntroButton) return;
+  skipIntro(cache.skipIntroButton);
+}
+
+/**
+ * Helper function to apply auto connect option if enabled.
+ * Performs proper null checks before calling autoConnect.
+ *
+ * @param options - Options configuration object
+ * @param cache - DOM element cache containing page elements
+ */
+function applyAutoConnect(options: OptionsTypes | null, cache: DOMElementCache): void {
+  if (!options?.autoConnect || !cache.skipIntroButton || !cache.enterButton) return;
+  autoConnect(cache.skipIntroButton, cache.enterButton);
+}
+
+/**
  * Initializes options from Chrome storage and applies them to the page.
  * Loads options, applies dark mode stylesheet, loads hotkeys if enabled,
  * and applies page-specific options like skipIntro and autoConnect.
@@ -57,20 +81,8 @@ export async function initializeOptions(
           callbacks.onHotkeysLoaded(hotkeys);
         }
 
-        if (
-          options?.skipIntro &&
-          options.autoConnect &&
-          cache.skipIntroButton &&
-          cache.enterButton
-        ) {
-          autoConnect(cache.skipIntroButton, cache.enterButton);
-        }
-        if (options?.skipIntro && cache.skipIntroButton) {
-          skipIntro(cache.skipIntroButton);
-        }
-        if (options?.autoConnect && cache.skipIntroButton && cache.enterButton) {
-          autoConnect(cache.skipIntroButton, cache.enterButton);
-        }
+        applyAutoConnect(options, cache);
+        applySkipIntro(options, cache);
         if (options && options.isNightMode) applyDarkMode();
         if (options && !options.isNightMode) removeDarkMode();
       }
@@ -114,22 +126,8 @@ export function setupOptionsChangeListener(
                 callbacks.onHotkeysLoaded(hotkeys);
               });
             }
-            // Each option is guarded by its feature flag and DOM element existence checks to prevent
-            // null-reference errors when elements aren't rendered on the current page.
-            if (
-              newOptions.skipIntro &&
-              newOptions.autoConnect &&
-              cache.skipIntroButton &&
-              cache.enterButton
-            ) {
-              autoConnect(cache.skipIntroButton, cache.enterButton);
-            }
-            if (newOptions.skipIntro && cache.skipIntroButton) {
-              skipIntro(cache.skipIntroButton);
-            }
-            if (newOptions.autoConnect && cache.skipIntroButton && cache.enterButton) {
-              autoConnect(cache.skipIntroButton, cache.enterButton);
-            }
+            applyAutoConnect(newOptions, cache);
+            applySkipIntro(newOptions, cache);
             if (newOptions.isNightMode) applyDarkMode();
             if (!newOptions.isNightMode) removeDarkMode();
           }

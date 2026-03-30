@@ -1,4 +1,5 @@
 export * from "./actionNames";
+export * from "./constants";
 export * from "./defaultOptions";
 export * from "./hotkeySections";
 export * from "./knownIssues";

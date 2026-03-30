@@ -5,7 +5,7 @@
  */
 
 import { HotkeyEntry } from "../types";
-import { ACTION_NAMES } from "../data";
+import { ACTION_NAMES, DEBOUNCE_DELAYS } from "../data";
 import { getActionsForHotkey } from "../utilities";
 import { DOMElementCache } from "./domElementCache";
 import { createActionFunctionMap, thumbsUpRelease } from "./actionExecutor";
@@ -122,14 +122,15 @@ export function setupHotkeyListeners(
     setLPInputFocused: state.setLPInputFocused,
   });
 
-  // Debounce timers (in milliseconds) prevent rapid repeated execution
-  // 150ms for keydown provides good responsiveness without excessive firing
-  // 160ms for keyup is slightly longer to allow keydown events to process first
+  // Debounce timers prevent rapid repeated execution
   const debouncedKeyDown = debounce(
     (e: KeyboardEvent) => handleKeyDown(e, actionFunctionMap, state),
-    150
+    DEBOUNCE_DELAYS.KEYDOWN
   );
-  const debouncedKeyUp = debounce((e: KeyboardEvent) => handleKeyUp(e, state, cache), 160);
+  const debouncedKeyUp = debounce(
+    (e: KeyboardEvent) => handleKeyUp(e, state, cache),
+    DEBOUNCE_DELAYS.KEYUP
+  );
 
   document.addEventListener("keydown", debouncedKeyDown);
   document.addEventListener("keyup", debouncedKeyUp);
