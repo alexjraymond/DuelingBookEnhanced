@@ -1,11 +1,14 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
 import { OptionsPage } from "../pages/OptionsPage";
+import { ErrorBoundary } from "../components";
 
 const root = createRoot(document.getElementById("root")!);
 
 root.render(
   <React.StrictMode>
-    <OptionsPage mode="full" />
+    <ErrorBoundary>
+      <OptionsPage mode="full" />
+    </ErrorBoundary>
   </React.StrictMode>
 );

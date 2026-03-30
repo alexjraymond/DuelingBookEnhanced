@@ -4,7 +4,7 @@
  * Handles execution of all game actions (card movements, UI interactions, etc.)
  */
 
-import { ACTION_NAMES, TIMEOUTS } from "../data";
+import { ACTION_NAMES, EDOMElements, TIMEOUTS } from "../data";
 import { DOMElementCache } from "./domElementCache";
 import { Logger } from "../services";
 
@@ -39,14 +39,18 @@ export function handleDeckView(deckType: string, cache: DOMElementCache): void {
     cache.extraDeck?.dispatchEvent(mouseOverEvent);
   }
 
-  const deckMenu = document.getElementById("card_menu_content") as HTMLElement;
-  let deckViewButton = deckMenu?.getElementsByClassName("card_menu_btn")[0] as HTMLElement;
+  const deckMenu = document.getElementById(EDOMElements.CardMenuContent) as HTMLElement;
+  let deckViewButton = deckMenu?.getElementsByClassName(
+    EDOMElements.CardMenuButton
+  )[0] as HTMLElement;
   let deckViewSpan = deckViewButton?.getElementsByTagName("span")[0] as HTMLElement;
 
   if (deckViewSpan && deckViewSpan.textContent === "View") {
     deckViewSpan.click();
   } else if (deckViewSpan && deckViewSpan.textContent === "Show") {
-    deckViewButton = deckMenu?.getElementsByClassName("card_menu_btn")[1] as HTMLElement;
+    deckViewButton = deckMenu?.getElementsByClassName(
+      EDOMElements.CardMenuButton
+    )[1] as HTMLElement;
     deckViewSpan = deckViewButton?.getElementsByTagName("span")[0] as HTMLElement;
     deckViewSpan.click();
   } else {
@@ -74,10 +78,12 @@ export function handleDeckOptions(deckType: string, action: string, cache: DOMEl
     cache.deck?.dispatchEvent(mouseOverEvent);
   }
 
-  const deckMenu = document.getElementById("card_menu_content") as HTMLElement;
+  const deckMenu = document.getElementById(EDOMElements.CardMenuContent) as HTMLElement;
 
   if (action === "banish") {
-    const deckBanishButton = deckMenu?.getElementsByClassName("card_menu_btn")[2] as HTMLElement;
+    const deckBanishButton = deckMenu?.getElementsByClassName(
+      EDOMElements.CardMenuButton
+    )[2] as HTMLElement;
     const deckBanishSpan = deckBanishButton?.getElementsByTagName("span")[0] as HTMLElement;
     debug.log("banish button", deckBanishButton);
     debug.log("banish span", deckBanishSpan);
@@ -240,9 +246,9 @@ function findAndClickAction(
  */
 export function playCard(action: string | [string] | [string, string]): void {
   // Always query fresh — card_menu_content is a dynamic context menu that gets recreated during gameplay
-  const cardHoverMenuDiv = document.getElementById("card_menu_content") as HTMLElement;
+  const cardHoverMenuDiv = document.getElementById(EDOMElements.CardMenuContent) as HTMLElement;
   const cardHoverMenuActions = cardHoverMenuDiv?.getElementsByClassName(
-    "card_menu_btn"
+    EDOMElements.CardMenuButton
   ) as HTMLCollectionOf<HTMLElement>;
 
   const actions = Array.isArray(action) ? action : [action];
