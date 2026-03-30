@@ -213,6 +213,7 @@ export function handleChatBox(
  * @param action - Action name(s) to search for. Can be a string or array of strings for fallback options
  */
 export function playCard(action: string | [string] | [string, string]): void {
+  // Always query fresh — card_menu_content is a dynamic context menu that gets recreated during gameplay
   const cardHoverMenuDiv = document.getElementById("card_menu_content") as HTMLElement;
   const cardHoverMenuActions = cardHoverMenuDiv?.getElementsByClassName(
     "card_menu_btn"
