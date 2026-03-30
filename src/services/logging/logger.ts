@@ -1,7 +1,10 @@
 /**
  * Centralized logging service for the Chrome extension.
  * Provides colored console output with filename prefixes for better debugging.
+ * Supports log levels to control verbosity in different environments.
  */
+
+import { ELogLevel } from "../../types";
 
 /**
  * ANSI color codes for terminal output
@@ -20,9 +23,17 @@ const Colors = {
 
 /**
  * Logger class that provides colored console output with filename prefixes.
+ * Respects the global log level to control output verbosity.
  */
 export class Logger {
   private filename: string;
+
+  /**
+   * Global log level setting.
+   * Set to DEBUG for development, INFO or WARN for production.
+   * Can be changed at runtime: Logger.globalLogLevel = ELogLevel.DEBUG
+   */
+  static globalLogLevel: ELogLevel = ELogLevel.DEBUG;
 
   /**
    * Creates a new Logger instance.
@@ -45,41 +56,56 @@ export class Logger {
 
   /**
    * Logs an info message (default console.log with blue color).
+   * Only outputs if global log level is INFO or higher.
    * @param args - Arguments to log
    */
   log(...args: unknown[]): void {
-    console.log(...this.formatMessage(Colors.Blue, ...args));
+    if (Logger.globalLogLevel >= ELogLevel.INFO) {
+      console.log(...this.formatMessage(Colors.Blue, ...args));
+    }
   }
 
   /**
    * Logs an error message (console.error with red color).
+   * Only outputs if global log level is ERROR or higher.
    * @param args - Arguments to log
    */
   error(...args: unknown[]): void {
-    console.error(...this.formatMessage(Colors.Red, ...args));
+    if (Logger.globalLogLevel >= ELogLevel.ERROR) {
+      console.error(...this.formatMessage(Colors.Red, ...args));
+    }
   }
 
   /**
    * Logs a warning message (console.warn with yellow color).
+   * Only outputs if global log level is WARN or higher.
    * @param args - Arguments to log
    */
   warn(...args: unknown[]): void {
-    console.warn(...this.formatMessage(Colors.Yellow, ...args));
+    if (Logger.globalLogLevel >= ELogLevel.WARN) {
+      console.warn(...this.formatMessage(Colors.Yellow, ...args));
+    }
   }
 
   /**
    * Logs a success message (console.log with green color).
+   * Only outputs if global log level is INFO or higher.
    * @param args - Arguments to log
    */
   success(...args: unknown[]): void {
-    console.log(...this.formatMessage(Colors.Green, ...args));
+    if (Logger.globalLogLevel >= ELogLevel.INFO) {
+      console.log(...this.formatMessage(Colors.Green, ...args));
+    }
   }
 
   /**
    * Logs a debug message (console.log with dim/cyan color).
+   * Only outputs if global log level is DEBUG.
    * @param args - Arguments to log
    */
   debug(...args: unknown[]): void {
-    console.log(...this.formatMessage(`${Colors.Dim}${Colors.Cyan}`, ...args));
+    if (Logger.globalLogLevel >= ELogLevel.DEBUG) {
+      console.log(...this.formatMessage(`${Colors.Dim}${Colors.Cyan}`, ...args));
+    }
   }
 }

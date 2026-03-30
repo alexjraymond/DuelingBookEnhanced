@@ -58,11 +58,13 @@ export function skipIntro(skipIntroButton: HTMLElement) {
  * Automatically connects to a duel after the intro is skipped.
  * Uses a MutationObserver to watch for when the skip intro button becomes hidden,
  * then clicks the enter button to start the duel.
+ * Returns a cleanup function to manually disconnect the observer if needed.
  *
  * @param skipIntroButton - The skip intro button DOM element to observe
  * @param enterButton - The enter/duel button DOM element to click
+ * @returns Cleanup function that disconnects the observer
  */
-export function autoConnect(skipIntroButton: HTMLElement, enterButton: HTMLElement) {
+export function autoConnect(skipIntroButton: HTMLElement, enterButton: HTMLElement): () => void {
   const observer = new MutationObserver((mutationsList) => {
     for (const mutation of mutationsList) {
       if (mutation.attributeName === "style") {
@@ -79,4 +81,7 @@ export function autoConnect(skipIntroButton: HTMLElement, enterButton: HTMLEleme
   });
 
   observer.observe(skipIntroButton, { attributes: true, attributeOldValue: true });
+
+  // Return cleanup function for manual disconnection if needed
+  return () => observer.disconnect();
 }
