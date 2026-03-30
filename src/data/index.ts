@@ -8,4 +8,5 @@ export * from "./optionsSections";
 export * from "./plannedFeatures";
 export * from "./updateFeatures";
 export * from "./urls";
+export * from "./selectors";
 export * from "./validHotkeys";

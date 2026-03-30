@@ -6,5 +6,6 @@ export { default as Issue } from "./Issue";
 export { default as JoinDiscord } from "./JoinDiscord";
 
 // Named exports
+export { ErrorBoundary } from "./ErrorBoundary";
 export { HotkeySection } from "./HotkeySection";
 export { ReloadWarning } from "./ReloadWarning";

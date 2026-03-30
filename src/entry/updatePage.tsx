@@ -1,6 +1,6 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
-import { JoinDiscord, Footer } from "../components";
+import { JoinDiscord, Footer, ErrorBoundary } from "../components";
 import logo from "../assets/images/dbe_logo_64.png";
 import { UPDATE_FEATURES } from "../data";
 
@@ -30,6 +30,8 @@ const root = createRoot(document.getElementById("root")!);
 
 root.render(
   <React.StrictMode>
-    <UpdatePage />
+    <ErrorBoundary>
+      <UpdatePage />
+    </ErrorBoundary>
   </React.StrictMode>
 );

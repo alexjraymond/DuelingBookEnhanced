@@ -5,6 +5,8 @@
  * Provides a single source of truth for all cached DOM elements.
  */
 
+import { EDOMElements } from "../data";
+
 /**
  * Cache of DOM elements used by the content script.
  * Centralizes all DOM queries for better performance and maintainability.
@@ -19,6 +21,16 @@ export interface DOMElementCache {
   deck: HTMLElement | null;
   /** Extra deck element */
   extraDeck: HTMLElement | null;
+  /** Deck menu container */
+  deckMenu: HTMLElement | null;
+  /** Deck view button in the menu */
+  deckViewButton: HTMLElement | null;
+  /** Deck view button span element */
+  deckViewSpan: HTMLElement | null;
+  /** Deck banish button (set dynamically when needed) */
+  deckBanishButton: HTMLElement | null;
+  /** Deck banish button span (set dynamically when needed) */
+  deckBanishSpan: HTMLElement | null;
   /** Life Points input field */
   LPInput: HTMLElement | null;
   /** Subtract LP button */
@@ -46,23 +58,38 @@ export interface DOMElementCache {
  * Should be called after window.onload to ensure DOM is ready.
  */
 export function initializeDOMCache(): DOMElementCache {
-  const viewElement = document.getElementById("view") as HTMLElement;
+  const viewElement = document.getElementById(EDOMElements.View);
+  const cardMenuContent = document.getElementById(EDOMElements.CardMenuContent);
+  const chatInputs = document.querySelectorAll(EDOMElements.ChatInput);
 
   return {
     view: viewElement,
-    closeViewButton: viewElement?.getElementsByClassName("exit_btn")[0] as HTMLElement,
-    deck: document.getElementById("deck_hidden") as HTMLElement,
-    extraDeck: document.getElementById("extra_hidden") as HTMLElement,
-    LPInput: document.getElementById("life_txt") as HTMLElement,
-    subButton: document.getElementById("plus_btn") as HTMLElement,
-    addButton: document.getElementById("minus_btn") as HTMLElement,
+    closeViewButton:
+      (viewElement?.getElementsByClassName(EDOMElements.ExitButton)[0] as HTMLElement | null) ||
+      null,
+    deck: document.getElementById(EDOMElements.DeckHidden),
+    extraDeck: document.getElementById(EDOMElements.ExtraDeckHidden),
+    deckMenu: cardMenuContent,
+    deckViewButton:
+      (cardMenuContent?.getElementsByClassName(
+        EDOMElements.CardMenuButton
+      )[0] as HTMLElement | null) || null,
+    deckViewSpan:
+      (cardMenuContent
+        ?.getElementsByClassName(EDOMElements.CardMenuButton)[0]
+        ?.getElementsByTagName("span")[0] as HTMLElement | null) || null,
+    deckBanishButton: null,
+    deckBanishSpan: null,
+    LPInput: document.getElementById(EDOMElements.LifePointsInput),
+    subButton: document.getElementById(EDOMElements.SubtractButton),
+    addButton: document.getElementById(EDOMElements.AddButton),
     // Second input with class 'cin_txt' is the chat input (first is likely LP input or another field)
-    chatInput: document.querySelectorAll("input.cin_txt")[1] as HTMLInputElement,
-    thunk: document.getElementById("think_btn"),
-    thumbsUp: document.getElementById("good_btn"),
-    graveyard: document.getElementById("grave_hidden"),
-    banished: document.getElementById("banished_hidden"),
-    skipIntroButton: document.getElementById("skip_intro_btn") as HTMLElement,
-    enterButton: document.getElementById("duel_btn") as HTMLElement,
+    chatInput: (chatInputs[1] as HTMLInputElement | undefined) || null,
+    thunk: document.getElementById(EDOMElements.ThinkButton),
+    thumbsUp: document.getElementById(EDOMElements.ThumbsUpButton),
+    graveyard: document.getElementById(EDOMElements.GraveyardHidden),
+    banished: document.getElementById(EDOMElements.BanishedHidden),
+    skipIntroButton: document.getElementById(EDOMElements.SkipIntroButton),
+    enterButton: document.getElementById(EDOMElements.DuelButton),
   };
 }

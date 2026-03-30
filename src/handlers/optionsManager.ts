@@ -9,7 +9,7 @@ import { injectStylesheet } from "../utilities";
 import { loadHotkeysConfig } from "../utilities";
 import { HotkeyEntry } from "../types";
 import { DOMElementCache } from "./domElementCache";
-import { Logger } from "../services";
+import { Logger, getStorage } from "../services";
 
 const debug = new Logger("optionsManager");
 
@@ -61,35 +61,37 @@ export async function initializeOptions(
 ): Promise<OptionsTypes> {
   injectStylesheet("dark-mode.css");
 
-  return new Promise<OptionsTypes>((resolve) => {
-    chrome.storage.sync.get("options", async (result) => {
-      const options = result.options as OptionsTypes;
+  try {
+    const options = await getStorage<OptionsTypes>("options", {} as OptionsTypes);
 
-      if (options && options.disableAllOptions) {
-        // When disableAllOptions is true, disable all functionality and ensure dark mode is off
-        options.disableHotkeys = true;
-        options.skipIntro = false;
-        options.autoConnect = false;
-        options.isNightMode = false;
-        removeDarkMode();
+    if (options && options.disableAllOptions) {
+      // When disableAllOptions is true, disable all functionality and ensure dark mode is off
+      options.disableHotkeys = true;
+      options.skipIntro = false;
+      options.autoConnect = false;
+      options.isNightMode = false;
+      removeDarkMode();
+      callbacks.onHotkeysCleared();
+    } else {
+      if (options.disableHotkeys) {
         callbacks.onHotkeysCleared();
       } else {
-        if (options.disableHotkeys) {
-          callbacks.onHotkeysCleared();
-        } else {
-          const hotkeys = await loadHotkeysConfig();
-          callbacks.onHotkeysLoaded(hotkeys);
-        }
-
-        applyAutoConnect(options, cache);
-        applySkipIntro(options, cache);
-        if (options && options.isNightMode) applyDarkMode();
-        if (options && !options.isNightMode) removeDarkMode();
+        const hotkeys = await loadHotkeysConfig();
+        callbacks.onHotkeysLoaded(hotkeys);
       }
 
-      resolve(options);
-    });
-  });
+      applyAutoConnect(options, cache);
+      applySkipIntro(options, cache);
+      if (options && options.isNightMode) applyDarkMode();
+      if (options && !options.isNightMode) removeDarkMode();
+    }
+
+    return options;
+  } catch (error) {
+    debug.error("Failed to load options:", error);
+    // Return default options on error
+    return {} as OptionsTypes;
+  }
 }
 
 /**
@@ -105,7 +107,7 @@ export function setupOptionsChangeListener(
   callbacks: OptionsManagerCallbacks
 ): void {
   chrome.storage.onChanged.addListener(
-    (changes: Record<string, chrome.storage.StorageChange>, namespace: string) => {
+    async (changes: Record<string, chrome.storage.StorageChange>, namespace: string) => {
       if (namespace === "sync") {
         if (changes.options && "newValue" in changes.options) {
           const newOptions = changes.options.newValue as OptionsTypes;
@@ -122,9 +124,8 @@ export function setupOptionsChangeListener(
             if (newOptions.disableHotkeys) {
               callbacks.onHotkeysCleared();
             } else {
-              loadHotkeysConfig().then((hotkeys) => {
-                callbacks.onHotkeysLoaded(hotkeys);
-              });
+              const hotkeys = await loadHotkeysConfig();
+              callbacks.onHotkeysLoaded(hotkeys);
             }
             applyAutoConnect(newOptions, cache);
             applySkipIntro(newOptions, cache);
