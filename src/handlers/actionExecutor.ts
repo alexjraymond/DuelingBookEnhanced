@@ -4,7 +4,7 @@
  * Handles execution of all game actions (card movements, UI interactions, etc.)
  */
 
-import { ACTION_NAMES } from "../data";
+import { ACTION_NAMES, TIMEOUTS } from "../data";
 import { DOMElementCache } from "./domElementCache";
 import { Logger } from "../services";
 
@@ -107,7 +107,7 @@ export function saySomething(message: string, cache: DOMElementCache): void {
   // Small delay ensures the input is focused before dispatching the Enter event
   setTimeout(() => {
     cache.chatInput?.dispatchEvent(enterEvent);
-  }, 10);
+  }, TIMEOUTS.CHAT_FOCUS);
 }
 
 /**
@@ -205,6 +205,32 @@ export function handleChatBox(
 }
 
 /**
+ * Finds and clicks a menu button matching one of the provided action names.
+ * Searches through menu buttons and clicks the first one whose span text matches an action.
+ *
+ * @param actions - Array of action names to search for
+ * @param menuButtons - Collection of menu button elements to search through
+ * @returns True if a matching button was found and clicked, false otherwise
+ */
+function findAndClickAction(
+  actions: string[],
+  menuButtons: HTMLCollectionOf<HTMLElement>
+): boolean {
+  for (const action of actions) {
+    const button = Array.from(menuButtons).find((btn) => {
+      const span = btn.getElementsByTagName("span")[0];
+      return span?.textContent === action;
+    });
+    if (button) {
+      const span = button.getElementsByTagName("span")[0];
+      span?.click();
+      return true;
+    }
+  }
+  return false;
+}
+
+/**
  * Executes a card play action by finding and clicking the appropriate menu button.
  * Searches the card hover menu for a button with matching text content.
  * Supports multiple action names as fallbacks (e.g., ["TO_GRAVE", "TO_GRAVEYARD"]).
@@ -221,17 +247,7 @@ export function playCard(action: string | [string] | [string, string]): void {
 
   const actions = Array.isArray(action) ? action : [action];
   debug.log(action);
-  for (const act of actions) {
-    debug.log(act);
-    debug.log(actions);
-    for (const element of cardHoverMenuActions) {
-      const span = element?.getElementsByTagName("span")[0];
-      if (span && span.textContent === act) {
-        span.click();
-        return;
-      }
-    }
-  }
+  findAndClickAction(actions, cardHoverMenuActions);
 }
 
 /**
