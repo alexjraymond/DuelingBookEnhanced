@@ -27,6 +27,10 @@ Welcome to the developer documentation for DuelingBookEnhanced. This documentati
 - [Adding Features](./contributing/adding-features.md) - How to add new features to the extension
 - [Code Style](./contributing/code-style.md) - Coding standards and conventions
 
+### Code Quality
+
+- [Code Quality Improvements](./code-quality/improvements.md) - Performance, semantics, scalability, and best practice optimizations
+
 ---
 
 **Quick Links:**
